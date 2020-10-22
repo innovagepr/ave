@@ -16,3 +16,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('/class', [ClassGroupController::class, 'index']);
+
+//Test-Albert:
+Route::get('/test', function(){
+    //return 'Hello World';
+    //return ['foo' => 'bar'];
+    //return view('test');
+    $name = request('name');
+    return $name;
+});
+
+Route::get('/homepage', function(){
+    return view('homepage');
+});
+
