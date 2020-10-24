@@ -1,13 +1,17 @@
-<nav x-data="{ open: false }" class="menu-top-border bg-menu ">
+{{-- In work, do what you enjoy. --}}
+
+
+<nav x-data="{ open: false }" class="{{$displayTop}} menu-top-border bg-menu " xmlns:wire="http://www.w3.org/1999/xhtml">
     <!-- Primary Navigation Menu -->
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
 
         <div class="flex h-13">
             <div class="flex flex-start">
 
-                <div class="menu-item hidden space-x-0 sm:-my-px sm:ml-10 sm:flex">
-                    <button class="menu-item" :wire:click="$emit('click')">
+                <div class="menu-item hidden space-x-0 sm:ml-2 sm:flex">
+                    <button class="menu-item" wire:click="hideTop">
                         <span class="pr-2 menu-burger fas fa-bars fa-2x"></span>
                         {{ __('Menú') }}
                     </button>
@@ -23,11 +27,12 @@
         {{--                </div>--}}
 
         <!-- Navigation Links -->
-            <div class="flex flex-end">
+            <div class=" flex ">
                 <div class="menu-item hidden space-x-0 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         <span class="pr-2 fas fa-book"></span>
                         {{ __('Actividades') }}
+{{--                        {{$option}}--}}
                     </x-jet-nav-link>
                 </div>
                 <div class="menu-item hidden space-x-0 sm:-my-px sm:ml-10 sm:flex">
@@ -265,3 +270,4 @@
         </div>
     </div>
 </nav>
+
