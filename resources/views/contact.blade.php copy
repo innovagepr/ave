@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="{{asset('images/avelogo.ico')}}">
+
+<head>
+    <title>AVE</title>
+</head>
+
+{{--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">--}}
+{{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">--}}
+
+{{--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">--}}
+{{--<script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>--}}
+{{--<link rel="stylesheet" href="{{asset('css/styles.css')}}" />--}}
+
+<body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB'">
+
+{{--<nav class="topnav">--}}
+{{--    <div class="topnav-right">--}}
+{{--        <a href="{{ route('login') }}"><span class="fas fa-sign-in-alt fa-lg"></span> Inicia Sesión</a>--}}
+{{--        <a class = "inactive"> | </a>--}}
+{{--        <a href="{{ route('register') }}"><span class="fas fa-user-circle fa-lg"></span> Crear Cuenta</a>--}}
+{{--                method="GET" action="{{ route('register') }}"--}}
+{{--    </div>--}}
+{{--</nav>--}}
+
+{{--<div id = "homeRow" class="row">--}}
+
+{{--    <div id = "cell1" class="cell">--}}
+
+{{--        <img id = "aveimg" src = "{{asset('images/aveLogo1.png')}}" alt = "AVE Official Logo">--}}
+
+{{--    </div>--}}
+
+{{--    <div id = "cell2" class="cell">--}}
+{{--        <div style="text-align: center">--}}
+{{--            <p style = "font-size: 6vw; color: #073C63; padding: 30px">¡Bienvenido a AVE!</p>--}}
+{{--            <p style="padding: 30px; font-size: 3vw; color: #2576AC">¡Aprende mientras te diviertes!</p>--}}
+
+{{--            <button class= "button button1" >Comienza</button>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+
+
+
+{{--<!-- The Modal -->--}}
+{{--<div id="myModal" class="modal">--}}
+
+{{--    <!-- Modal content -->--}}
+{{--    <div class="modal-content">--}}
+{{--        <span class="close">&times;</span>--}}
+{{--        <p>Some text in the Modal..</p>--}}
+{{--    </div>--}}
+
+{{--</div>--}}
+
+{{--<script>--}}
+{{--    // Get the modal--}}
+{{--    var modal = document.getElementById("myModal");--}}
+
+{{--    // Get the button that opens the modal--}}
+{{--    var btn = document.getElementById("myBtn");--}}
+
+{{--    // Get the <span> element that closes the modal--}}
+{{--    var span = document.getElementsByClassName("close")[0];--}}
+
+{{--    // When the user clicks the button, open the modal--}}
+{{--    btn.onclick = function() {--}}
+{{--        modal.style.display = "block";--}}
+{{--    }--}}
+
+{{--    // When the user clicks on <span> (x), close the modal--}}
+{{--    span.onclick = function() {--}}
+{{--        modal.style.display = "none";--}}
+{{--    }--}}
+
+{{--    // When the user clicks anywhere outside of the modal, close it--}}
+{{--    window.onclick = function(event) {--}}
+{{--        if (event.target == modal) {--}}
+{{--            modal.style.display = "none";--}}
+{{--        }--}}
+{{--    }--}}
+{{--</script>--}}
+
+{{--<!-- Button trigger modal -->--}}
+{{--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">--}}
+{{--    Launch demo modal--}}
+{{--</button>--}}
+
+{{--<!-- Modal -->--}}
+{{--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+{{--    <div class="modal-dialog">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="modal-header">--}}
+{{--                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>--}}
+{{--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                    <span aria-hidden="true">&times;</span>--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body">--}}
+{{--                ...--}}
+{{--            </div>--}}
+{{--            <div class="modal-footer">--}}
+{{--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+{{--                <button type="button" class="btn btn-primary">Save changes</button>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+
+
+
+
+{{--<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#vertically-centered">--}}
+{{--    Vertically centered--}}
+{{--</button>--}}
+
+{{--<x-modal id="vertically-centered" title="Vertically centered" :centered="true">--}}
+{{--    <x-slot name="body">--}}
+{{--        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.--}}
+{{--    </x-slot>--}}
+{{--    <x-slot name="footer">--}}
+{{--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+{{--        <button type="button" class="btn btn-primary">Save changes</button>--}}
+{{--    </x-slot>--}}
+{{--</x-modal>--}}
+
+
+{{--<div class="mt-4">--}}
+{{--    @livewire('server-list')--}}
+{{--</div>--}}
+<x-jet-confirmation-modal wire:model="confirmingUserDeletion">
+    <x-slot name="title">
+        Delete Account
+    </x-slot>
+
+    <x-slot name="content">
+        Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted.
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$toggle('confirmingUserDeletion')" wire:loading.attr="disabled">
+            Nevermind
+        </x-jet-secondary-button>
+
+        <x-jet-danger-button class="ml-2" wire:click="deleteUser" wire:loading.attr="disabled">
+            Delete Account
+        </x-jet-danger-button>
+    </x-slot>
+</x-jet-confirmation-modal>
+
+
+{{--<footer class="footer">--}}
+{{--    <div>--}}
+{{--        <a style="font-size: 16px; text-decoration: none;" href="#info"><span class="left; fas fa-info-circle fa-lg"></span> Más Información</a>--}}
+{{--        <a style = "margin-left:20px; font-size: 16px; text-decoration: none;" id= "myBtn" href="#info"><span class="fas fa-phone-alt fa-lg"></span> Contáctanos</a>--}}
+{{--        <p style = "margin-right:20px; font-size: 16px; color: #073C63" class="right">Por innovAGE<img style="margin-left: 10px; width:28px; height:28px" src = "{{asset('images/roundInnovAGElogo.png')}}" alt = "innovAGE_logo"></p>--}}
+{{--        <button class="myBtn" >Comienza</button>--}}
+
+{{--    </div>--}}
+{{--</footer>--}}
+
+
+{{--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>--}}
+{{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>--}}
+
+{{--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>--}}
+{{--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>--}}
+{{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>--}}
+
+</body>
+</html>
+
+
+
+{{--<x-app-layout>--}}
+{{--    <x-slot name="header">--}}
+{{--        <h2 class="font-semibold text-xl text-gray-800 leading-tight">--}}
+{{--            {{ __('Dashboard') }}--}}
+{{--        </h2>--}}
+{{--    </x-slot>--}}
+
+{{--    <div class="py-12">--}}
+{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
+{{--            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">--}}
+{{--                <x-jet-welcome />--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</x-app-layout>--}}
+
