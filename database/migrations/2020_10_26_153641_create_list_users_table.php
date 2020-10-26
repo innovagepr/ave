@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ListWord extends Migration
+class CreateListUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class ListWord extends Migration
      */
     public function up()
     {
-        Schema::create('list_word', function (Blueprint $table) {
+        Schema::create('list_users', function (Blueprint $table) {
             $table->foreignId('list_id');
-            $table->foreign('list_id')->references('id')->on('list_exercise');
-            $table->foreignId('word_id');
-            $table->foreign('word_id')->references('id')->on('word');
+            $table->foreign('list_id')->references('id')->on('list_exercises');
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -28,6 +28,6 @@ class ListWord extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_word');
+        Schema::dropIfExists('list_users');
     }
 }

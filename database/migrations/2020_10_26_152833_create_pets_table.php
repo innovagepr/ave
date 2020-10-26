@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Difficulty extends Migration
+class CreatePetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class Difficulty extends Migration
      */
     public function up()
     {
-        Schema::create('difficulty', function (Blueprint $table) {
+        Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->string('name', 128);
+            $table->string('slug', 128);
+            $table->string('icon_url', 128);
         });
     }
 
@@ -26,6 +28,6 @@ class Difficulty extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('difficulty');
+        Schema::dropIfExists('pets');
     }
 }

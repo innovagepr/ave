@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Word extends Migration
+class CreateDifficultiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class Word extends Migration
      */
     public function up()
     {
-        Schema::create('word', function (Blueprint $table) {
+        Schema::create('difficulties', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('difficulty_id');
-            $table->foreign('difficulty_id')->references('id')->on('difficulty');
-            $table->string('word', 32);
+            $table->string('name', 128);
         });
     }
 
@@ -28,6 +26,6 @@ class Word extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('word');
+        Schema::dropIfExists('difficulties');
     }
 }

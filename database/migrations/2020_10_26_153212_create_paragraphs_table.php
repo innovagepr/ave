@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Role extends Migration
+class CreateParagraphsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class Role extends Migration
      */
     public function up()
     {
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('paragraphs', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 128);
+            $table->text('text');
         });
     }
 
@@ -26,6 +26,6 @@ class Role extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role');
+        Schema::dropIfExists('paragraphs');
     }
 }

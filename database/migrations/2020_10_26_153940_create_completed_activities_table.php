@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Activity extends Migration
+class CreateCompletedActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class Activity extends Migration
      */
     public function up()
     {
-        Schema::create('activity', function (Blueprint $table) {
+        Schema::create('completed_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 128);
-            $table->string('slug', 128);
-            $table->text('rules');
-            $table->binary('active');
         });
     }
 
@@ -29,6 +25,6 @@ class Activity extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity');
+        Schema::dropIfExists('completed_activities');
     }
 }

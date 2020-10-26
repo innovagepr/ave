@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class GroupList extends Migration
+class CreateGroupListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class GroupList extends Migration
      */
     public function up()
     {
-        Schema::create('group_list', function (Blueprint $table) {
+        Schema::create('group_lists', function (Blueprint $table) {
             $table->foreignId('group_id');
-            $table->foreign('group_id')->references('id')->on('group');
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->foreignId('list_id');
-            $table->foreign('list_id')->references('id')->on('list_exercise');
+            $table->foreign('list_id')->references('id')->on('list_exercises');
         });
     }
 
@@ -28,6 +28,6 @@ class GroupList extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_list');
+        Schema::dropIfExists('group_lists');
     }
 }

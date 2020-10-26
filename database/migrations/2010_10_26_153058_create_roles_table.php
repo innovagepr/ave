@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Group extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class Group extends Migration
      */
     public function up()
     {
-        Schema::create('group', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id');
-            $table->foreign('owner_id')->references('id')->on('users');
             $table->string('name', 128);
-            $table->text('description');
-            $table->date('date_created');
-            $table->integer('active');
         });
     }
 
@@ -31,6 +26,6 @@ class Group extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group');
+        Schema::dropIfExists('roles');
     }
 }

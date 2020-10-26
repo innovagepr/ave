@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Reward extends Migration
+class CreateRewardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class Reward extends Migration
      */
     public function up()
     {
-        Schema::create('reward', function (Blueprint $table) {
+        Schema::create('rewards', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('reward_type_id');
-            $table->foreign('reward_type_id')->references('id')->on('reward_type');
+            $table->foreign('reward_type_id')->references('id')->on('reward_types');
         });
     }
 
@@ -28,6 +29,6 @@ class Reward extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reward');
+        Schema::dropIfExists('rewards');
     }
 }

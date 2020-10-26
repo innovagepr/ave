@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class LoginRecord extends Migration
+class CreateListExercisesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class LoginRecord extends Migration
      */
     public function up()
     {
-        Schema::create('login_record', function (Blueprint $table) {
+        Schema::create('list_exercises', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 128);
+            $table->foreignId('activity_id');
+            $table->foreign('activity_id')->references('id')->on('activities');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('type', 128);
-            $table->timestamp('date');
+            $table->foreignId('difficulty_id');
+            $table->foreign('difficulty_id')->references('id')->on('difficulties');
         });
     }
 
@@ -29,8 +32,6 @@ class LoginRecord extends Migration
      */
     public function down()
     {
-        Schema::table('login_record', function (Blueprint $table) {
-            Schema::dropIfExists('login_record');
-        });
+        Schema::dropIfExists('list_exercises');
     }
 }

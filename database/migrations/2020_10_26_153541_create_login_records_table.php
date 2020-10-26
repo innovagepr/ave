@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CompletedActivity extends Migration
+class CreateLoginRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CompletedActivity extends Migration
      */
     public function up()
     {
-        Schema::create('completed_activity', function (Blueprint $table) {
+        Schema::create('login_records', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('type', 128);
+            $table->timestamp('date');
         });
     }
 
@@ -25,6 +29,6 @@ class CompletedActivity extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('completed_activity');
+        Schema::dropIfExists('login_records');
     }
 }

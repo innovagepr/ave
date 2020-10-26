@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ListExercise extends Migration
+class CreateUserPetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class ListExercise extends Migration
      */
     public function up()
     {
-        Schema::create('list_exercise', function (Blueprint $table) {
+        Schema::create('user_pets', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 128);
-            $table->foreignId('activity_id');
-            $table->foreign('activity_id')->references('id')->on('activity');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreignId('difficulty_id');
-            $table->foreign('difficulty_id')->references('id')->on('difficulty');
+            $table->foreignId('pet_id');
+            $table->foreign('pet_id')->references('id')->on('pets');
+            $table->integer('level');
+            $table->string('background_color', 128);
         });
     }
 
@@ -32,6 +31,6 @@ class ListExercise extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_exercise');
+        Schema::dropIfExists('user_pets');
     }
 }
