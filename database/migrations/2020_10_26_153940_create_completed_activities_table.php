@@ -15,6 +15,13 @@ class CreateCompletedActivitiesTable extends Migration
     {
         Schema::create('completed_activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('activity_id');
+            $table->foreign('activity_id')->references('id')->on('activities');
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('difficulty_id');
+            $table->foreign('difficulty_id')->references('difficulty_id')->on('list_exercises');
+            $table->integer('final_score');
         });
     }
 
