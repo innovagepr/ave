@@ -1,12 +1,11 @@
+/*Styles*/
 
-/* Add a black background color to the top navigation */
 .topnav {
 
     background-color: #86E0E3;
     overflow: hidden;
     border-bottom: 4px solid;
     border-bottom-color: #2576AC;
-
 }
 
 .topnav-right{
@@ -18,9 +17,9 @@
     float: left;
     color: gray;
     text-align: center;
-    padding: 20px;
+    padding: 18px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 20px;
 }
 
 /* Change the color of links on hover */
@@ -41,7 +40,7 @@
 /* Create two equal columns that sits next to each other */
 .column {
     flex: 50%;
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 .button {
@@ -52,23 +51,29 @@
     display: inline-block;
     font-size: 40px;
     font-family: "Berlin Sans FB";
-    margin: 20px 20px;
+    margin: 10px 10px;
     cursor: pointer;
-    padding: 20px 30px;
+    padding: 10px 10px;
     transition-duration: 0.4s;
 }
 .button1:hover{
     background-color: #52C5AB;
 }
 
+
 .footer {
-    position: fixed;
-    left: 10px;
-    bottom: 12px;
+    /*position: absolute;*/
+    /*left: 10px;*/
+    /*bottom: 12px;*/
+    /*width: 100%;*/
+    /*height: 20px;*/
+    /*margin-right: 40px;*/
+    /*margin-bottom: 10px;*/
+    position: absolute;
     width: 100%;
-    height: 20px;
-    margin-right: 40px;
-    margin-bottom: 10px;
+    height: 100px;
+    bottom: 0;
+    left: 0;
 }
 .left{
     float:left;
@@ -83,7 +88,7 @@
     /*justify-content:center;*/
     align-items:stretch;
     flex-wrap:nowrap;
-    padding:10px;
+    /*padding:10px;*/
 }
 .cell{
     min-height:75px;
@@ -123,6 +128,16 @@
     /*text-align:left;*/
     /*justify-content:right;*/
     align-self:center;
+}
+.a1 {
+    float:left;
+    font-size: 16px;
+    text-decoration: none;
+    color:#2576AC;
+    margin-left: 10px;
+}
+.a2:hover{
+    color: #073C63;
 }
 @media (max-width: 768px){
     .row{
@@ -170,41 +185,41 @@
     .col-11 {width: 91.66%;}
     .col-12 {width: 100%;}
 }
-/*------------------------------------------------------*/
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+/*!*------------------------------------------------------*!*/
+/*.modal {*/
+/*    display: none; !* Hidden by default *!*/
+/*    position: fixed; !* Stay in place *!*/
+/*    z-index: 1; !* Sit on top *!*/
+/*    padding-top: 100px; !* Location of the box *!*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    width: 100%; !* Full width *!*/
+/*    height: 100%; !* Full height *!*/
+/*    overflow: auto; !* Enable scroll if needed *!*/
+/*    background-color: rgb(0,0,0); !* Fallback color *!*/
+/*    background-color: rgba(0,0,0,0.4); !* Black w/ opacity *!*/
+/*}*/
 
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
+/*!* Modal Content *!*/
+/*.modal-content {*/
+/*    background-color: #fefefe;*/
+/*    margin: auto;*/
+/*    padding: 20px;*/
+/*    border: 1px solid #888;*/
+/*    width: 80%;*/
+/*}*/
 
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+/*!* The Close Button *!*/
+/*.close {*/
+/*    color: #aaaaaa;*/
+/*    float: right;*/
+/*    font-size: 28px;*/
+/*    font-weight: bold;*/
+/*}*/
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
+/*.close:hover,*/
+/*.close:focus {*/
+/*    color: #000;*/
+/*    text-decoration: none;*/
+/*    cursor: pointer;*/
+/*}*/
