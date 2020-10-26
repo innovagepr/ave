@@ -13,6 +13,10 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+        <link rel="icon" href="{{asset('avelogo.ico')}}">
+
+
 
         @livewireStyles
 
@@ -22,8 +26,12 @@
     </head>
     <body class="bg-main font-sans antialiased">
         <div>
-            @livewire('top-nav')
-            @livewire('aside-nav')
+
+                @livewire('top-nav')
+                @livewire('aside-nav')
+
+
+
 {{--            @livewire('navigation-dropdown')--}}
 
             <!-- Page Heading -->
@@ -34,10 +42,14 @@
 {{--            </header>--}}
 
             <!-- Page Content -->
-            <main class="bg-main">
-                @yield('content')
-{{--                {{ $slot }}--}}
-            </main>
+                <main class="bg-main">
+
+                    @yield('content')
+                    {{--                {{ $slot }}--}}
+
+                </main>
+
+
         </div>
 
         @stack('modals')

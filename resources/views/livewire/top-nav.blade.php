@@ -11,8 +11,8 @@
             <div class="flex flex-start">
 
                 <div class="menu-item hidden space-x-0 sm:ml-2 sm:flex">
-                    <button class="menu-item" wire:click="hideTop">
-                        <span class="pr-2 menu-burger fas fa-bars fa-2x"></span>
+                    <button class="menu-item" wire:click="hide">
+                        <span class="pr-2 menu-burger fas fa-bars fa-lg"></span>
                         {{ __('Menú') }}
                     </button>
                 </div>
@@ -30,25 +30,25 @@
             <div class=" flex ">
                 <div class="menu-item hidden space-x-0 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        <span class="pr-2 fas fa-book"></span>
+                        <span class="pr-2 fas fa-book "></span>
                         {{ __('Actividades') }}
 {{--                        {{$option}}--}}
                     </x-jet-nav-link>
                 </div>
                 <div class="menu-item hidden space-x-0 sm:-my-px sm:ml-10 sm:flex">
-                    <span class="pr-2 fas fa-paw"></span>
+                    <span class="pr-2 fas fa-paw "></span>
                     <x-jet-nav-link href="" >
                         {{ __('Mi Mascota') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="menu-item hidden space-x-0 sm:-my-px sm:ml-10 sm:flex">
-                    <span class="pr-2 fas fa-store-alt"></span>
+                    <span class="pr-2 fas fa-store-alt "></span>
                     <x-jet-nav-link href="">
                         {{ __('Tienda') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="menu-item hidden space-x-0 sm:-my-px sm:ml-10 sm:flex">
-                    <span class="pr-2 fas fa-chart-bar"></span>
+                    <span class="pr-2 fas fa-chart-bar "></span>
                     <x-jet-nav-link href="">
                         {{ __('Mi Progreso') }}
                     </x-jet-nav-link>

@@ -22,7 +22,7 @@
     text-align: right;
     --text-opacity: 1;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1rem;
     /*color: #2576ac;*/
     /*color: rgba(37, 118, 172, var(--text-opacity));*/
     color: #073c63;
@@ -36,7 +36,7 @@
     --border-opacity: 1;
     border-color: #073c63;
     border-color: rgba(7, 60, 99, var(--border-opacity));
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 800;
     --text-opacity: 1;
     color: #073c63;
@@ -69,7 +69,7 @@
     text-align: right;
     --text-opacity: 1;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.5rem;
     /*color: #2576ac;*/
     /*color: rgba(37, 118, 172, var(--text-opacity));*/
     color: #073c63;
@@ -138,10 +138,14 @@ a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    height: 100%;
+    /*height: 100%;*/
     background: #acf9a4;
     color: #6b6b6b;
     transition: all 0.3s;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    transition: ease-in-out;
 }
 
 #sidebar.active {
