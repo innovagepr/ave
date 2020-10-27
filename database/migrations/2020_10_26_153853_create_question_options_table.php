@@ -18,7 +18,7 @@ class CreateQuestionOptionsTable extends Migration
             $table->foreignId('question_id');
             $table->foreign('question_id')->references('id')->on('questions');
             $table->string('option', 128);
-            $table->binary('is_correct');
+            $table->boolean('is_correct');
         });
     }
 
