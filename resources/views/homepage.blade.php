@@ -20,16 +20,16 @@
 <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
 
-<body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB'; line-height: normal ;position: relative; margin: 0; height: 100%; width: 100%; overflow-x: hidden">
-
+<body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
+<div id="page-container">
 <nav class="topnav">
     <div class="topnav-right">
         <a href="{{ route('login') }}"><span class="fas fa-sign-in-alt fa-lg"></span> Inicia Sesión</a>
-        <a class = "inactive"> | </a>
+        <a id="separator"> | </a>
         <a href="{{ route('register') }}"><span class="fas fa-user-circle fa-lg"></span> Crear Cuenta</a>
     </div>
 </nav>
-
+<div id="content-wrap">
 <div id = "homeRow" class="row">
 
     <div id = "cell1" class="cell">
@@ -46,6 +46,7 @@
         </div>
     </div>
 </div>
+</div>
 @extends('layouts/contactModalLayout')
 <footer class="footer">
 
@@ -54,6 +55,6 @@
         <p style = "margin-right:20px; font-size: 16px; color: #073C63" class="right">Por innovAGE<img style="margin-left: 10px; width:28px; height:28px" src = "{{asset('images/roundInnovAGElogo.png')}}" alt = "innovAGE_logo"></p>
 
 </footer>
-
+</div>
 </body>
 </html>

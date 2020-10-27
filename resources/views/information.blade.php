@@ -7,6 +7,13 @@
     <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
 
     <style>
+        #page-container {
+            position: relative;
+            min-height: 100vh;
+        }
+        #content-wrap {
+            padding-bottom: 2.5rem;    /* Footer height */
+        }
         body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
@@ -48,17 +55,19 @@
         }
 
         .content {
-            padding-bottom: 100px;
+            padding-bottom: 5px;
             /* Height of the footer element */
         }
         .footer {
+            /*position: absolute;*/
+            /*width: 100%;*/
+            /*height: 100px;*/
+            /*bottom: 0;*/
+            /*left: 0;*/
             position: absolute;
-            width: 100%;
-            height: 100px;
             bottom: 0;
-            left: 0;
-            /*padding: 1em;*/
-            /*top:100%;*/
+            width: 100%;
+            height: 2.5rem;
         }
 
         @media screen and (max-width: 650px) {
@@ -71,7 +80,8 @@
 </head>
 <body>
 
-<div class="content">
+<div id="page-container" class="content">
+    <div id="content-wrap">
 <div class="about-section">
     <h1>AVE - Asistencia Virtual Educativa</h1>
 
@@ -94,11 +104,10 @@
     </div>
 
 </div>
-</div>
-
+    </div>
 <footer class="footer">
         <a class="back" href="/homepage" ><i style ="font-size: xx-large;" class="fas fa-arrow-alt-circle-left"></i> </a>
 </footer>
-
+</div>
 </body>
 </html>
