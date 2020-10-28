@@ -1,4 +1,4 @@
-@props(['id', 'maxWidth', 'attributes'])
+@props(['id', 'maxWidth'])
 
 @php
 $id = $id ?? md5($attributes->wire('model'));
@@ -49,7 +49,7 @@ switch ($maxWidth ?? '2xl') {
     id="{{ $id }}"
     class="fixed top-0 inset-x-0 px-4 pt-6 z-50 sm:px-0 sm:flex sm:items-top sm:justify-center"
     style="display: none;"
-    xmlns:x-transition="http://www.w3.org/1999/xhtml" xmlns:x-on="http://www.w3.org/1999/xhtml">
+>
     <div x-show="show" class="fixed inset-0 transform transition-all" x-on:click="show = false" x-transition:enter="ease-out duration-300"
                     x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100"
