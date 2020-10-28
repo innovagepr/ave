@@ -1,15 +1,17 @@
 {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
 
+{{--sm:-mx-6 lg:-mx-8  divide-y divide-gray-200--}}
     <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 align-middle m-auto inline-block max-w-3xl sm:px-6 lg:px-8">
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200">
+        <div class="m-auto mt-7 overflow-x-auto ">
+            <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden  sm:rounded-lg">
+                    <x-jet-label class="m-auto">{{__('Mis Grupos')}}</x-jet-label>
+                    <table class="table-border min-w-full ">
                         <thead>
                         <tr>
                             <th class="px-6 py-3 table-header text-center text-xs leading-4 font-medium uppercase tracking-wider">
-{{--                                {{__($name)}}--}}
-                                Name
+                                {{$name}}
+{{--                                Name--}}
                             </th>
                             <th class="px-6 py-3 table-header text-center text-xs leading-4 font-medium uppercase tracking-wider">
                                 Title
@@ -23,7 +25,7 @@
                             <th class="px-6 py-3 table-header text-center text-xs leading-4 font-medium uppercase tracking-wider">
                         </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class=" table-border bg-white">
                         <tr>
                             <td class="px-6 py-4 whitespace-no-wrap">
                                 <div class="flex items-center">

@@ -10,7 +10,7 @@
     @section('content')
         @if(true)
             @livewire('pro-summary')
-            @livewire('child-summary')
+{{--            @livewire('child-summary')--}}
 
         @else
             {{--            <div class="py-12">--}}
