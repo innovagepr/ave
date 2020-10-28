@@ -18,7 +18,7 @@ class CreateActivitiesTable extends Migration
             $table->string('name', 128);
             $table->string('slug', 128);
             $table->text('rules');
-            $table->binary('active');
+            $table->boolean('active');
         });
     }
 
