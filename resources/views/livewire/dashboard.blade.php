@@ -8,20 +8,13 @@
     @section('title', 'Inicio')
 
     @section('content')
-        @if(true)
-            @livewire('pro-summary')
-{{--            @livewire('child-summary')--}}
 
+        @if(Auth::user()->role_id == 1)
+            @livewire('pro-summary')
         @else
-            {{--            <div class="py-12">--}}
-            {{--                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
-            {{--                    <div class="overflow-hidden sm:rounded-lg">--}}
-            {{--                                            <x-jet-welcome />--}}
-            <h2>Hello</h2>
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+            @livewire('child-summary')
         @endif
+
     @endsection
 
 
