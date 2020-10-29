@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,31 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('livewire.dashboard');
 })->name('dashboard');
+
+Route::get('/class', [ClassGroupController::class, 'index']);
+
+//Test-Albert:
+Route::get('/test', function(){
+    //return 'Hello World';
+    //return ['foo' => 'bar'];
+    //return view('test');
+    $name = request('name');
+    return $name;
+});
+
+Route::get('/homepage', function(){
+    return view('homepage');
+});
+
+Route::get('/contact', function(){
+    return view('contact');
+});
+
+Route::get('/information', function(){
+    return view('information');
+});
+
+Route::get('/mascota',[PetController::class, 'index']);
+

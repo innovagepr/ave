@@ -5,34 +5,53 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'AVE') }}</title>
+{{--        <title>{{ config('app.name', 'AVE') }}</title>--}}
+        <title>@yield('title')</title>
+
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+        <link rel="icon" href="{{asset('avelogo.ico')}}">
+
+
 
         @livewireStyles
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
+        <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-dropdown')
+    <body class="bg-main font-sans antialiased">
+        <div>
+
+                @livewire('top-nav')
+                @livewire('aside-nav')
+
+
+
+{{--            @livewire('navigation-dropdown')--}}
 
             <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+{{--            <header class="bg-white shadow">--}}
+{{--                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">--}}
+{{--                    {{ $header }}--}}
+{{--                </div>--}}
+{{--            </header>--}}
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                <main class="bg-main">
+
+                    @yield('content')
+                    {{--                {{ $slot }}--}}
+
+                </main>
+
+
         </div>
 
         @stack('modals')

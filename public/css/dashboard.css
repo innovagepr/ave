@@ -1,0 +1,145 @@
+.dashboard-card {
+    background-color: white;
+    border: #2576ac 2px solid;
+    border-radius: 20px;
+}
+
+.sm-block {
+    height: 50px;
+    width: 50%;
+}
+
+.lg-block {
+    height: 100px;
+    width: 100%;
+}
+
+.first-row{
+    display: inline-flex;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+
+}
+
+.points{
+    margin-right: 5%;
+}
+
+.coins{
+    margin-left: 5%;
+}
+
+.main-block-normal{
+    height: 500px;
+    /*border: black 1px dashed;*/
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-block-aside{
+    height: 500px;
+    /*border: black 1px dashed;*/
+    width: 50%;
+    margin-left: 25%;
+    margin-right: auto;
+}
+
+
+.dashboard-label{
+    text-align: center;
+    --text-opacity: 1;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #2576ac;
+    color: rgba(37, 118, 172, var(--text-opacity));
+}
+
+.card-content{
+    text-align: center;
+    place-content: center;
+}
+
+.card-text{
+    font-size: 1.2rem;
+    color: #2576ac;
+    color: rgba(37, 118, 172, var(--text-opacity));
+}
+
+progress[value]{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 70%;
+    height: 25px;
+    border-radius: 10px;
+    border: #2576ac 2px solid;
+}
+
+progress[value]::-webkit-progress-bar {
+    background-color: white;
+    border-radius: 10px;
+}
+
+progress[value]::-webkit-progress-value {
+    background-color: lightgreen;
+        /*-webkit-linear-gradient(-45deg,*/
+        /*transparent 33%, rgba(0, 0, 0, .1) 33%,*/
+        /*rgba(0,0, 0, .1) 66%, transparent 66%),*/
+        /*-webkit-linear-gradient(top,*/
+        /*rgba(255, 255, 255, .25),*/
+        /*rgba(0, 0, 0, .25)),*/
+        /*-webkit-linear-gradient(left, #09c, #f44);*/
+
+    border-radius: 10px;
+    /*background-size: 35px 20px, 100% 100%, 100% 100%;*/
+}
+
+
+
+.sidebar-test{
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    overflow: hidden;
+    border: darkblue 1px solid;
+}
+
+.content-test{
+    border: darkred 1px solid;
+    margin: auto;
+    width: 100%;
+}
+
+.table-header{
+    background-color: #2576ac;
+    --bg-opacity: 1;
+    --text-opacity: 1;
+    color: white;
+    font-weight: bold;
+    border: white 2px solid;
+}
+
+.table-cell {
+    border: #2576AC 2px solid;
+    color: #073c63;
+    --text-opacity: 1;
+}
+
+.simple-table{
+    margin: auto;
+}
+
+.table-label {
+    font-size: 1.4rem;
+}
+
+.table-border {
+    /*border-right: #2576ac 2px solid;*/
+    /*border-bottom: #2576ac 2px solid;*/
+    /*border-left: #2576ac 2px solid;*/
+    /*border-color: #2576AC;*/
+    border-radius: 0.5rem;
+    --divide-opacity: 1;
+
+}
