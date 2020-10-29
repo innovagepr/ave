@@ -30,9 +30,9 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-        <div class="container mt-4" style="background-color:#FFFFFF; width: 835px; font-size: 25px; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+        <div class="container mt-4" style="background-color:#FFFFFF; width: 40%; font-size: 1.5rem; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
             <div class="mt-2">
-                <a style="color: #2576AC; font-size:37px;">{{ __('Complete su información') }}</a>
+                <a style="color: #2576AC; font-size: 2rem;">{{ __('Complete su información') }}</a>
             </div>
             <div class="mt-2">
                 <x-jet-label for="first_name" value="{{ __('Nombre:') }}" style="display: block; text-align: left; padding-left: 10%;" />
@@ -73,8 +73,8 @@
             </div>
 
             <div class="mt-4">
-                <label for="remember_me" style="display: block; text-align: left; padding-left: 10%;">
-                    <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
+                <label for="accepted_terms" style="display: block; text-align: left; padding-left: 10%;">
+                    <input id="accepted_terms" type="checkbox" class="form-checkbox" name="accepted_terms">
                     <span>{{ __('Acepto los términos y condiciones.') }}</span>
                 </label>
             </div>

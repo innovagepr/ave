@@ -28,11 +28,11 @@
             {{ session('status') }}
         </div>
     @endif
-    <div class="container mt-4" style="background-color:#FFFFFF; width: 1051px; font-size: 30px; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <div class="container mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
     <form method="POST" action="{{ route('login') }}">
         @csrf
                 <div class="mt-4">
-            <a style="color: #2576AC; font-size:60px;">{{ __('Iniciar Sesión') }}</a>
+            <a style="color: #2576AC; font-size:4rem;">{{ __('Iniciar Sesión') }}</a>
         </div>
         <div class="mt-2">
             <x-jet-label for="email" value="{{ __('Email:') }}" style="display: inline-block; text-align: left; padding-right: 7%;" />
@@ -58,7 +58,7 @@
         </div>
         <div class="flex items-center justify-center mt-4">
             @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" style="color: #398BF6; font-size: 20px; text-align: left;">
+                <a href="{{ route('password.request') }}" style="color: #398BF6; font-size: 1.5rem; text-align: left;">
                     {{ __('¿Olvidó su contraseña?') }}
                 </a>
             @endif
