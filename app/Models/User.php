@@ -66,4 +66,21 @@ class User extends Authenticatable
     public function pet(){
         return $this->hasOne(Pet::class,);
     }
+
+    public function rewards(){
+        return $this->hasMany(Reward::class);
+    }
+
+
+    public function loginRecords(){
+        return $this->hasMany(LoginRecord::class);
+    }
+
+    public function groups(){
+        return $this->hasMany(Group::class);
+    }
+
+    public function lists(){
+        return $this->hasMany(ListExercise::class);
+    }
 }
