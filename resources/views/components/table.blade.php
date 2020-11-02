@@ -1,3 +1,4 @@
+
 <div class="align-middle min-w-full overflow-x-auto overflow-hidden ">
     <table class=" table-border min-w-full divide-y ">
         <thead>
@@ -9,7 +10,7 @@
         </thead>
         <tbody class="bg-white divide-y divide-x divide-cool-gray-200">
 
-        {{$body}}
+            {{$body}}
         </tbody>
 
 

@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{--        <title>{{ config('app.name', 'AVE') }}</title>--}}
-    <title>@yield('title')</title>
-
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <link rel="icon" href="{{asset('avelogo.ico')}}">
+{{--        <title>{{ config('app.name', 'AVE') }}</title>--}}
+        <title>@yield('title')</title>
 
 
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-    @livewireStyles
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+        <link rel="icon" href="{{asset('avelogo.ico')}}">
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
-    <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
-</head>
-<body class="bg-main font-sans antialiased">
-<div>
 
-    @livewire('top-nav')
-    @livewire('aside-nav')
+
+        @livewireStyles
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
+        <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-main font-sans antialiased">
+        <div>
+
+                @livewire('top-nav')
+                @livewire('aside-nav')
 
 
 
 {{--            @livewire('navigation-dropdown')--}}
 
-<!-- Page Heading -->
+            <!-- Page Heading -->
 {{--            <header class="bg-white shadow">--}}
 {{--                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">--}}
 {{--                    {{ $header }}--}}
 {{--                </div>--}}
 {{--            </header>--}}
 
-<!-- Page Content -->
-    <main class="bg-main">
+            <!-- Page Content -->
+                <main class="bg-main">
 
-        @yield('content')
-        {{--                {{ $slot }}--}}
+                    @yield('content')
+                    {{--                {{ $slot }}--}}
 
-    </main>
+                </main>
 
 
-</div>
+        </div>
 
-@stack('modals')
+        @stack('modals')
 
-@livewireScripts
-</body>
+        @livewireScripts
+    </body>
 </html>

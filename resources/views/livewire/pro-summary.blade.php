@@ -4,6 +4,7 @@
     use App\Models\Group;
     $headersGroups = array("Nombre", "Activo");
     $groups = Group::all();
+
 $headersStudents = array("Nombre", "Grupo", "Activo");
 $students = array(array("name" => "Juanito", "group" => "Grupito 2", "active" =>1),
                     array("name" => "Laurita", "group" =>"Peleones", "active" => 1));
