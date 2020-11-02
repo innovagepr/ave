@@ -2,3 +2,4 @@
     {{$reward->name()}}
 @endforeach
 
+{{--{{$user}}--}}

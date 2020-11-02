@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ProSummary;
+use GuzzleHttp\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +51,19 @@ Route::get('/information', function(){
 
 Route::get('/mascota',[PetController::class, 'index']);
 
+Route::get('/actividad1', [ActivityController::class, 'show']);
+
+Route::get('/dashboard',[ProSummary::class, 'render']);
+
+//Route::post("")
+Route::get('/json-api', function() {
+    $client = new Client();
+
+    $response = $client->request('GET', 'https://desertebs.com/api/dummy/posts');
+    $statusCode = $response->getStatusCode();
+    $body = $response->getBody()->getContents();
+
+    return $body;
+});
+
+Route::get('json-api', 'ApiController@index');
