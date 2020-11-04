@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -44,6 +44,15 @@ Route::get('/contact', function(){
 Route::get('/information', function(){
     return view('information');
 });
+
+Route::get('/grupos', function(){
+    return view('group/group-management');
+});
+
+Route::get('/grupos/1', function(){
+    return view('group/group-edit');
+});
+
 
 Route::get('/mascota',[PetController::class, 'index']);
 
