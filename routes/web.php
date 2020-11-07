@@ -46,13 +46,31 @@ Route::get('/information', function(){
 });
 
 Route::get('/grupos', function(){
-    return view('group/group-management');
+    return view('group/groups');
 });
 
 Route::get('/grupos/1', function(){
     return view('group/group-edit');
 });
 
+Route::get('/actividad2', function(){
+    return view('Activity/activity2');
+});
+Route::get('/emtest', function(){
+    return view('emtest');
+});
+
+Route::get('/actividades', function(){
+    return view('Activity/activities');
+});
+
+Route::get('/actividades/palabras', function(){
+    return view('Activity/word-activity-edit');
+});
+
+Route::get('/actividades/lectura', function(){
+    return view('Activity/reading-activity-edit');
+});
 
 Route::get('/mascota',[PetController::class, 'index']);
 

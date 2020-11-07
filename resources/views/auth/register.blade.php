@@ -36,12 +36,12 @@
             </div>
             <div class="mt-2">
                 <x-jet-label for="first_name" value="{{ __('Nombre:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="first_name" type="text" style="display: inline-block; width:80%;" name="name" placeholder="Escriba su nombre" :value="old('first_name')" required autofocus autocomplete="name" />
+                <x-jet-input id="first_name" type="text" style="display: inline-block; width:80%;" name="first_name" placeholder="Escriba su nombre" :value="old('first_name')" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-0">
                 <x-jet-label for="last_name" value="{{ __('Apellido:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="last_name" type="text" style="display: inline-block; width:80%;" name="name"  placeholder="Escriba su apellido" :value="old('last_name')" required autofocus autocomplete="name" />
+                <x-jet-input id="last_name" type="text" style="display: inline-block; width:80%;" name="last_name"  placeholder="Escriba su apellido" :value="old('last_name')" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-0">
