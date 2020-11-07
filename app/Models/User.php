@@ -83,4 +83,8 @@ class User extends Authenticatable
     public function lists(){
         return $this->hasMany(ListExercise::class);
     }
+
+    public function answered_words(){
+        return $this->hasMany(AnsweredWord::class);
+    }
 }

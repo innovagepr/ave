@@ -7,21 +7,8 @@ use GuzzleHttp\Client;
 
 class ApiController extends Controller
 {
-    public function index()
-    {
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => 'https://jsonplaceholder.typicode.com',
-            // You can set any number of default request options.
-            'timeout' => 2.0,
-        ]);
 
-        $response = $client->request('GET', 'posts');
-
-        return json_decode(dd($response->getBody()->getContents()));
-    }
-
-    public function tts()
+    public static function tts($word)
     {
 
         $region = "eastus";
@@ -44,7 +31,7 @@ class ApiController extends Controller
 
         $ttsServiceUri = "https://" . $region . ".tts.speech.microsoft.com/cognitiveservices/v1";
 
-        $SsmlTemplate = "<speak version='1.0' xml:lang='es-MX'><voice xml:lang='es-MX' xml:gender='Female' name='es-MX-DaliaNeural'> Hola, ratoncito de maya peludo. </voice></speak>";
+        $SsmlTemplate = "<speak version='1.0' xml:lang='es-MX'><voice xml:lang='es-MX' xml:gender='Female' name='es-MX-DaliaNeural'> $word </voice></speak>";
 
         $options = array(
             'http' => array(
@@ -69,12 +56,11 @@ class ApiController extends Controller
         }
         else{
 
-            $mp3 = file_put_contents("test.wav",$result);
-
-//            echo "<br/>Download   Audio: <a href='test.wav'>here</a>";
+            $mp3 = file_put_contents($word.".wav",$result);
 
 
-            return view('Activity.tts', ['sound' => $mp3]);
+
+//            return view('Activity.activity1', ['sound' => $mp3]);
 
         }
     }

@@ -49,8 +49,7 @@ Route::get('/information', function(){
 
 Route::get('/mascota',[PetController::class, 'index']);
 
-Route::get('/actividad1', [ActivityController::class, 'show']);
-
+Route::get('/lista/{list}', [ActivityController::class, 'show']);
 
 //Text-to-Speech
 Route::get('/guz', [ApiController::class,'tts']);
