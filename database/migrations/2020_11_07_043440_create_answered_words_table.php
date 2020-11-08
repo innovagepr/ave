@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePetsTable extends Migration
+class CreateAnsweredWordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreatePetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pets', function (Blueprint $table) {
+        Schema::create('answered_words', function (Blueprint $table) {
             $table->id();
+            $table->string('answer', 128);
+            $table->foreignId('list_id');
+            $table->foreign('list_id')->references('id')->on('list_exercises');
+            $table->foreignId('word_id');
+            $table->foreign('word_id')->references('id')->on('words');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreignId('pet_type_id');
-            $table->foreign('pet_type_id')->references('id')->on('pet_types');
-            $table->integer('level')->default(0);
-            $table->string('background_color', 128);
-            $table->string('name', 128);
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreatePetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pets');
+        Schema::dropIfExists('answered_words');
     }
 }

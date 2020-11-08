@@ -9,6 +9,7 @@ class PetController extends Controller
 {
     public function index(){
         $pet = Auth::user()->pet;
+        $user = Auth::user();
         return view('Pet.dashboard', compact('pet'));
     }
 }

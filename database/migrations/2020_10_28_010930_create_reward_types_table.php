@@ -20,6 +20,7 @@ class CreateRewardTypesTable extends Migration
             $table->integer('price');
             $table->integer('user_level');
             $table->integer('pet_level');
+            $table->string('icon_url');
             $table->timestamps();
         });
     }

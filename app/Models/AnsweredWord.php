@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reward extends Model
+class AnsweredWord extends Model
 {
     use HasFactory;
 
@@ -13,11 +13,11 @@ class Reward extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function rewardType(){
-        return $this->belongsTo(RewardType::class);
+    public function list(){
+        return $this->belongsTo(ListExercise::class);
     }
 
-    public function name(){
-        return $this->rewardType->name;
+    public function word(){
+        return $this->belongsTo(Word::class);
     }
 }

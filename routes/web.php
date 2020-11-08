@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,4 +76,12 @@ Route::get('/actividades/lectura', function(){
 });
 
 Route::get('/mascota',[PetController::class, 'index']);
+
+Route::get('/lista/{list}', [ActivityController::class, 'show']);
+
+//Text-to-Speech
+Route::get('/guz', [ApiController::class,'tts']);
+
+
+
 

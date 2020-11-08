@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePetsTable extends Migration
+class CreateGroupUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreatePetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pets', function (Blueprint $table) {
-            $table->id();
+        Schema::create('group_users', function (Blueprint $table) {
+            $table->foreignId('groups_id');
+            $table->foreign('groups_id')->references('id')->on('groups');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreignId('pet_type_id');
-            $table->foreign('pet_type_id')->references('id')->on('pet_types');
-            $table->integer('level')->default(0);
-            $table->string('background_color', 128);
-            $table->string('name', 128);
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreatePetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pets');
+        Schema::dropIfExists('group_users');
     }
 }

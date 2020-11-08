@@ -13,7 +13,7 @@ class Pet extends Model
         return $this->belongsTo(User::class);
     }
 
-//    public function petType(){
-//        return $this->belongsTo(PetType::class);
-//    }
+    public function petType(){
+        return $this->belongsTo(PetType::class);
+    }
 }

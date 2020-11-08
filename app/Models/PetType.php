@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PetType extends Model
 {
     use HasFactory;
+
 }
