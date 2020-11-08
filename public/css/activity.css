@@ -84,9 +84,20 @@
 
 /*---Progress Bar--------------------------------*/
 .container1 {
-    width: 50%;
-    margin: 20px auto;
+    width: 100%;
+    /*margin: 20px auto;*/
 }
+
+.main-block-ses{
+    /*height: 900px;*/
+    /*border: black 1px dashed;*/
+    width: 40%;
+    /*height: 100%;*/
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 1%;
+}
+
 .progressbar {
     counter-reset: step;
 }
@@ -99,7 +110,7 @@
     font-family: "Berlin Sans FB";
     text-align: center;
     color: #7d7d7d;
-    z-index: 0;
+    /*z-index: 0;*/
 
 }
 .progressbar li:before {
@@ -115,6 +126,7 @@
     border-radius: 50%;
     background-color: #B4D5D4;
     cursor: pointer;
+    /*z-index: 0;*/
 }
 .progressbar li:after {
     width: 100%;

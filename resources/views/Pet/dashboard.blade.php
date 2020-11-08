@@ -1,5 +1,17 @@
-@foreach($user->rewards as $reward)
-    {{$reward->name()}}
-@endforeach
+{{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
 
-{{--{{$user}}--}}
+{{--<link rel="stylesheet" href="{{asset('css/activity.css')}}" />--}}
+
+@extends('layouts/app')
+
+@section('title', 'Perfil de Mascota')
+
+@section('content')
+
+    <div>
+        <livewire:pet-summary :pet="$pet"/>
+    </div>
+
+@endsection
+
+

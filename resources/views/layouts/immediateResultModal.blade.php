@@ -1,5 +1,4 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <style>
@@ -49,7 +48,6 @@
 </style>
 
 
-
 <div class="modal fade border" id="modalImmediateResultGood" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -57,11 +55,13 @@
                 <h1 class="message">¡Bien Hecho!</h1>
                 <h1 class="message">Formaste la palabra correctamente.</h1>
             </div>
-            <div class="modal-body" style="text-align: center;">
+            @auth
+                <div class="modal-body" style="text-align: center;">
 
-                <p class="bodyPop"><img class="imgSz" src="{{asset('images/satisfaction.png')}}"> +2 puntos</p>
-                <p class="bodyPop"><img class="imgSz" src="{{asset('images/savings.png')}}"> +5 monedas</p>
-            </div>
+                    <p class="bodyPop"><img class="imgSz" src="{{asset('images/satisfaction.png')}}"> +2 puntos</p>
+                    <p class="bodyPop"><img class="imgSz" src="{{asset('images/savings.png')}}"> +5 monedas</p>
+                </div>
+            @endauth
             <div class="modal-footer" style="margin: 0 auto;">
                 <button type="button" class="button button1 button2" data-dismiss="modal">Continuar</button>
             </div>
@@ -76,26 +76,25 @@
                 <h1 class="message"><i class="far fa-frown"></i> Te has equivocado.</h1>
             </div>
             <div class="modal-body" style="text-align: center;">
-                <x-table>
-                    <x-slot name="head">
-
-                        <x-table.heading>Tu Respuesta</x-table.heading>
-                        <x-table.heading>Respuesta Correcta</x-table.heading>
-
-                    </x-slot>
-                    <x-slot name="body">
-
-                        <x-table.row>
-                            <x-table.cell>hira</x-table.cell>
-                            <x-table.cell>{{$word}}</x-table.cell>
-                        </x-table.row>
-                    </x-slot>
-                </x-table>
-                {{--                <p class="bodyPop"><img class="imgSz" src="{{asset('images/satisfaction.png')}}">+2 mojón</p>--}}
+                <table style="text-align: center; font-family: 'Berlin Sans FB'; font-size: 25px; width:100%; border: 2px solid red">
+                    <tr >
+                        <th style="font-weight: lighter; text-align: center; color: #2576AC">Tu Respuesta</th>
+                        <th style="font-weight: lighter; text-align: center; color: #2576AC">Respuesta Correcta</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            LOL
+                        </td>
+                        <td style="color: #19D519">
+{{--                            {{$words}}--}}
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="modal-footer" style="margin: 0 auto;">
-                <button type="button" class="button button1 button2" data-dismiss="modal">Continuar</button>
+                <div class="modal-footer" style="margin: 0 auto;">
+                    <button type="button" class="button button1 button2" data-dismiss="modal">Continuar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+

@@ -1,18 +1,50 @@
 
+{{--@extends('layouts/immediateResultModal')--}}
 
 <div style="text-align: center">
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
 
+{{--@if($step == 1 )--}}
+{{--    Hola Llegaste al {{$step}}--}}
+{{--    @endif--}}
 
-    <h1>PALABRA: {{$word}}</h1>
-    <h1> Unordered: {{  $shuffledWord }}</h1>
-    <h1>Answer Positions:
-        @foreach($positions as $position)
-            {{$position}}
-        @endforeach
-    </h1>
+{{--    {{$purchase_order->status == 'Ordered' ? 'table-no-stock' : ($purchase_order->status == 'Received' ? 'table-stock' : 'table-reorder')}}--}}
+
+    <div class="main-block-ses">
+        <ul class="progressbar">
+            <li id="0" class="{{$step == 0 ? 'active':''}}"></li>
+            <li id="1" class="{{$step == 1 ? 'active':''}}"></li>
+            <li id="2" class="{{$step == 2 ? 'active':''}}"></li>
+            <li id="3" class="{{$step == 3 ? 'active':''}}"></li>
+            <li id="4" class="{{$step == 4 ? 'active':''}}"></li>
+            <li id="5" class="{{$step == 5 ? 'active':''}}"></li>
+            <li id="6" class="{{$step == 6 ? 'active':''}}"></li>
+            <li id="7" class="{{$step == 7 ? 'active':''}}"></li>
+            <li id="8" class="{{$step == 8 ? 'active':''}}"></li>
+            <li id="9" class="{{$step == 9 ? 'active':''}}"></li>
+        </ul>
+    </div>
+
+
+
+
 
     <div>
+        <div>
+            <h1>Palabra: {{$word}}</h1>
+            <h1> Unordered: {{  $shuffledWord }}</h1>
+            <h1>Answer Positions:
+                @foreach($positions as $position)
+                    {{$position}}
+                @endforeach
+            </h1>
+            <h1>
+                Joined Answer: {{join($answer)}}
+            </h1>
+            <h1>
+                HH: {{$joinedAnswer}}
+            </h1>
+        </div>
 
         {{--                <audio controls>--}}
         {{--                    <source src="/{{$word}}.wav" type="audio/ogg">--}}
@@ -57,11 +89,21 @@
     </div>
 </div>
 
+<div wire:ignore>
+    <div class="modal fade" id="galaxy-form-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <livewire:immediate-modal :word="$word" :joinedAnswer="$joinedAnswer"/>
+    </div>
+</div>
+
 <script>
-    window.addEventListener('immediateResultGood', event => {
-        $("#modalImmediateResultGood").modal('show');
+    // window.livewire.on('toggleGalaxyFormModal', () => $('#galaxy-form-modal').modal('toggle'));
+    window.addEventListener('toggleGalaxyFormModal', event => {
+        $("#galaxy-form-modal").modal('toggle');
     })
-    window.addEventListener('immediateResultBad', event => {
-        $("#modalImmediateResultBad").modal('show');
-    })
+    // window.addEventListener('immediateResultGood', event => {
+    //     $("#modalImmediateResultGood").modal('show');
+    // })
+    // window.addEventListener('immediateResultBad', event => {
+    //     $("#modalImmediateResultBad").modal('show');
+    // })
 </script>

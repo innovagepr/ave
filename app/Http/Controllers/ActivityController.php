@@ -11,16 +11,18 @@ use App\Helper\Helper;
 
 class ActivityController extends Controller
 {
-    public function show(ListExercise $list){
-        $word = $list->words->first()->word;
 
+    public function show(ListExercise $list){
+//      $word = $list->words->first()->word;
+        $words = $list->words;
         //Crea el audio file
         //TODO::Moverlo a cuando se crea el word
 //        ApiController::tts($word);
 
 
         $user = Auth::user();
-        return view('Activity.activity1', compact('word'));
+        return view('Activity.activity1', compact('words'));
+//        return view('Activity.activity1', compact('words'));
     }
 
 

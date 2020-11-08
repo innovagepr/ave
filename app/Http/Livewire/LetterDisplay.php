@@ -8,6 +8,7 @@ use function GuzzleHttp\Psr7\str;
 
 class LetterDisplay extends Component
 {
+
     public $word;
     public $shuffledWord;
     public $splitWord;
@@ -15,9 +16,10 @@ class LetterDisplay extends Component
     public $position2 = 0;
     public $positions = [];
 
-    protected $messages = [
-      'good' => '¡Bien hecho!'
-    ];
+    public $joinedAnswer;
+
+    public $words;
+    public $step = 0;
 
     public function render(){
         return view('livewire.letter-display');
@@ -28,6 +30,8 @@ class LetterDisplay extends Component
         array_splice($this->answer, $this->position2, 1, $letter);
         array_splice($this->splitWord, $position, 1, " ");
         $this->position2++;
+        $this->joinedAnswer();
+
     }
 
     public function removeLetter(){
@@ -36,6 +40,7 @@ class LetterDisplay extends Component
             $this->position2--;
             $temp = array_splice($this->answer, $this->position2, 1, " ");
             array_splice($this->splitWord, array_pop($this->positions), 1, $temp);
+
         }
     }
 
@@ -53,24 +58,61 @@ class LetterDisplay extends Component
     }
 
     public function mount(){
+        $this->word = $this->words[$this->step]->word;
         $this->answer = array_fill(0,strlen($this->word),'');
         $this->shuffleWord();
         $this->splitWord();
-        $this->immediateResult();
     }
 
 //Immediate Result ------------------------------------------------------------------------------------------
     public function immediateResult(){
         $joinedWord = implode($this->answer);
         if($joinedWord == $this->word){
-//          dd(auth()->user()->answered_words()->get());
-//            dd('Son iguales',$joinedWord, $this->word,auth()->user());
-            $this->dispatchBrowserEvent('immediateResultGood');
+//            $this->emit('toggleGalaxyFormModal');
+            $this->dispatchBrowserEvent('toggleGalaxyFormModal',$this->joinedAnswer);
+
+//            $this->dispatchBrowserEvent('immediateResultGood');
+
         }else{
-//
-            $this->dispatchBrowserEvent('immediateResultBad');
+//            $this->dispatchBrowserEvent('immediateResultBad');
+
         }
+//        if($this->step == count($this->words)){
+//            dd("se acabo");
+//        }
+
+        $this->step++;
+
+        $this->word;
+        $this->shuffledWord;
+        $this->splitWord;
+        $this->answer = [];
+        $this->position2 = 0;
+        $this->positions = [];
+        $this->joinedAnswer;
+
+
+        $this->word = $this->words[$this->step]->word;
+        $this->answer = array_fill(0,strlen($this->word),'');
+        $this->shuffleWord();
+        $this->splitWord();
+
     }
+
+    public function joinedAnswer(){
+        $this->joinedAnswer = implode($this->answer);
+    }
+
+
+
+//    public function goTo($exercise){
+//        if($this->step != $exercise){
+//            $this->step = $exercise;
+//        }else{
+//            dd($exercise);
+//        }
+
+//    }
 
 //    public function tts($word)
 //    {
