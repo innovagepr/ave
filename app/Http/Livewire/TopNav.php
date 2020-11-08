@@ -7,21 +7,20 @@ use Livewire\Component;
 class TopNav extends Component
 {
 
+    public $optionsChild = array (
+        "1" => array("Inicio", "dashboard", "home"),
+        "2" => array("Actividades", "activities", "book"),
+        "3" => array("Mi Mascota", "dashboard", "paw"),
+        "4" => array("Tienda", "dashboard", "store-alt"),
+        "5" => array("Mi Progreso", "dashboard", "chart-bar"),
+    );
 
-    public $displayTop = 'block';
-
-    protected $listeners = ['showTop' => 'show', 'hideTop' => 'hide'];
-
-    public function show(){
-        $this -> displayTop = 'block';
-    }
-
-    public function hide() {
-        $this -> displayTop = 'hidden';
-        $this -> emit('showAside');
-        //TODO Gla: make this work
-        $this -> emitTo('child-summary', 'changeMarginLeft');
-    }
+    public $optionsAdult = array (
+        "1" => array("Inicio", "dashboard", "home"),
+        "2" => array("Registro", "activities", "users"),
+        "3" => array("Actividades", "dashboard", "book"),
+        "4" => array("Estadísticas", "dashboard", "chart-bar"),
+    );
 
     public function render()
     {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PetController;
+use App\Http\Livewire\Activities;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,4 +47,8 @@ Route::get('/information', function(){
 });
 
 Route::get('/mascota',[PetController::class, 'index']);
+
+Route::get('/actividades', function () {
+    return view('livewire.activities');
+})->name('activities');
 

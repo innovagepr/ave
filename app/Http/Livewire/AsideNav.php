@@ -6,19 +6,20 @@ use Livewire\Component;
 
 class AsideNav extends Component
 {
-    public $displayAside = 'hidden';
+    public $optionsChild = array (
+        "1" => array("Inicio", "dashboard", "home"),
+        "2" => array("Actividades", "activities", "book"),
+        "3" => array("Mi Mascota", "dashboard", "paw"),
+        "4" => array("Tienda", "dashboard", "store-alt"),
+        "5" => array("Mi Progreso", "dashboard", "chart-bar"),
+    );
 
-    protected $listeners = ['showAside' => 'show', 'hideAside' => 'hide'];
-
-
-    public function show(){
-        $this -> displayAside = 'block';
-    }
-
-    public function hide(){
-        $this -> displayAside = 'hidden';
-        $this -> emit('showTop');
-    }
+    public $optionsAdult = array (
+        "1" => array("Inicio", "dashboard", "home"),
+        "2" => array("Registro", "activities", "users"),
+        "3" => array("Actividades", "dashboard", "book"),
+        "4" => array("Estadísticas", "dashboard", "chart-bar"),
+    );
 
     public function render()
     {
