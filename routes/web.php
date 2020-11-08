@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -43,6 +43,34 @@ Route::get('/contact', function(){
 
 Route::get('/information', function(){
     return view('information');
+});
+
+Route::get('/grupos', function(){
+    return view('group/groups');
+});
+
+Route::get('/grupos/1', function(){
+    return view('group/group-edit');
+});
+
+Route::get('/actividad2', function(){
+    return view('Activity/act2');
+});
+Route::get('/emtest', function(){
+    return view('emtest');
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/actividades', function () {
+    return view('Activity/activities');
+})->name('actividades');
+
+Route::get('/actividades/palabras', function(){
+    return view('Activity/word-activity-edit');
+});
+
+
+Route::get('/actividades/lectura', function(){
+    return view('Activity/reading-activity-edit');
 });
 
 Route::get('/mascota',[PetController::class, 'index']);
