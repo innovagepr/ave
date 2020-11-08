@@ -1,7 +1,5 @@
 <html>
-<head>
-    <title>{{ __('AVE - Manejar Actividades de Palabras') }}</title>
-</head>
+@section('title', 'Manejo de Actividades de Palabras')
 <link rel="icon" href="{{asset('images/avelogo.ico')}}">
 <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
 @extends('/layouts/app')

@@ -1,7 +1,5 @@
 <html>
-<head>
-    <title>{{ __('AVE - Manejar Grupo') }}</title>
-</head>
+@section('title', 'Manejo de Grupos')
 <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
 @extends('/layouts/app')
 @extends('layouts.contactModalLayout')

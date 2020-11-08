@@ -29,7 +29,7 @@ class Activity2 extends Component
         array("id" =>10, "options" => array("opción correcta", "opción incorrecta", "opción incorrecta")));
     public function nextExercise(){
         if($this->exerciseNumber == 9){
-            $this->dispatchBrowserEvent('exercise completed');
+            $this->redirect('/');
         }
         else{
             $this->exerciseNumber++;
