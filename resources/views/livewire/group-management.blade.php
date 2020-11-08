@@ -41,20 +41,22 @@
     <div class="flex flex-col">
         <div class="m-auto mt-7 overflow-x-auto">
             <div class="mt-4">
-                <button class="button button1" href="#" data-toggle="modal" data-target="#modalAdd" style="float:right; width: 205px; height:64px; font-size: 33px; ">
+                <button class="button button1" href="#" wire:click.prevent="newModal()" style="float:right; width: 205px; height:64px; font-size: 33px; ">
                     {{ __('Añadir') }}
                 </button>
             </div>
-            <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8" >
+            <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8">
                 <x-jet-label class="m-auto" style="float:left;">{{__('Grupos')}}</x-jet-label>
                 <x-table>
                     <x-slot name="head">
                         @foreach($headersGroups as $head)
-                            <x-table.heading>{{ __($head) }}</x-table.heading>
+                            <x-table.heading style="position:sticky; top: 0;">{{ __($head) }}</x-table.heading>
                         @endforeach
                     </x-slot>
+                    <div style="height:240px;overflow-y:scroll">
                     <x-slot name="body">
-                        @foreach($groups as $g)
+
+                    @foreach($groups as $g)
                             <x-table.row>
                                 <x-table.cell>
                                     <a href="/grupos/1">{{__($g['name'])}}</a>
@@ -68,19 +70,59 @@
                                 @endif
                             </x-table.row>
                         @endforeach
+
                     </x-slot>
+                    </div>
                 </x-table>
             </div>
+            @if($selectedGroup)
+                <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8">
+                    <x-jet-label class="m-auto" style="float:left;">{{__('Grupos')}}</x-jet-label>
+                    <x-table>
+                        <x-slot name="head">
+                            @foreach($headersStudent as $head)
+                                <x-table.heading style="position:sticky; top: 0;">{{ __($head) }}</x-table.heading>
+                            @endforeach
+                        </x-slot>
+                        <div style="height:240px;overflow-y:scroll">
+                            <x-slot name="body">
+
+                                @foreach($groups as $g)
+                                    <x-table.row>
+                                        <x-table.cell>
+                                            <a href="/grupos/1">{{__($g['name'])}}</a>
+                                        </x-table.cell>
+                                        <x-table.cell>{{__($g['creation-date'])}}</x-table.cell>
+                                        <x-table.cell>{{__($g['members'])}}</x-table.cell>
+                                        @if($g['active'] === 0)
+                                            <x-table.cell>No</x-table.cell>
+                                        @else
+                                            <x-table.cell>Sí</x-table.cell>
+                                        @endif
+                                    </x-table.row>
+                                @endforeach
+
+                            </x-slot>
+                        </div>
+                    </x-table>
+                </div>
+                @endif
             <div>
-                <p> {{ __('DEBUG: ') }} {{ $name }} {{ $description }}</p>
+                <p> {{ __('DEBUG: ') }} {{ $name }} {{ $description }} {{ $groupID }}</p>
             </div>
         </div>
     </div>
     <script>
+        window.addEventListener('newModal', event => {
+            $("#modalAdd").addClass("fade");
+            $("#modalAdd").modal('show');
+        })
+    </script>
+    <script>
         window.addEventListener('group-added', event => {
-            $("#modalAdd").removeClass("in");
-            $(".modal-backdrop").remove();
             $("#modalAdd").modal('hide');
+            $("#modalAdd").removeClass("fade");
+            $(".modal-backdrop").remove();
         })
     </script>
 </div>
