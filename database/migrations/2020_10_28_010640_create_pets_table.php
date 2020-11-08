@@ -19,7 +19,7 @@ class CreatePetsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('pet_type_id');
             $table->foreign('pet_type_id')->references('id')->on('pet_types');
-            $table->integer('level');
+            $table->integer('level')->default(0);
             $table->string('background_color', 128);
             $table->string('name', 128);
             $table->timestamps();

@@ -14,12 +14,16 @@
     width: 100%;
 }
 
+.big-block{
+    width: 40%;
+    height: 350px;
+}
+
 .first-row{
     display: inline-flex;
     justify-content: center;
     margin: auto;
     width: 100%;
-
 }
 
 .points{
@@ -36,6 +40,30 @@
     width: 50%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.main-block-full{
+    /*height: 900px;*/
+    border: black 1px dashed;
+    width: 80%;
+    /*height: 100%;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+.column {
+    /*float: left;*/
+    width: 50%;
+    padding: 10px;
+    align-content: center;
+    /*height: 300px; */
+    text-align: center;
+}
+.dashboard-card2 {
+    background-color: white;
+    border: #2576ac 2px solid;
+    border-radius: 20px;
+    margin: 20px;
 }
 
 .main-block-aside{

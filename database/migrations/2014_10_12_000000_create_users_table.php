@@ -24,6 +24,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('active')->default(true);
             $table->date('dob');
+            $table->integer('points')->default(0);
+            $table->integer('coins')->default(0);
+            $table-> integer('level')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\PetController;
-use App\Http\Livewire\Activities;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -46,9 +47,41 @@ Route::get('/information', function(){
     return view('information');
 });
 
+Route::get('/grupos', function(){
+    return view('group/groups');
+});
+
+Route::get('/grupos/1', function(){
+    return view('group/group-edit');
+});
+
+Route::get('/actividad2', function(){
+    return view('Activity/act2');
+});
+Route::get('/emtest', function(){
+    return view('emtest');
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/actividades', function () {
+    return view('Activity/activities');
+})->name('actividades');
+
+Route::get('/actividades/palabras', function(){
+    return view('Activity/word-activity-edit');
+});
+
+
+Route::get('/actividades/lectura', function(){
+    return view('Activity/reading-activity-edit');
+});
+
 Route::get('/mascota',[PetController::class, 'index']);
 
 Route::get('/actividades', function () {
     return view('livewire.activities');
 })->name('activities');
 
+Route::get('/lista/{list}', [ActivityController::class, 'show']);
+
+//Text-to-Speech
+Route::get('/guz', [ApiController::class,'tts']);

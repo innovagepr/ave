@@ -30,18 +30,18 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-        <div class="container mt-4" style="background-color:#FFFFFF; width: 835px; font-size: 25px; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+        <div class="container mt-4" style="background-color:#FFFFFF; width: 40%; font-size: 1.5rem; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
             <div class="mt-2">
-                <a style="color: #2576AC; font-size:37px;">{{ __('Complete su información') }}</a>
+                <a style="color: #2576AC; font-size: 2rem;">{{ __('Complete su información') }}</a>
             </div>
             <div class="mt-2">
                 <x-jet-label for="first_name" value="{{ __('Nombre:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="first_name" type="text" style="display: inline-block; width:80%;" name="name" placeholder="Escriba su nombre" :value="old('first_name')" required autofocus autocomplete="name" />
+                <x-jet-input id="first_name" type="text" style="display: inline-block; width:80%;" name="first_name" placeholder="Escriba su nombre" :value="old('first_name')" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-0">
                 <x-jet-label for="last_name" value="{{ __('Apellido:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="last_name" type="text" style="display: inline-block; width:80%;" name="name"  placeholder="Escriba su apellido" :value="old('last_name')" required autofocus autocomplete="name" />
+                <x-jet-input id="last_name" type="text" style="display: inline-block; width:80%;" name="last_name"  placeholder="Escriba su apellido" :value="old('last_name')" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-0">
@@ -73,8 +73,8 @@
             </div>
 
             <div class="mt-4">
-                <label for="remember_me" style="display: block; text-align: left; padding-left: 10%;">
-                    <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
+                <label for="accepted_terms" style="display: block; text-align: left; padding-left: 10%;">
+                    <input id="accepted_terms" type="checkbox" class="form-checkbox" name="accepted_terms">
                     <span>{{ __('Acepto los términos y condiciones.') }}</span>
                 </label>
             </div>
