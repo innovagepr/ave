@@ -28,7 +28,7 @@
             {{ session('status') }}
         </div>
     @endif
-    <div class="container mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <div class="container-fluid mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
     <form method="POST" action="{{ route('login') }}">
         @csrf
                 <div class="mt-4">

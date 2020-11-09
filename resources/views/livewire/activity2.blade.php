@@ -89,21 +89,21 @@
             background-color: lightskyblue;
         }
     </style>
-        <div class="container1" style="float:right;">
-            <ul class="progressbar">
-                <li class="active" id="1"></li>
-                <li id="2"></li>
-                <li id="3"></li>
-                <li id="4"></li>
-                <li id="5"></li>
-                <li id="6"></li>
-                <li id="7"></li>
-                <li id="8"></li>
-                <li id="9"></li>
-                <li id="10"></li>
-            </ul>
-        </div>
-        {{--<div class="container">
+    <div class="main-block-ses">
+        <ul class="progressbar">
+            <li id="0" class="{{$step == 0 ? 'active':''}}"></li>
+            <li id="1" class="{{$step == 1 ? 'active':''}}"></li>
+            <li id="2" class="{{$step == 2 ? 'active':''}}"></li>
+            <li id="3" class="{{$step == 3 ? 'active':''}}"></li>
+            <li id="4" class="{{$step == 4 ? 'active':''}}"></li>
+            <li id="5" class="{{$step == 5 ? 'active':''}}"></li>
+            <li id="6" class="{{$step == 6 ? 'active':''}}"></li>
+            <li id="7" class="{{$step == 7 ? 'active':''}}"></li>
+            <li id="8" class="{{$step == 8 ? 'active':''}}"></li>
+            <li id="9" class="{{$step == 9 ? 'active':''}}"></li>
+        </ul>
+    </div>
+        <div class="container">
             <p>
                 {{ $exercises[$exerciseNumber]['Paragraph'] }}
             </p>
@@ -121,7 +121,7 @@
             </fieldset>
         </form>
 
-    </div>--}}
+    </div>
     <div>
         <button class="button button1" wire:click="nextExercise()" style="float:right; width: 205px; height:64px; font-size: 33px; ">
             {{ __('Próximo') }}

@@ -28,7 +28,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                <a class="text-center">Nuevo grupo</a>
+                <p class="text-center">Nuevo grupo</p>
             </div>
             <div class="modal-body" style="text-align: center;">
                 <div class="mt-2">
