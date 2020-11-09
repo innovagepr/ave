@@ -11,6 +11,7 @@ class Activities extends Component
     public $activity = 'palabritas';
     public $showNext = 'button-show';
     public $showPrev = 'button-hidden';
+    public $prev = 'Anterior';
 
     protected $listeners = ['nextOption' => 'next', 'previousOption' => 'prev'];
 

@@ -14,8 +14,9 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/bar.css') }}">
+{{--        <link rel="stylesheet" href="{{ asset('css/menu.css') }}">--}}
         <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
         <link rel="icon" href="{{asset('avelogo.ico')}}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -226,7 +227,7 @@
 
         </style>
     </head>
-    <body class=" bg-main font-sans antialiased">
+    <body class="bg-main font-sans antialiased">
     <div class="d-flex" id="wrapper">
         @livewire('aside-nav')
         <div id="page-content-wrapper">

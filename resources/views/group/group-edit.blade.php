@@ -1,7 +1,5 @@
 {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="{{asset('images/avelogo.ico')}}">
+
 
 @php
     $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Activo");
@@ -14,9 +12,9 @@
                       array("name" => "Pedro Colón", "age" => 9, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1));
 @endphp
 
+@section('title', 'Editar Grupo')
 @extends('/layouts/app')
 <head>
-    <title>{{ __('AVE - Editar Grupo') }}</title>
     <style>
         html{
             overflow-x: hidden;
@@ -85,9 +83,9 @@
 </div>
 
 {{--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">--}}
-<script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{{asset('css/styles.css')}}" />
-<body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
+{{--<script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>--}}
+{{--<link rel="stylesheet" href="{{asset('css/styles.css')}}" />--}}
+<body>
 @section('content')
     <div class="mt-2">
         <a style="color: #2576AC; font-size: 2rem; padding-left: 10%; padding-top:20%;">{{ __($groups[0]['name']) }}</a>
@@ -136,5 +134,5 @@
         </div>
     </div>
 @endsection
-@extends('layouts/contactModalLayout')
+{{--@extends('layouts/contactModalLayout')--}}
 </body>

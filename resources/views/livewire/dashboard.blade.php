@@ -6,8 +6,6 @@
     @section('content')
         <div id="main-content">
 
-
-
         @if(Auth::user()->role_id == 2)
             @livewire('pro-summary')
         @else

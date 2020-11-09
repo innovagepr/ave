@@ -39,6 +39,7 @@ Route::get('/homepage', function(){
     return view('homepage');
 });
 
+//Not a direct route, modal in homepage
 Route::get('/contact', function(){
     return view('contact');
 });
@@ -56,13 +57,13 @@ Route::get('/grupos/1', function(){
 });
 
 Route::get('/actividad2', function(){
-    return view('Activity/act2');
+    return view('Activity/activity2');
 });
 Route::get('/emtest', function(){
     return view('emtest');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/actividades', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/manejoActividades', function () {
     return view('Activity/activities');
 })->name('actividades');
 
