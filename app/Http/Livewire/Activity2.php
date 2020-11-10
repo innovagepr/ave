@@ -4,6 +4,11 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
+/**
+ * Livewire Component for the Reading Comprehension Activity
+ * Class Activity2
+ * @package App\Http\Livewire
+ */
 class Activity2 extends Component
 {
     protected $rules = [

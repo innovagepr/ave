@@ -69,7 +69,7 @@
 
             <div class="mt-4">
                 <label for="accepted_terms" style="display: block; text-align: left; padding-left: 10%;">
-                    <input id="accepted_terms" type="checkbox" class="form-checkbox" name="accepted_terms">
+                    <input id="accepted_terms" type="checkbox" class="form-checkbox" name="accepted_terms" required>
                     <span>{{ __('Acepto los términos y condiciones.') }}</span>
                 </label>
             </div>
