@@ -8,6 +8,11 @@ use GuzzleHttp\Client;
 class ApiController extends Controller
 {
 
+    /**
+     * Function to execute Text-to-Speech Service from Microsoft Azure
+     * Allows to convert text into audio.
+     * @param $word
+     */
     public static function tts($word)
     {
 
@@ -57,10 +62,6 @@ class ApiController extends Controller
         else{
 
             $mp3 = file_put_contents($word.".wav",$result);
-
-
-
-//            return view('Activity.activity1', ['sound' => $mp3]);
 
         }
     }

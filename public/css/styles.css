@@ -67,6 +67,17 @@
     position: relative;
     min-height: 100vh;
 }
+#page-container2 {
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+}
 #content-wrap {
     padding-bottom: 2.5rem;    /* Footer height */
 }
@@ -126,7 +137,6 @@
     display:flex;
     align-self:center;
 }
-
 
 
 .a1 {
