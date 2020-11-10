@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                    <a class="text-center">{{ __('Nuevo grupo') }}</a>
+                    <a class="text-center">{{ __('Nueva Lista') }}</a>
                 </div>
 
                 <div class="modal-body" style="text-align: center;">
@@ -19,12 +19,14 @@
                         </div>
 
                         <div class="mt-0">
-                            <x-jet-label for="description" value="{{ __('Descripción:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                            <x-jet-input id="description" type="text" style="display: inline-block; width:80%; height: 5rem" name="description" wire:model="description"/>
-                            <div>
-                                @error('description') <span class="text-danger error">{{ $message }}</span>@enderror
-                            </div>
+                            <x-jet-label for="difficulty" value="{{ __('Dificultad:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                            <select id="difficulty" name="difficulty" wire:model="difficulty">
+                                <option value="Fácil">{{ __('Fácil') }}</option>
+                                <option value="Medio">{{ __('Medio') }}</option>
+                                <option value="Difícil">{{ __('Difícil') }}</option>
+                            </select>
                         </div>
+
                         <div class="mt-4">
                             <button type="submit" wire:click.prevent="submitGroup()" class="button button1">
                                 {{ __('Salvar') }}
@@ -52,19 +54,21 @@
                         <form>
                             <div class="mt-2">
                                 <x-jet-label for="group_name" value="{{ __('Nombre:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                <x-jet-input id="group_name" type="text" style="display: inline-block; width:80%;" name="group_name" wire:model="nameToEdit"/>
+                                <x-jet-input id="group_name" type="text" style="display: inline-block; width:80%;" name="group_name" wire:model="name"/>
                                 <div>
-                                    @error('nameToEdit') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
 
                             <div class="mt-0">
-                                <x-jet-label for="description" value="{{ __('Descripción:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                <x-jet-input id="description" type="text" style="display: inline-block; width:80%; height: 5rem" name="description" wire:model="descToEdit"/>
-                                <div>
-                                    @error('descToEdit') <span class="text-danger error">{{ $message }}</span>@enderror
-                                </div>
+                                <x-jet-label for="difficulty" value="{{ __('Dificultad:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                                <select id="difficulty" name="difficulty" wire:model="difficulty">
+                                    <option value="Fácil">{{ __('Fácil') }}</option>
+                                    <option value="Medio">{{ __('Medio') }}</option>
+                                    <option value="Difícil">{{ __('Difícil') }}</option>
+                                </select>
                             </div>
+
                             <div class="mt-4">
                                 <button type="submit" wire:click.prevent="editGroup()" class="button button1">
                                     {{ __('Salvar') }}
@@ -195,6 +199,7 @@
                         <x-slot name="body">
 
                             @foreach($groups as $g)
+                                @if($g['deleted'] === 0)
                                 <x-table.row>
                                     @if($g['name'] === 'Default')
                                         <x-table.cell>{{__($g['name'])}}</x-table.cell>
@@ -215,12 +220,13 @@
                                         <x-table.cell>{{__(' ')}}</x-table.cell>
                                     @else
                                         <x-table.cell>
-                                            <a href="#" class="text-danger error">
-                                                <span href="#" class="fa fa-trash-alt" wire:click.prevent="deleteGroup({{ $g['id'] }}})"></span>
+                                            <a href="#" class="text-danger">
+                                                <span class="fa fa-trash-alt" wire:click.prevent="removeGroup({{ $g['id'] }})"></span>
                                             </a>
                                         </x-table.cell>
                                     @endif
                                 </x-table.row>
+                                @endif
                             @endforeach
 
                         </x-slot>
@@ -229,11 +235,12 @@
             </div>
         </div>
     </div>
-    @if($selectedGroup === 0 || $selectedGroup)
+    @if($tableActive)
         <div class="flex flex-col">
             <div class="m-auto mt-7 overflow-x-auto">
                 <div class="mt-4">
                     <button class="button button1" href="#" wire:click.prevent="newStudentModal()" style="float:right; width: 205px; height:64px; font-size: 33px; ">
+                        <i class="fa fa-plus"></i>
                         {{ __('Añadir') }}
                     </button>
                     <button class="button button1" href="#" wire:click.prevent="editModal()" style="float:right; width: 205px; height:64px; font-size: 33px; ">
@@ -241,7 +248,6 @@
                         {{ __('Editar') }}
                     </button>
                     <button class="button button1" href="#" wire:click.prevent="editModal()" style="float:right; width: 205px; height:64px; font-size: 33px; ">
-                        <i class="fa fa-plus"></i>
                         {{ __('Asignar') }}
                     </button>
                 </div>
@@ -296,12 +302,6 @@
         window.addEventListener('newStudentModal', event => {
             $("#modalAddStudent").addClass("fade");
             $("#modalAddStudent").modal('show');
-        })
-    </script>
-    <script>
-        window.addEventListener('regModal', event => {
-            $("#modalRegStudent").addClass("fade");
-            $("#modalRegStudent").modal('show');
         })
     </script>
     <script>

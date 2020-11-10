@@ -69,10 +69,13 @@
 
     <div class="sidebar-footer">
         <div class="flex items-center px-4">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
             <button class="menu-item" id="menu-toggle">
-                <span class="pr-2 menu-burger fas fa-sign-out-alt"></span>
+                <span class="pr-2 menu-burger fas fa-sign-out-alt""></span>
                 {{ __('Cerrar Sesión') }}
             </button>
+            </form>
         </div>
         <div class="line"></div>
         <button class="menu-item" id="menu-toggle">

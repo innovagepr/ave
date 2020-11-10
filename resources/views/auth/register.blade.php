@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="{{asset('images/avelogo.ico')}}">
-
+<!-- Page Title -->
 <head>
     <title>AVE - Registrar</title>
     <style>
@@ -12,22 +12,17 @@
         }
     </style>
 </head>
-
-{{--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">--}}
+<!-- Stylesheets and relevant script sources -->
 <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
 <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
-
+<!-- Link to homepage -->
 <i type="button" onclick="location.href='/homepage'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
     <span class="fa fa-home fa-5x"></span>
 </i>
-
-{{--<i type="button" onclick="location.href='/homepage'" style="float: left; cursor: pointer; color: #8F8F8F; padding-top: 800px;">
-    <span class="fa fa-arrow-alt-circle-left fa-5x"></span>
-</i>--}}
-
+<!-- Allows for validation of user account information -->
         <x-jet-validation-errors class="mb-4" />
-
+<!-- Registration form -->
         <form method="POST" action="{{ route('register') }}">
             @csrf
         <div class="container mt-4" style="background-color:#FFFFFF; width: 40%; font-size: 1.5rem; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
@@ -65,10 +60,10 @@
             </div>
 
             <div class="mt-0">
-                <x-jet-label for="role" value="{{ __('Profesión:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <select id="role" type="select" style="display: inline-block; width:80%;" name="role" required>
-                    <option value="1">{{ __('Educador') }}</option>
-                    <option value="2">{{ __('Psicólogo') }}</option>
+                <x-jet-label for="role_id" value="{{ __('Tipo de cuenta:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+                <select id="role_id" type="select" style="display: inline-block; width:80%;" name="role_id" required>
+                    <option value="1">{{ __('Profesional') }}</option>
+                    <option value="2">{{ __('Estudiante') }}</option>
                 </select>
             </div>
 
@@ -88,6 +83,7 @@
 
         </form>
 
+<!-- Footer with modal for contact information and information about team -->
         @extends('layouts/contactModalLayout')
         <footer class="footer">
             <a class="a1 a2" href="/information"><span class="left; fas fa-info-circle fa-lg"></span> Más Información</a>

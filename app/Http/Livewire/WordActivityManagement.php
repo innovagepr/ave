@@ -8,21 +8,21 @@ class WordActivityManagement extends Component
 {
     protected $rules = [
         'name' => 'required|max:128',
-        'description' => 'required',
     ];
     protected $messages = [
         'name.required' => 'Favor proveer un nombre.',
         'name.max' => 'El nombre del grupo no puede exceder 128 caracteres.',
-        'description.required' => 'Favor proveer una descripción.',
     ];
     public $tempDate;
     public $name;
+    public $tableActive;
     public $firstName;
     public $lastName;
     public $age;
+    public $difficulty = "Fácil";
     public $nameToEdit;
-    public $descToEdit;
-    public $groupID = 1;
+    public $diffToEdit;
+    public $groupID = 3;
     public $selectedGroup;
     public $description;
     public $groupStudents = array();
@@ -30,14 +30,14 @@ class WordActivityManagement extends Component
     public $creationdate;
     public $members;
     public $email;
-    public $studentToAddEmail = "orlando.rivera@home.e";
-    public $active;
+    public $studentID = 7;
+    public $active = true;
     public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Grupo", "Activa", "Eliminar");
     public $headersStudents = array("Palabra", "Activa", "Eliminar");
-    public $groups = array(array("id"=> 0,"name" => "Default", "difficulty" => "Fácil", "quantity" => 40, "group" => "Todos", "active" => 1),
-        array("id"=> 1,"name" => "Default", "difficulty" => "Medio", "quantity" => 49, "group" => "Todos", "active" => 1),
-        array("id"=> 2,"name" => "Default", "difficulty" => "Difícil", "quantity" => 59, "group" => "Todos", "active" => 1),
-        array("id"=> 3,"name" => "Lista1", "difficulty" => "Fácil", "quantity" => 4, "group" => "Grupo 1", "active" => 1),);
+    public $groups = array(array("id"=> 0,"name" => "Default", "difficulty" => "Fácil", "quantity" => 40, "group" => "Todos", "active" => 1, "deleted" => 0),
+        array("id"=> 1,"name" => "Default", "difficulty" => "Medio", "quantity" => 49, "group" => "Todos", "active" => 1, "deleted" => 0),
+        array("id"=> 2,"name" => "Default", "difficulty" => "Difícil", "quantity" => 59, "group" => "Todos", "active" => 1, "deleted" => 0),
+        array("id"=> 3,"name" => "Lista1", "difficulty" => "Fácil", "quantity" => 4, "group" => "Grupo 1", "active" => 1, "deleted" => 0));
     public $students = array(array("id" => 3, "word" => "hora", "active" => 1),
                              array("id" => 3, "word" => "piano", "active" => 1),
                              array("id" => 3, "word" => "papel", "active" => 1),
@@ -54,20 +54,17 @@ class WordActivityManagement extends Component
     public function resetOnClose()
     {
         $this->name="";
-        $this->firstName="";
-        $this->lastName="";
-        $this->age="";
+        $this->difficulty="Fácil";
         $this->description="";
-        $this->email="";
         $this->nameToEdit="";
-        $this->descToEdit="";
+        $this->diffToEdit="";
     }
     public function newModal(){
         $this->dispatchBrowserEvent('newModal');
     }
     public function editModal(){
         $this->nameToEdit = $this->groups[$this->selectedGroup]['name'];
-        $this->descToEdit = $this->groups[$this->selectedGroup]['description'];
+        $this->diffToEdit = $this->groups[$this->selectedGroup]['difficulty'];
         $this->dispatchBrowserEvent('editModal');
     }
     public function newStudentModal(){
@@ -76,14 +73,31 @@ class WordActivityManagement extends Component
     public function regStudentModal(){
         $this->dispatchBrowserEvent('regModal');
     }
+    public function removeGroup($selectedGroup){
+        $this->tableActive = 0;
+        $this->groups[$selectedGroup]['deleted'] = 1;
+    }
+    public function removeStudent($selectedStudent){
+        $this->groupStudents[$selectedStudent]['deleted'] = 1;
+        $this->students[$selectedStudent]['deleted'] = 1;
+    }
     public function clickGroup($groupNumber)
     {
-        $this->selectedGroup = $groupNumber;
-        $this->groupStudents = array();
+        if($this->tableActive === 1 && $this->selectedGroup === $groupNumber)
+        {
+            $this->tableActive = 0;
+            $this->groupStudents = array();
+        }
+        else
+        {
+            $this->selectedGroup = $groupNumber;
+            $this->groupStudents = array();
+            $this->tableActive = 1;
+
+        }
         foreach($this->students as &$students)
         {
-            if($students['id'] === $this->selectedGroup)
-            {
+            if(array_key_exists($groupNumber, $this->students) && $students['id'] === $this->selectedGroup) {
                 array_push($this->groupStudents, $students);
             }
         }
@@ -92,65 +106,18 @@ class WordActivityManagement extends Component
     {
         $this->validate();
         $this->groupID++;
-        array_push($this->groups, array("id" => $this->groupID, "name"=> $this->name, "description" => $this->description,  "creation-date"=> "6/noviembre/2020", "members" => 0, "active" => 1));
+        array_push($this->groups, array("id"=> $this->groupID,"name" => $this->name,
+            "difficulty" => $this->difficulty, "quantity" => 0, "group" => " ", "active" => 1, "deleted" => 0));
         $this->dispatchBrowserEvent('group-added');
         $this->resetOnClose();
     }
     public function editGroup()
     {
-        $this->validate(['nameToEdit' => 'required|max:128',
-            'descToEdit' => 'required'],
-            [
-                'nameToEdit.required' => 'Favor proveer un nombre.',
-                'nameToEdit.max' => 'El nombre del grupo no puede exceder 128 caracteres.',
-                'descToEdit.required' => 'Favor proveer una descripción.',
-            ],
-            ['nameToEdit' => 'Name to Edit',
-                'descToEdit' => 'Description to Edit']);
+        $this->validate();
         $this->groups[$this->selectedGroup]['name'] = $this->nameToEdit;
-        $this->groups[$this->selectedGroup]['description'] = $this->descToEdit;
+        $this->groups[$this->selectedGroup]['difficulty'] = $this->diffToEdit;
         $this->dispatchBrowserEvent('group-edited');
         $this->resetOnClose();
     }
-    public function addStudent(){
-        $this->validate(['email' => 'required|email'],
-            [
-                'email.required' => 'Favor proveer un correo electrónico',
-                'email.email' => 'Formato incorrecto para correo electrónico',
-            ],
-            ['email' => 'Correo electrónico']);
-        $studentToAdd = array("id" => $this->selectedGroup, "name" => "Orlando Rivera", "age" => 9, "level" => "Nivel 2", "last-access" => "10/noviembre/2020", "active" => 1);
-        array_push($this->students, $studentToAdd);
-        array_push($this->groupStudents, $studentToAdd);
-        $this->dispatchBrowserEvent('student-added');
-        $this->resetOnClose();
-    }
-    public function registerStudent()
-    {
-        $this->validate(['firstName' => 'required|max:128',
-            'lastName' => 'required|max:128',
-            'age' => 'required|numeric',
-            'email' => 'required|email'],
-            [
-                'firstName.required' => 'Favor proveer un nombre.',
-                'firstName.max' => 'El nombre no puede exceder 128 caracteres.',
-                'lastName.required' => 'Favor proveer un apellido.',
-                'lastName.max' => 'El apellido no puede exceder 128 caracteres.',
-                'age.required' => 'Favor proveer la edad.',
-                'age.numeric' => 'La edad debe ser un número.',
-                'email.required' => 'Favor proveer un correo electrónico',
-                'email.email' => 'Formato incorrecto para correo electrónico'],
-            ['firstName' => 'Nombre',
-                'lastName' => 'Apellido',
-                'age' => 'Edad',
-                'email' => 'Correo electrónico',]);
-        $this->firstName .= " ";
-        $this->firstName .= $this->lastName;
-        $studentToAdd = array("id" => $this->selectedGroup, "name" => $this->firstName,
-            "age" => $this->age, "level" => "Nivel 1", "last-access" => "10/noviembre/2020", "active" => 1);
-        array_push($this->students, $studentToAdd);
-        array_push($this->groupStudents, $studentToAdd);
-        $this->dispatchBrowserEvent('student-registered');
-        $this->resetOnClose();
-    }
+
 }

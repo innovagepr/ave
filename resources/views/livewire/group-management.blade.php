@@ -1,4 +1,5 @@
 <div>
+    <!-- Modal for adding a new group -->
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -38,6 +39,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal for editing a group. Only works if a group is selected. -->
     @if($selectedGroup === 0 || $selectedGroup)
     <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -85,6 +88,7 @@
         </div>
     </div>
     @endif
+<!-- Modal for adding a student to a group. Only works if a group is selected. -->
     @if($selectedGroup === 0 || $selectedGroup)
         <div class="modal fade" id="modalAddStudent" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -125,6 +129,8 @@
             </div>
         </div>
     @endif
+
+<!-- Modal for adding a new student account and appending it to a group. Only works if a group is selected. -->
     @if($selectedGroup === 0 || $selectedGroup)
         <div class="modal fade" id="modalRegStudent" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -179,6 +185,7 @@
             </div>
         </div>
     @endif
+<!-- Main table containing all groups present -->
     <div class="flex flex-col">
         <div class="m-auto mt-7 overflow-x-auto">
             <div class="mt-4">
@@ -226,6 +233,7 @@
             </div>
         </div>
     </div>
+    <!-- Table for students in a group. Shows when a group is selected. -->
     @if($tableActive)
         <div class="flex flex-col">
             <div class="m-auto mt-7 overflow-x-auto">
@@ -278,8 +286,8 @@
                 </div>
             </div>
         </div>
-
     @endif
+<!-- Event listeners for opening modals. -->
     <script>
         window.addEventListener('newModal', event => {
             $("#modalAdd").addClass("fade");

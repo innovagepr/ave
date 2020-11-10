@@ -1,17 +1,8 @@
 {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
 
 
-@php
-    $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Activo");
-    $groups = array(array("id"=> 1, "name" => "Grupo 1", "creation-date" => "10/septiembre/2020", "members" =>4, "active"=> 1, "description" => "Grupo de tutorías martes y jueves 4pm a 6pm"),
-                    array("id"=> 2, "name" => "Grupo 2", "creation-date" =>"1/septiembre/2020", "members" =>4, "active" => 0));
-    $headersStudents = array("Nombre", "Edad", "Nivel", "Ultimo Acceso", "Activo");
-    $students = array(array("name" => "Miguel Rivera", "age" => 8, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1),
-                      array("name" => "Laura Perez", "age" => 10, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 0),
-                      array("name" => "María Vázquez", "age" => 8, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1),
-                      array("name" => "Pedro Colón", "age" => 9, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1));
-@endphp
 
+<!-- Set title and import stylesheets-->
 @section('title', 'Editar Grupo')
 @extends('/layouts/app')
 <head>
