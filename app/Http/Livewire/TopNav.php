@@ -7,6 +7,7 @@ use Livewire\Component;
 class TopNav extends Component
 {
 
+    public $user;
     public $optionsChild = array (
         "1" => array("Inicio", "dashboard", "home"),
         "2" => array("Actividades", "activities", "book"),
@@ -21,6 +22,10 @@ class TopNav extends Component
         "3" => array("Actividades", "dashboard", "book"),
         "4" => array("Estadísticas", "dashboard", "chart-bar"),
     );
+
+    public function mount(){
+        $this->user = auth()->user();
+    }
 
     public function render()
     {

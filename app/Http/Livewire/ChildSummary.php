@@ -7,22 +7,33 @@ use Livewire\Component;
 class ChildSummary extends Component
 {
 
-    public $marginLeft = 'main-block-normal';
-    public $points = '89';
-    public $level = '1';
-    public $coins = '0';
-    public $petLevel = '1';
+    public $points;
+    public $petPoints;
+    public $level;
+    public $coins;
+    public $petLevel;
+    public $nextPoints;
+    public $nextPetPoints;
 
-    protected $listeners = ['changeMarginLeft' => 'extraML'];
+    public function mount(){
+        $this->points = auth()->user()->points;
+        $this->coins = auth()->user()->coins;
+        $this->level = auth()->user()->level;
+        $this->petLevel = auth()->user()->pet->level;
+        $this->petPoints = $this->points/2;
+
+        $this->nextPoints = 20-$this->points;
+        $this->nextPetPoints = $this->nextPoints/2;
+
+    }
+
 
     public function render()
     {
         return view('livewire.child-summary');
     }
 
-    public function extraML(){
-        $this -> marginLeft = 'main-block-aside';
-    }
+
 
     /**
      * @return string

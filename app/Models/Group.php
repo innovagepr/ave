@@ -9,12 +9,12 @@ class Group extends Model
 {
     use HasFactory;
 
-    public function users(){
-        return $this->hasMany(User::class);
+    public function owner(){
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function owner(){
-        return $this->belongsTo(User::class);
+    public function members(){
+        return $this->belongsToMany(User::class,'group_users', 'groups_id');
     }
 
 }

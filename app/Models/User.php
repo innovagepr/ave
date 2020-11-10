@@ -90,4 +90,14 @@ class User extends Authenticatable
     public function answered_words(){
         return $this->hasMany(AnsweredWord::class);
     }
+
+    public function ownedGroups(){
+        return $this->hasMany(Group::class, 'owner_id');
+    }
+
+    public function getFullNameAttribute(){
+        return "{$this->first_name} {$this->last_name}";
+    }
+
 }
+
