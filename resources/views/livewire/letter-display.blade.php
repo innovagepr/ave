@@ -1,14 +1,5 @@
-
-{{--@extends('layouts/immediateResultModal')--}}
-
 <div style="text-align: center">
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-
-{{--@if($step == 1 )--}}
-{{--    Hola Llegaste al {{$step}}--}}
-{{--    @endif--}}
-
-{{--    {{$purchase_order->status == 'Ordered' ? 'table-no-stock' : ($purchase_order->status == 'Received' ? 'table-stock' : 'table-reorder')}}--}}
 
     <div class="main-block-ses">
         <ul class="progressbar">
@@ -25,35 +16,9 @@
         </ul>
     </div>
 
-
-
-
-
     <div>
-        <div>
-            <h1>Palabra: {{$word}}</h1>
-            <h1> Unordered: {{  $shuffledWord }}</h1>
-            <h1>Answer Positions:
-                @foreach($positions as $position)
-                    {{$position}}
-                @endforeach
-            </h1>
-            <h1>
-                Joined Answer: {{join($answer)}}
-            </h1>
-            <h1>
-                HH: {{$joinedAnswer}}
-            </h1>
-        </div>
-
-        {{--                <audio controls>--}}
-        {{--                    <source src="/{{$word}}.wav" type="audio/ogg">--}}
-        {{--                    <source src="/{{$word}}.wav" type="audio/mpeg">--}}
-        {{--                    Your browser does not support the audio tag.--}}
-        {{--                </audio>--}}
-
-        <div style=" top: 25%; left:45%; display:inline-block; position: absolute">
-            <a class="audio1" wire:click="tts({{$word}})"><i class="icons1 fas fa-volume-up"></i> Escuhar la palabra</a>
+        <div style=" top: 20%; left:40%; display:inline-block; position: absolute">
+            <livewire:audio-api :word="$word"/>
         </div>
 
         <div style="display: flex">
@@ -87,23 +52,36 @@
         </div>
 
     </div>
-</div>
 
-<div wire:ignore>
-    <div class="modal fade" id="galaxy-form-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <livewire:immediate-modal :word="$word" :joinedAnswer="$joinedAnswer"/>
+    <div wire:ignore>
+        <div class="modal fade" id="immediate-result-modal-Bad" tabindex="-1" role="dialog" aria-hidden="true">
+            <livewire:immediate-modal :word="$word" :joinedAnswer="$joinedAnswer"/>
+        </div>
     </div>
+
+    <div wire:ignore>
+        <div class="modal fade" id="final-result-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <livewire:final-results-modal :word="$word" :joinedAnswer="$joinedAnswer"/>
+        </div>
+    </div>
+
+    <div wire:ignore>
+        <div class="modal fade" id="immediate-modal-good" tabindex="-1" role="dialog" aria-hidden="true">
+            <livewire:immediate-modal-good :word="$word" :joinedAnswer="$joinedAnswer"/>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    // window.livewire.on('toggleGalaxyFormModal', () => $('#galaxy-form-modal').modal('toggle'));
-    window.addEventListener('toggleGalaxyFormModal', event => {
-        $("#galaxy-form-modal").modal('toggle');
+    window.addEventListener('toggleResultModal', event => {
+        $("#immediate-result-modal-Bad").modal('toggle');
     })
-    // window.addEventListener('immediateResultGood', event => {
-    //     $("#modalImmediateResultGood").modal('show');
-    // })
-    // window.addEventListener('immediateResultBad', event => {
-    //     $("#modalImmediateResultBad").modal('show');
-    // })
+    window.addEventListener('immediateResultGood', event => {
+        $("#immediate-modal-good").modal('toggle');
+    })
+    window.addEventListener('finalResult', event => {
+        $("#final-result-modal").modal('toggle');
+    })
+
 </script>

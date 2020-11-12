@@ -4,20 +4,20 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class ImmediateModal extends Component
+class ImmediateModalGood extends Component
 {
     public $joinedAnswer;
     public $word;
 
-    protected $listeners = ['refreshChildren'=>'refreshMe'];
+    protected $listeners = ['refreshGoodModal'=>'refreshGood'];
 
-    public function refreshMe($someVariable,$othervar){
+    public function refreshGood($someVariable,$othervar){
         $this->joinedAnswer = $someVariable;
         $this->word = $othervar;
     }
 
     public function render()
     {
-        return view('livewire.immediate-modal');
+        return view('livewire.immediate-modal-good');
     }
 }

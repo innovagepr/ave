@@ -1,23 +1,9 @@
 {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">--}}
 {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--}}
 
+
 <style>
-    .button2{
-        background-color: #ACF9A4;
-        color: #073C63;
-        border-radius: 40px;
-        border: 3px solid #2576AC;
-        display: inline-block;
-        font-size: 20px;
-        margin: 5px 5px;
-        cursor: pointer;
-        padding: 5px 10px;
-        transition-duration: 0.4s;
-    }
-    .button1:hover{
-        background-color: #52C5AB;
-    }
-    .modal-content{
+     .modal-content{
         border: 3px solid #2576AC;
         border-radius: 30px;
     }
@@ -40,9 +26,6 @@
                 <a style="font-size: 18px" href = "mailto: innovagepr@gmail.com">innovagepr@gmail.com</a>
 
             </div>
-{{--            <div class="modal-footer" style="margin: 0 auto;">--}}
-{{--                <button type="button" class="button button1 button2" data-dismiss="modal">Continuar</button>--}}
-{{--            </div>--}}
         </div>
     </div>
 </div>
