@@ -17,7 +17,6 @@ class Activity2 extends Component
     protected $messages = [
         'option.required' => 'Favor escoger una opción.',
     ];
-    public $name = "Jelly";
     public $step = 0;
     public $exerciseKey;
     public $exerciseNumber = 0;
