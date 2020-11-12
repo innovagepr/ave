@@ -56,7 +56,7 @@ Route::get('/grupos/1', function(){
     return view('group/group-edit');
 });
 
-Route::get('/actividad2', function(){
+Route::get('/lectura', function(){
     return view('Activity/activity2');
 });
 Route::get('/emtest', function(){
@@ -67,13 +67,17 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/manejoActividades', funct
     return view('Activity/activities');
 })->name('actividades');
 
-Route::get('/actividades/palabras', function(){
+Route::get('/manejoActividades/palabras', function(){
     return view('Activity/word-activity-edit');
 });
 
 
-Route::get('/actividades/lectura', function(){
+Route::get('/manejoActividades/lectura', function(){
     return view('Activity/reading-activity-edit');
+});
+
+Route::get('/estadisticas', function(){
+    return view('profile/statistics');
 });
 
 Route::get('/mascota',[PetController::class, 'index']);

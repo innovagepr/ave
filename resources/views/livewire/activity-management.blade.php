@@ -16,14 +16,14 @@
                                     <x-table.cell> {{__($a['activity'])}} </x-table.cell>
                                     @if($a['activity'] === 'Palabras')
                                     <x-table.cell>
-                                        <a href="/actividades/palabras">
+                                        <a href="/manejoActividades/palabras">
                                             <span class="fa fa-edit"></span>
                                         </a>
                                     </x-table.cell>
                                         @endif
                                     @if($a['activity'] === 'Lectura')
                                         <x-table.cell>
-                                            <a href="/actividades/lectura">
+                                            <a href="/manejoActividades/lectura">
                                                 <span class="fa fa-edit"></span>
                                             </a>
                                         </x-table.cell>
