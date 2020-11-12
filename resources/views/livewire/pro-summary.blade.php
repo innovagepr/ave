@@ -1,19 +1,8 @@
 {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
 
-@php
-    use App\Models\Group;
-    $headersGroups = array("Nombre", "Activo");
-    $groups = Group::all();
-
-$headersStudents = array("Nombre", "Grupo", "Activo");
-$students = array(array("name" => "Juanito", "group" => "Grupito 2", "active" =>1),
-                    array("name" => "Laurita", "group" =>"Peleones", "active" => 1));
-@endphp
 <div class="main-block-normal">
-
-
     <div class="flex flex-col ">
-        <div class="m-auto mt-7 overflow-x-auto ">
+        <div class="m-auto pt-4 overflow-x-auto ">
             <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8">
                 <x-jet-label class="m-auto">{{__('Mis Grupos')}}</x-jet-label>
                 <x-table>
@@ -39,6 +28,7 @@ $students = array(array("name" => "Juanito", "group" => "Grupito 2", "active" =>
         </div>
     </div>
 
+
     <div class="flex flex-col">
         <div class="m-auto mt-7 overflow-x-auto ">
             <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8">
@@ -50,16 +40,14 @@ $students = array(array("name" => "Juanito", "group" => "Grupito 2", "active" =>
                         @endforeach
                     </x-slot>
                     <x-slot name="body">
-                        @foreach($students as $s)
-                            <x-table.row>
-                                <x-table.cell>{{$s['name']}}</x-table.cell>
-                                <x-table.cell>{{$s['group']}}</x-table.cell>
-                                @if($s['active'] === 0)
-                                    <x-table.cell>No</x-table.cell>
-                                @else
+                        @foreach($groups as $group)
+                            @foreach($group->members as $user)
+                                <x-table.row>
+                                    <x-table.cell>{{$user->first_name}}</x-table.cell>
+                                    <x-table.cell>{{$group->name}}</x-table.cell>
                                     <x-table.cell>Sí</x-table.cell>
-                                @endif
-                            </x-table.row>
+                                </x-table.row>
+                            @endforeach
                         @endforeach
                     </x-slot>
                 </x-table>

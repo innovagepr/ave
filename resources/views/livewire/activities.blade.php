@@ -1,61 +1,70 @@
 {{-- Stop trying to control. --}}
-<x-app-layout xmlns:wire="http://www.w3.org/1999/xhtml">
-    <div>
-    {{--    <x-slot name="header">--}}
-    {{--        <h2 class="font-semibold text-xl text-gray-800 leading-tight">--}}
-    {{--            {{ __('Dashboard') }}--}}
-    {{--        </h2>--}}
-    {{--    </x-slot>--}}
-    @livewireScripts
-    @section('title', 'Actividades')
 
+<div class="activities-info mt-6 flex">
+    {{--    <div class="flex m-auto">--}}
+    <div class="button-area">
+        <button class="{{$showPrev}}" wire:click="change">
+            <div class="m-auto select-button">
+                <img src="{{asset('images/arrow_prev.png')}}">
+            </div>
+            <div>
+                {{__('Anterior')}}
+            </div>
+        </button>
+    </div>
+    <div class="act-square flex">
+        <div class="half-square float-left">
+            @auth
+                <div class="ml-5">
+                    <button class="center list-button py-1 my-2">
+                        <span class="pr-1 fas fa-list "></span>
+                        {{__('Ejercicios Asignados')}}
+                        <span class="badge">3</span>
+                    </button>
+                </div>
+            @endauth
+            <div class="act-main-square">
+                <div class="m-auto center activity-name">
+                    <p>
+                        {{$index + 1}}
+                    </p>
+                    <p class="activity-name">
+                        {{$activity->name}}
+                    </p>
 
-    {{--    <x-content>--}}
-    @section('content')
-        <div>
-            <div class="activities-info mt-6">
-                <div class="flex m-auto">
-                    <div class="button-area">
-                        <div class="m-auto select-button">
-                            <img src="{{asset('images/arrow_prev.png')}}">
-                        </div>
-                        <div>
-                            {{__('Anterior')}}
-                            {{--                        {{$prev}}--}}
-                        </div>
-                    </div>
-                    <div class="act-square">
-                        {{--                    <div class="flex">--}}
-
-
-                        <div class="act-main-square">
-                            <div class="m-auto center ">
-                                {{--                            {{$activity}}--}}
-                            </div>
-                        </div>
-                        <div>
-                            {{__('1. Instrucciones')}}
-                        </div>
-                        {{--                        <div class="difficulty">--}}
-                        {{--                            <button class= "button button1" >Comienza</button>--}}
-
-                        {{--                        </div>--}}
-
-                        {{--                    </div>--}}
-
-                    </div>
-                    <div class="button-area">
-                        <div class=" m-auto select-button">
-                            <img src="{{asset('images/arrow_next.png')}}">
-                        </div>
-                        <div>
-                            {{__('Siguiente')}}
-                        </div>
-                    </div>
                 </div>
             </div>
+            <div class="ml-3 mt-2 center activity-rules">
+                <p>{{__('Instrucciones')}}</p>
+                <br>
+                <p>{{$activity->rules}}</p>
+            </div>
         </div>
-    @endsection
+        <div class="half-square float-right">
+            <div class="flex flex-col center">
+                @foreach($levels as $level)
+                    <button class="center level-button py-2 my-4">{{$level->name}}</button>
+
+                @endforeach
+            </div>
+
+        </div>
 
     </div>
-</x-app-layout>
+    <div class="button-area">
+        <button class="{{$showNext}}" wire:click="change">
+
+            <div class=" m-auto select-button">
+                <img src="{{asset('images/arrow_next.png')}}">
+            </div>
+            <div>
+                {{__('Siguiente')}}
+            </div>
+        </button>
+
+    </div>
+
+</div>
+
+
+

@@ -83,10 +83,15 @@ Route::get('/estadisticas', function(){
 Route::get('/mascota',[PetController::class, 'index']);
 
 Route::get('/actividades', function () {
-    return view('livewire.activities');
+    return view('act');
+//    return view('livewire.activities');
 })->name('activities');
 
 Route::get('/lista/{list}', [ActivityController::class, 'show']);
+
+Route::get('/editarPerfil', function (){
+    return view('livewire.edit-profile');
+});
 
 //Text-to-Speech
 Route::get('/guz', [ApiController::class,'tts']);

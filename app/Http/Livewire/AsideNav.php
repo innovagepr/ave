@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class AsideNav extends Component
 {
+    public $user;
+    public $pet;
     public $optionsChild = array (
         "1" => array("Inicio", "dashboard", "home"),
         "2" => array("Actividades", "dashboard", "book"),
@@ -20,6 +22,16 @@ class AsideNav extends Component
         "3" => array("Actividades", "actividades", "book"),
         "4" => array("Estadísticas", "dashboard", "chart-bar"),
     );
+
+    public function mount(){
+        $this->user = auth()->user();
+        $this->pet = auth()->user()->pet;
+    }
+
+    public function editProfile()
+    {
+        return redirect()->to('/editarPerfil');
+    }
 
     public function render()
     {
