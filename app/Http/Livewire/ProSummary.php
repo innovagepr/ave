@@ -11,7 +11,7 @@ class ProSummary extends Component
 {
 
     public $headersGroups = array("Nombre", "Activo");
-    public $groups = '';
+    public $groups;
     public $headersStudents = array("Nombre", "Grupo", "Activo");
 
     public function mount(){
