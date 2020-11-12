@@ -18,7 +18,7 @@ class LetterDisplay extends Component
     public $positions = [];
     public $joinedAnswer;
     public $words;
-    public $step = 9;
+    public $step = 0;
     public $correctAnswers = [];
     public $badAnswers = [];
 

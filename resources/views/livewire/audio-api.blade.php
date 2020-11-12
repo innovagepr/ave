@@ -7,6 +7,7 @@
     </audio>
 </div>
 
+{{--Refresca y recarga el archivo de audio--}}
 <script>
     window.addEventListener('refreshAudio', event => {
         document.getElementById("audio").load();
