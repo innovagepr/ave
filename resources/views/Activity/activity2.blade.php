@@ -1,12 +1,11 @@
-<html>
-<link rel="stylesheet" href="{{asset('css/styles.css')}}" />
-@extends('/layouts/app')
-@extends('layouts.contactModalLayout')
+<!-- Extending base app layout -->
+<x-app-layout>
 @section('title', 'Actividad: Comprensión de Lectura')
 @section('content')
+    <!-- Call for Livewire component to render the view -->
     <body>
     @livewire('activity2')
     @livewireScripts
     </body>
 @endsection
-</html>
+</x-app-layout>

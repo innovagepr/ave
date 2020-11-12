@@ -171,3 +171,89 @@ progress[value]::-webkit-progress-value {
     --divide-opacity: 1;
 
 }
+
+.complete{
+    /*border: black 1px dashed;*/
+    height: 500px;
+    width: 100%;
+}
+
+.button-area {
+    /*width: 150px;*/
+    /*height: 500px;*/
+    width: 20%;
+    /*border: red 1px dashed;*/
+    color: #2576ac;
+    font-size: 1.75rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 11rem;
+}
+
+.act-square {
+    width: 80%;
+    /*border: black 1px dashed;*/
+    height: 500px;
+}
+
+.activity {
+    width: 40%;
+    border: black 1px solid;
+    height: 70%;
+}
+
+.act-main-square {
+    width: 40%;
+    border: #2576ac 2px solid;
+    background-color: white;
+    height: 60%;
+    justify-content: center;
+    vertical-align: center;
+    margin-top: 12%;
+    margin-left: 3rem;
+}
+
+.difficulty {
+    width: 40%;
+    border: black 1px solid;
+}
+
+.select-button {
+    /*border: #2576AC 2px solid;*/
+    /*border-radius: 50%;*/
+    /*margin-top: 200px;*/
+    /*height: 100px;*/
+    /*width: 100px;*/
+    width: 50%;
+    /*height: 30%;*/
+    /*background-color: #52c5ab;*/
+}
+
+
+.arrow-act{
+    font-weight: bolder;
+    font-size: 80px;
+    color: #e5fcfb;
+}
+
+.button-hidden {
+    display: none;
+}
+
+.button-show {
+    display: block;
+}
+
+.activities-info {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: center;
+    /*border: orange 2px solid;*/
+}
+
+.bg-main{
+    background-color:#e5fcfb;
+}
+

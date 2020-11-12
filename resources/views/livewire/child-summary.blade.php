@@ -34,14 +34,8 @@
             <x-jet-label class="mt-5">{{__('Mi Nivel')}}</x-jet-label>
             <div class="dashboard-card lg-block ">
                 <div class="card-content card-text- m-auto mt-3 flex flex-col">
-{{--                    <div class="inline-flex m-auto">--}}
-{{--                        <x-jet-label class="mt-5">{{__('2')}}</x-jet-label>--}}
                         <progress class="m-auto mt-4" value="60" max="100"></progress>
-{{--                        <x-jet-label class="mt-5">{{__('3')}}</x-jet-label>--}}
-{{--                    </div>--}}
-{{--                    <div class="m-auto">--}}
                         {{__('Puntos para el próximo nivel: 45')}}
-{{--                    </div>--}}
                 </div>
             </div>
 

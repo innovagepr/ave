@@ -1,22 +1,11 @@
 {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="{{asset('images/avelogo.ico')}}">
 
-@php
-    $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Activo");
-    $groups = array(array("id"=> 1, "name" => "Grupo 1", "creation-date" => "10/septiembre/2020", "members" =>4, "active"=> 1, "description" => "Grupo de tutorías martes y jueves 4pm a 6pm"),
-                    array("id"=> 2, "name" => "Grupo 2", "creation-date" =>"1/septiembre/2020", "members" =>4, "active" => 0));
-    $headersStudents = array("Nombre", "Edad", "Nivel", "Ultimo Acceso", "Activo");
-    $students = array(array("name" => "Miguel Rivera", "age" => 8, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1),
-                      array("name" => "Laura Perez", "age" => 10, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 0),
-                      array("name" => "María Vázquez", "age" => 8, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1),
-                      array("name" => "Pedro Colón", "age" => 9, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1));
-@endphp
 
+
+<!-- Set title and import stylesheets-->
+@section('title', 'Editar Grupo')
 @extends('/layouts/app')
 <head>
-    <title>{{ __('AVE - Editar Grupo') }}</title>
     <style>
         html{
             overflow-x: hidden;
@@ -30,7 +19,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                <a class="text-center">Nuevo grupo</a>
+                <p class="text-center">Nuevo grupo</p>
             </div>
             <div class="modal-body" style="text-align: center;">
                 <div class="mt-2">
@@ -85,9 +74,9 @@
 </div>
 
 {{--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">--}}
-<script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{{asset('css/styles.css')}}" />
-<body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
+{{--<script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>--}}
+{{--<link rel="stylesheet" href="{{asset('css/styles.css')}}" />--}}
+<body>
 @section('content')
     <div class="mt-2">
         <a style="color: #2576AC; font-size: 2rem; padding-left: 10%; padding-top:20%;">{{ __($groups[0]['name']) }}</a>
@@ -136,5 +125,5 @@
         </div>
     </div>
 @endsection
-@extends('layouts/contactModalLayout')
+{{--@extends('layouts/contactModalLayout')--}}
 </body>
