@@ -1,85 +1,99 @@
 {{-- If your happiness depends on money, you will never be happy with yourself. --}}
-{{--@extends('dashboard')--}}
 
-@section('title', 'Inicio')
+<div class="main-block-normal mt-7">
 
-@section('content')
+    <div class="first-row">
+        <x-jet-label class="m-auto">{{__('Mis Puntos')}}</x-jet-label>
 
-    <div class="{{$marginLeft}} mt-7">
+        <x-jet-label class="m-auto">{{__('Mis Monedas')}}</x-jet-label>
+    </div>
 
-        <div class="first-row">
-            <x-jet-label class="m-auto">{{__('Mis Puntos')}}</x-jet-label>
+    <div class="first-row">
 
-            <x-jet-label class="m-auto">{{__('Mis Monedas')}}</x-jet-label>
-        </div>
-
-        <div class="first-row">
-
-            <div class="dashboard-card sm-block points">
-                <div class="card-content card-text m-auto mt-2">
-                    <span class="fas fa-trophy"></span>
-                    {{$points}}
-                </div>
-            </div>
-
-            <div class="dashboard-card sm-block coins">
-                <div class="card-content card-text m-auto mt-2">
-                    <span class="fas fa-coins"></span>
-                    {{$coins}}
-                </div>
+        <div class="dashboard-card sm-block points">
+            <div class="card-content card-text m-auto mt-2">
+                <span class="fas fa-trophy"></span>
+                {{$points}}
             </div>
         </div>
 
-        <div>
-            <x-jet-label class="mt-5">{{__('Mi Nivel')}}</x-jet-label>
-            <div class="dashboard-card lg-block ">
-                <div class="card-content card-text- m-auto mt-3 flex flex-col">
-                        <progress class="m-auto mt-4" value="60" max="100"></progress>
-                        {{__('Puntos para el próximo nivel: 45')}}
-                </div>
-            </div>
-
-        </div>
-
-        <div>
-            <x-jet-label class="mt-5">{{__('Mi Mascota')}}</x-jet-label>
-            <div class="dashboard-card lg-block">
-                <div class="card-content card-text- m-auto mt-3 flex flex-col">
-                    <progress class="m-auto mt-4" value="32" max="100"></progress>
-                    {{__('Puntos para el próximo nivel de mi mascota: 45')}}
-                </div>
+        <div class="dashboard-card sm-block coins">
+            <div class="card-content card-text m-auto mt-2">
+                <span class="fas fa-coins"></span>
+                {{$coins}}
             </div>
         </div>
+    </div>
 
-        <div>
-            <x-jet-label class="mt-5">{{__('Última Actividad')}}</x-jet-label>
-            <div class="dashboard-card lg-block">
-                <table class="m-auto mt-2 w-4/5">
-                    <thead>
-                    <th>Actividad</th>
-                    <th>Fecha</th>
-                    <th>Dificultad</th>
-                    <th>Resultado</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="card-text">
-                            {{__('Letras')}}
-                        </td>
-                        <td class="card-text">
-                            {{__('10/septiembre/2020')}}
-                        </td>
-                        <td class="card-text">
-                            {{__('Fácil')}}
-                        </td>
-                        <td class="card-text">
-                            {{__('6/10')}}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <div>
+        <x-jet-label class="mt-3">{{__('Mi Nivel')}}</x-jet-label>
+        <div class="dashboard-card lg-block ">
+            <div class="card-content card-text m-auto pt-3 flex flex-col">
+                <div class="flex flex-row">
+                    <div class="text-right level">
+                        {{$level}}
+                    </div>
+                    <progress class="m-auto mt-4" value="{{$points}}" max="20"></progress>
+                    <div class="text-left level">
+                        {{$level+1}}
+                    </div>
+                </div>
+                {{__('Puntos para el próximo nivel: '.$nextPoints)}}
+
             </div>
         </div>
 
     </div>
-@endsection
+
+    <div>
+        <x-jet-label class="mt-3">{{__('Mi Mascota')}}</x-jet-label>
+        <div class="dashboard-card lg-block">
+            <div class="card-content card-text m-auto pt-3 flex flex-col">
+                <div class="flex">
+                    <div class="text-right level">
+
+                    {{$level}}
+                    </div>
+                    <progress class="m-auto mt-4" value="{{$petPoints}}" max="10"></progress>
+                    <div class="text-right level">
+
+                    {{$level+1}}
+                    </div>
+                </div>
+                {{__('Puntos para el próximo nivel de mi mascota: '.$nextPetPoints)}}
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <x-jet-label class="mt-3">{{__('Última Actividad')}}</x-jet-label>
+        <div class="dashboard-card lg-block">
+            <table class="m-auto mt-2 w-4/5">
+                <thead>
+                <th>Actividad</th>
+                <th>Fecha</th>
+                <th>Dificultad</th>
+                <th>Resultado</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="card-text">
+                        {{__('Letras')}}
+                    </td>
+                    <td class="card-text">
+                        {{__('10/septiembre/2020')}}
+                    </td>
+                    <td class="card-text">
+                        {{__('Fácil')}}
+                    </td>
+                    <td class="card-text">
+                        {{__('2/10')}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
