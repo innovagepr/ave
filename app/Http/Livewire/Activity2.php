@@ -27,7 +27,7 @@ class Activity2 extends Component
     public $studentAnswers = array();
     public $exerciseList = array("#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9", "#10");
     public $exercises = array(array("id" => 1, "Paragraph" => "Hola, Santiago: Te escribo porque quiero invitarte a ver
-    una Película en mi casa. Mi mamá dice que puede ser el sábado que viene. Invité a Josué y a Omar, así que no te la
+    una Película en mi casa. Mi mamá dice que puede ser el sábado que viene.\n Invité a Josué y a Omar, así que no te la
     puedes perder. \n Te espero, \nTu amigo Ismael"), array("id" => 2, "Paragraph" => "Párrafo de prueba 2"),
         array("id" => 3, "Paragraph" => "Párrafo de prueba 3"), array("id" => 4, "Paragraph" => "Párrafo de prueba 4"),
         array("id" => 5, "Paragraph" => "Párrafo de prueba 5"), array("id" => 6, "Paragraph" => "Párrafo de prueba 6"),
