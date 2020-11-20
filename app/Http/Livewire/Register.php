@@ -7,7 +7,6 @@ use Livewire\Component;
 class Register extends Component
 {
     public $test = "";
-
     public function render()
     {
         return view('livewire.register');

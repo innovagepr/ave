@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Group;
 use Livewire\WithPagination;
+use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 
 /**
  * Livewire Component for Group Management
@@ -33,6 +35,7 @@ class GroupManagement extends Component
     public $firstName;
     public $lastName;
     public $dob;
+    public $age;
     public $nameToEdit;
     public $descToEdit;
     public $groupID = 1;
@@ -48,7 +51,6 @@ class GroupManagement extends Component
     public $studentID = 7;
     public $active = true;
     public $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Eliminar");
-    public $headersStudents = array("Nombre", "Edad", "Nivel", "último acceso", "Eliminar");
     public $students;
 
     /**
@@ -112,18 +114,7 @@ class GroupManagement extends Component
         $this->descToEdit = $this->selectedGroup->description;
         $this->dispatchBrowserEvent('editModal');
     }
-    /**
-     * Sends a browser event to add a student.
-     */
-    public function newStudentModal(){
-        $this->dispatchBrowserEvent('newStudentModal');
-    }
-    /**
-     * Sends a browser event to add and register a new student.
-     */
-    public function regStudentModal(){
-        $this->dispatchBrowserEvent('regModal');
-    }
+
     /**
      * Sets the group depending on the clicked area of the view.
      * @param $groupNumber the group that has been selected.
@@ -151,6 +142,7 @@ class GroupManagement extends Component
         $this->validate();
         $createdGroup = new Group;
         $createdGroup->owner_id = auth()->user()->id;
+        $createdGroup->list_exercise_id = null;
         $createdGroup->name = $this->name;
         $createdGroup->description = $this->description;
         $createdGroup->date_created = today();
@@ -199,6 +191,8 @@ class GroupManagement extends Component
         $this->resetOnClose();
         $this->dispatchBrowserEvent('group-removed');
     }
+
+
     public function removeStudentModal($selectedStudent){
         $this->studentToRemove = User::find($selectedStudent);
         $this->dispatchBrowserEvent('removeStudentModal');
@@ -213,55 +207,5 @@ class GroupManagement extends Component
         $this->dispatchBrowserEvent('student-removed');
     }
 
-    /**
-     * Adds a student to a group.
-     */
-    public function addStudent(){
-        $this->validate(['email' => 'required|email|exists:users'],
-            [
-                'email.required' => 'Favor proveer un correo electrónico',
-                'email.email' => 'Formato incorrecto para correo electrónico',
-                'email.exists' => 'Usuario no existe en el sistema'
-            ],
-            ['email' => 'Correo electrónico']);
-        $studentToAdd = User::where('email', '=', $this->email)->get();
-        $group = Group::find($this->selectedGroup->id);
-        $group->members()->attach($studentToAdd);
-        $this->dispatchBrowserEvent('student-added');
-        $this->resetOnClose();
-    }
 
-    /**
-     * Adds and registers a student to a group.
-     */
-    public function registerStudent(){
-        $this->validate(['firstName' => 'required|max:128',
-                         'lastName' => 'required|max:128',
-                         'dob' => 'required',
-                         'email' => 'required|email'],
-            [
-                'firstName.required' => 'Favor proveer un nombre.',
-                'firstName.max' => 'El nombre no puede exceder 128 caracteres.',
-                'lastName.required' => 'Favor proveer un apellido.',
-                'lastName.max' => 'El apellido no puede exceder 128 caracteres.',
-                'dob.required' => 'Favor proveer la fecha de nacimiento.',
-                'email.required' => 'Favor proveer un correo electrónico',
-                'email.email' => 'Formato incorrecto para correo electrónico'],
-            ['firstName' => 'Nombre',
-                'lastName' => 'Apellido',
-                'dob' => 'Fecha de Nacimiento',
-                'email' => 'Correo electrónico',]);
-        $studentToAdd = new User;
-        $studentToAdd->role_id = 2;
-        $studentToAdd->first_name = $this->firstName;
-        $studentToAdd->last_name = $this->lastName;
-        $studentToAdd->email = $this->email;
-        $studentToAdd->password = Hash::make('Aveduca21!');
-        $studentToAdd->dob = $this->dob;
-        $studentToAdd->active = 0;
-        $studentToAdd->save();
-        $this->selectedGroup->members()->attach($studentToAdd);
-        $this->dispatchBrowserEvent('student-registered');
-        $this->resetOnClose();
-    }
 }

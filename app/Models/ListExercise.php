@@ -18,7 +18,7 @@ class ListExercise extends Model
     }
 
     public function groups(){
-        return $this->hasMany(Group::class);
+        return $this->belongsToMany(Group::class, 'group_lists', 'list_id');
     }
 
     public function activity(){

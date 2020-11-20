@@ -22,6 +22,7 @@ class CreateListExercisesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('difficulty_id');
             $table->foreign('difficulty_id')->references('id')->on('difficulties');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

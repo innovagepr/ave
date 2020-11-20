@@ -31,7 +31,7 @@
 <div class="container mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
     <div class="mb-4 text-sm text-gray-600">
         {{ __('¿Olvidó su contraseña? No hay problema. Provea el correo electrónico y le enviaremos un enlace para restablecer su contraseña.') }}
-    </div>{{--
+    </div>
     <form method="POST" action="{{ route('password.email') }}">
         @csrf
         <div class="block">
@@ -44,17 +44,6 @@
                 {{ __('Enviar enlace') }}
             </button>
         </div>
-    </form>--}}
-    <form id="forgotForm">
-    <div class="block">
-        <x-jet-label for="email" value="{{ __('Correo electrónico:') }}" />
-        <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-    </div>
-    <div class="flex items-center justify-end mt-4">
-        <button class="button button1">
-            {{ __('Enviar enlace') }}
-        </button>
-    </div>
     </form>
 </div>
 
