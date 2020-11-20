@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\AnsweredWord;
 use Illuminate\View\View;
 use Livewire\Component;
 use function GuzzleHttp\Psr7\str;
@@ -44,23 +45,25 @@ class LetterDisplay extends Component
     }
 
     public function shuffleWord(){
+        shuffle($this->splitWord );
 
-        $this->shuffledWord = str_shuffle($this->word);
 //Evita que salga igual a la palabra original
-        if($this->shuffledWord == $this->word){
+        $temp = join($this->splitWord);
+        if($temp == $this->word){
             $this->shuffleWord();
         }
     }
 
     public function splitWord(){
-        $this->splitWord = str_split($this->shuffledWord);
+        $this->splitWord  = preg_split('//u', $this->word, null, PREG_SPLIT_NO_EMPTY);
     }
 
     public function mount(){
         $this->word = $this->words[$this->step]->word;
-        $this->answer = array_fill(0,strlen($this->word),'');
-        $this->shuffleWord();
         $this->splitWord();
+        $this->shuffleWord();
+        $this->answer = array_fill(0,count($this->splitWord),'');
+
     }
 
 //Immediate Result ------------------------------------------------------------------------------------------
@@ -85,12 +88,16 @@ class LetterDisplay extends Component
             $this->word = $this->words[$this->step]->word;
             $this->emit('refreshAudio', $this->word);
 // Reset variables
+            $this->shuffledWord = null;
+            $this->splitWord = null;
+            $this->joinedAnswer = null;
+
             $this->answer = [];
             $this->position2 = 0;
             $this->positions = [];
-            $this->answer = array_fill(0, strlen($this->word), '');
-            $this->shuffleWord();
             $this->splitWord();
+            $this->shuffleWord();
+            $this->answer = array_fill(0,count($this->splitWord),'');
         }
     }
 
@@ -101,6 +108,34 @@ class LetterDisplay extends Component
     public function lastExercise(){
         if($this->step == 9){
             $this->dispatchBrowserEvent('finalResult', $this->joinedAnswer, $this->correctAnswers, $this->badAnswers);
+        }
+    }
+
+    public function clearAll(){
+        for ($j = 0; $j < strlen($this->word); $j++){
+            $this->removeLetter();
+        }
+    }
+
+    public function goTo($step1){
+
+        if($this->step != $step1) {
+
+            $this->step = $step1;
+            $this->word = $this->words[$this->step]->word;
+            $this->emit('refreshAudio', $this->word);
+// Reset variables
+            $this->shuffledWord = null;
+            $this->splitWord = null;
+            $this->joinedAnswer = null;
+
+            $this->position2 = 0;
+            $this->positions = [];
+            $this->splitWord();
+            $this->shuffleWord();
+            $this->answer = array_fill(0, count($this->splitWord), '');
+
+
         }
     }
 }

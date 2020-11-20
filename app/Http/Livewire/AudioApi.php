@@ -25,4 +25,8 @@ class AudioApi extends Component
         return view('livewire.audio-api');
     }
 
+//    public function togglePlay(){
+//        audio.play();
+//    }
+
 }

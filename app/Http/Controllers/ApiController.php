@@ -36,12 +36,12 @@ class ApiController extends Controller
 
         $ttsServiceUri = "https://" . $region . ".tts.speech.microsoft.com/cognitiveservices/v1";
 
-        $SsmlTemplate = "<speak version='1.0' xml:lang='es-MX'><voice xml:lang='es-MX' xml:gender='Female' name='es-MX-DaliaNeural'> $word </voice></speak>";
+        $SsmlTemplate = "<speak version='1.0' xml:lang='es-MX'><voice xml:lang='es-MX' xml:gender='Female' name='es-MX-HildaRUS'><prosody rate='-20.00%'>$word</prosody></voice></speak>";
 
         $options = array(
             'http' => array(
                 'header' => "Content-type: application/ssml+xml"."\r\n" .
-                    "X-Microsoft-OutputFormat: riff-8khz-8bit-mono-alaw" . "\r\n" .
+                    "X-Microsoft-OutputFormat: ogg-24khz-16bit-mono-opus" . "\r\n" .
                     "Authorization: " . "Bearer " . $access_token . "\r\n" .
                     "User-Agent: AVE" . "\r\n" .
                     "Host: eastus.tts.speech.microsoft.com" . "\r\n",
