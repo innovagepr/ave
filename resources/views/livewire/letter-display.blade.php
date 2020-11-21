@@ -19,9 +19,9 @@
     <div>
         <div class="audio">
             {{$word}}
-            @foreach($tempAnswers as $tempAnswer)
-            {{$tempAnswer}}
-            @endforeach
+            {{--            @foreach($tempAnswers as $tempAnswer)--}}
+            {{--            {{$tempAnswer}}--}}
+            {{--            @endforeach--}}
             <livewire:audio-api :word="$word"/>
         </div>
 
@@ -29,28 +29,31 @@
 
 
         <div style="display: flex">
-            <table class="table1" >
-                <tr>
-                    @for ($j = 0; $j < count ($splitWord); $j++)
-                        <td class="{{$j == $position2 ? 'green' : 'answerBox'}}">
-                            {{$answer[$j]}}
-                        </td>
-                    @endfor
-                </tr>
-            </table>
 
-            <td>
-                <a wire:click="removeLetter()"><i style="font-size: 40px; color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-backspace"></i></a>
-            </td>
-            <td>
-                <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>
-            </td>
+                <table class="table1" >
+                    <tr>
+                        @for ($j = 0; $j < count ($splitWord); $j++)
+                            <td class="{{$j == $position2 ? 'green' : 'answerBox'}}">
+                                {{$answer[$j]}}
+                            </td>
+                        @endfor
+                    </tr>
+                </table>
 
-            <table>
+            <div style="border: 4px solid blue">
+                <td>
+                    <a wire:click="removeLetter()"><i style="font-size: 40px; color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-backspace"></i></a>
+                </td>
+                <td>
+                    <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>
+                </td>
+            </div>
+
+            <table class="table2">
                 <tr>
                     @for ($j = 0; $j < count($splitWord); $j++)
-                        <td class="{{$splitWord[$j] == ' ' ? 'letterNoPointer': 'letterBox'}}">
-                            <a wire:click="placeLetter('{{$j}}','{{ $splitWord[$j] }}')">{{$splitWord[$j]}}</a>
+                        <td wire:click="placeLetter('{{$j}}','{{ $splitWord[$j] }}')" class="{{$splitWord[$j] == ' ' ? 'letterNoPointer': 'letterBox'}}">
+                            <a >{{$splitWord[$j]}}</a>
                         </td>
                     @endfor
                 </tr>
@@ -69,7 +72,8 @@
             @if($step != 0)
                 <button class = "backArrow" wire:click="goTo({{$step-1}})" type="button"><i class=" icons1 fas fa-arrow-left"></i></button>
             @else
-                <a  href="/homepage" class = "backArrow"><i class=" icons1 fas fa-arrow-left"></i></a>
+                <button class = "backArrow" wire:click="quitWarning()" type="button"><i class=" icons1 fas fa-arrow-left"></i></button>
+{{--                <a  href="/homepage" class = "backArrow"><i class=" icons1 fas fa-arrow-left"></i></a>--}}
             @endif
         </div>
 
@@ -92,6 +96,11 @@
             <livewire:immediate-modal-good :word="$word" :joinedAnswer="$joinedAnswer"/>
         </div>
     </div>
+    <div wire:ignore>
+        <div class="modal fade" id="quit-warning" tabindex="-1" role="dialog" aria-hidden="true">
+            <livewire:quit-warning/>
+        </div>
+    </div>
 
 </div>
 
@@ -104,5 +113,8 @@
     })
     window.addEventListener('finalResult', event => {
         $("#final-result-modal").modal('toggle');
+    })
+    window.addEventListener('quitWarning', event => {
+        $("#quit-warning").modal('toggle');
     })
 </script>

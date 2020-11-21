@@ -25,8 +25,8 @@ body{
 
     /*margin: 0;*/
     position: absolute;
-    top: 70%;
-    left: 47%;
+    top: 185px;
+    left: 48%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
@@ -145,6 +145,15 @@ body{
 .table1 {
     margin: 0;
     position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid purple;
+}
+.table2 {
+    margin: 0;
+    position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
@@ -153,8 +162,8 @@ body{
 
 .audio{
     position: absolute;
-    top: 30%;
-    left: 47%;
+    top: 28%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
