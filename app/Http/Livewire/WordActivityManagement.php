@@ -120,16 +120,16 @@ class WordActivityManagement extends Component
         $this->validate(['name' => ['required', 'max:128', new IsDefault()]]);
         $list = new ListExercise();
         $list->name = $this->name;
-        if(Activity::where('slug', '=', 'Palabras')->first() === null)
+        if(Activity::where('slug', '=', 'Lectura')->first() === null)
         {
             $activity = new Activity();
-            $activity->name = "Palabras";
-            $activity->slug = "Palabras";
-            $activity->rules = "Ordena las palabras!";
+            $activity->name = "Lectura";
+            $activity->slug = "Lectura";
+            $activity->rules = "Lee el párrafo cuidadosamente y escoge la opción correcta!";
             $activity->active = 1;
             $activity->save();
         }
-        $list->activity_id = Activity::where('slug', '=', 'Palabras')->first()->id;
+        $list->activity_id = Activity::where('slug', '=', 'Lectura')->first()->id;
         $list->user_id = auth()->user()->id;
         if(Difficulty::where('name', '=', $this->difficulty)->first() === null)
         {
@@ -142,7 +142,7 @@ class WordActivityManagement extends Component
         $list->save();
         $list->owner()->associate(auth()->user()->id);
         $list->difficulty()->associate(Difficulty::where('name', '=', $this->difficulty)->first()->id);
-        $list->activity()->associate(Activity::where('slug', '=', 'Palabras')->first()->id);
+        $list->activity()->associate(Activity::where('slug', '=', 'Lectura')->first()->id);
         $this->resetOnClose();
         $this->dispatchBrowserEvent('group-added');
     }
