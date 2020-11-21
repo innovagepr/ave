@@ -14,6 +14,8 @@
             padding: 0px;
         }
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
@@ -24,7 +26,7 @@
     <nav class="topnav">
         <div class="topnav-right">
             @if(Auth::check())
-                <a href="{{ route('dashboard') }}"><span class="far fa-id-card fa-lg"></span> Dashboard</a>
+                <a href="{{ route('dashboard') }}"><span class="far fa-id-card fa-lg"></span> Tablero</a>
             @endif
             @if(!Auth::check())
                 <a href="{{ route('login') }}"><span class="fas fa-sign-in-alt fa-lg"></span> Inicia Sesión</a>

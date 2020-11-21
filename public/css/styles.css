@@ -62,6 +62,41 @@
 .button1:hover{
     background-color: #52C5AB;
 }
+/*-----------------------------------------*/
+.button3{
+    background-color: #ACF9A4;
+    color: #073C63;
+    border-radius: 40px;
+    border: 3px solid #2576AC;
+    display: inline-block;
+    font-size: 45px;
+    font-family: "Berlin Sans FB";
+    margin: 10px 10px;
+    cursor: pointer;
+    padding: 10px 10px;
+    transition-duration: 0.4s;
+    width: 150px;
+    height: 60px;
+}
+.button4{
+    background-color: #52C5AB;
+    color: #073C63;
+    border-radius: 40px;
+    border: 3px solid #2576AC;
+    display: inline-block;
+    font-size: 20px;
+    font-family: "Berlin Sans FB";
+    margin: 10px 10px;
+    cursor: pointer;
+    padding: 10px 10px;
+    transition-duration: 0.4s;
+    width: 150px;
+    height: 60px;
+}
+.button4:hover{
+    background-color: #ACF9A4;
+}
+/*-----------------------------------------*/
 
 #page-container {
     position: relative;

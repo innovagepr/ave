@@ -1,6 +1,7 @@
+
 <div>
-    <p style="font-size: 20px; font-family: 'Berlin Sans FB'; color: #2576AC">Escuchar Palabra</p>
-    <audio controls id="audio">
+    <span  class="btn btn1" onclick="togglePlay()"><i class="fas fa-volume-up fa-lg"></i> Escuchar Palabra </span>
+    <audio controls id="audio" controlsList="nodownload" hidden="true">
         <source src="/{{$word2}}.wav" type="audio/ogg">
         <source src="/{{$word2}}.wav" type="audio/mpeg">
         Su navegador no es compatible con la etiqueta de audio.
@@ -12,4 +13,8 @@
     window.addEventListener('refreshAudio', event => {
         document.getElementById("audio").load();
     })
+
+    function togglePlay() {
+        audio.play();
+    }
 </script>

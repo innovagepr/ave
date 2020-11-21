@@ -73,7 +73,123 @@
     border-radius: 20px;
     margin: 20px;
 }
+/*--------------Pet------------------------*/
+.main-block-pet{
+    /*height: 900px;*/
+    /*position: relative;*/
+    border: black 1px dashed;
+    width: 90%;
+    /*height: 100%;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8%;
+}
+.pet-row{
+    display: flex;
+    justify-content: left;
+    align-content: start;
+    /*margin: 1px;*/
+    width: 100%;
+    border: 4px solid purple;
+}
+.dashboard-petCard {
+    /*background-color: white;*/
+    border: #2576ac 3px solid;
+    border-radius: 30px;
+    margin: 10px;
+    width: 380px;
+    height: 380px;
+}
+.pet-name{
+    font-size: 45px;
+    font-family: "Berlin Sans FB";
+    color: #2576AC;
+    /*margin-right: 30px;*/
+}
+.pet-level{
+    font-size: 25px;
+    font-family: "Berlin Sans FB";
+    color: #52C5AB;
+}
 
+.header-row{
+    display: inline-flex;
+    justify-content: left;
+    margin-left: 45px;
+    width: 100%;
+}
+.columnPet1 {
+    /*float: left;*/
+    width: 450px;
+    padding: 5px;
+    align-content: center;
+    /*height: 300px; */
+    text-align: center;
+    border: 2px solid black;
+}
+.columnPet2 {
+    /*float: left;*/
+    width: 65%;
+    padding: 5px;
+    align-content: flex-start;
+    /*height: 300px; */
+    text-align: left;
+    border: 2px solid black;
+}
+.pet-level-card {
+    background-color: white;
+    border: #2576ac 3px solid;
+    border-radius: 20px;
+    margin: 10px;
+    height: 5rem;
+    width: 85%;
+}
+.pet-articles-card {
+    background-color: white;
+    border: #2576ac 3px solid;
+    border-radius: 20px;
+    margin: 10px;
+    margin-top: 5px;
+    height: 8rem;
+    width: 85%;
+}
+.pet-progress{
+    margin-top: 25px;
+}
+.level-img{
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    margin-top: 10px;
+}
+.level-row{
+    display: inline-flex;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+    /*border: 2px solid purple;*/
+}
+.article-text{
+    display: inline-flex;
+    justify-content: left;
+    margin-left: 4px;
+    font-size: 20px;
+    font-family: 'Berlin Sans FB';
+    color: #2576AC;
+    margin-top: 20px
+}
+.colorBox{
+    width: 50px;
+    height: 50px;
+    border: 3px solid #2576ac;
+    border-radius: 10px;
+    margin: 10px;
+    alignment: left;
+    align-items: start;
+    align-content: start;
+    text-align: left;
+}
+/*-----------------------------------------*/
 .main-block-aside{
     height: 500px;
     /*border: black 1px dashed;*/
@@ -81,7 +197,6 @@
     margin-left: 25%;
     margin-right: auto;
 }
-
 
 .dashboard-label{
     text-align: center;
