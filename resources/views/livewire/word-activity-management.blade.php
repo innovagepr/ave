@@ -140,8 +140,8 @@
                             </div>
                             <div class="mt-2">
                                 @foreach($students as $s)
-                                    <x-jet-label for="{{$s->user_id}}" value="{{ __($s->id) }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                    <input type="checkbox" wire:model="test2.{{ $s }}" value="{{$s->user_id}}">
+                                    <x-jet-label for="{{$s->fullname}}" value="{{ __($s->fullname) }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                                    <input type="checkbox" wire:model="test2.{{ $s->id }}" value="{{$s->id}}">
                                 @endforeach
                             </div>
                             <div class="mt-4">

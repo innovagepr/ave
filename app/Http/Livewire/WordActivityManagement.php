@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\ListExercise;
 use App\Models\Word;
 use App\Rules\IsDefault;
+use Illuminate\Support\Collection;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -37,7 +38,7 @@ class WordActivityManagement extends Component
     public $test2 = [];
     public $testGroup = "";
     public $testStudent = "";
-    public $students;
+    public $students = [];
     public $selectedGroup;
     public $description;
     public $groupStudents = array();
@@ -101,10 +102,15 @@ class WordActivityManagement extends Component
         else
         {
             $this->selectedGroup = ListExercise::find($groupNumber);
-            $this->groups = Group::where('owner_id', '=', auth()->user()->id)->get();
-            $this->students = Group::where('owner_id', '=', auth()->user()->id)
-                ->join('group_users', 'group_users.groups_id', '=', 'groups.id')
-                ->join('users', 'users.id', '=', 'group_users.user_id')->get();
+            $this->groups = Group::where('owner_id', '=', auth()->user()->id)->get()
+                                    ->where('active', '=', 1);
+            $tempResult = Group::with('members')->where('owner_id', '=', auth()->user()->id)
+                ->where('active', '=', 1)->get()->pluck('members')->all();
+            $this->students = new Collection();
+            for($j=0; $j < count($tempResult); $j++){
+                $tempResult[0] = $tempResult[0]->merge($tempResult[$j]);
+            }
+            $this->students = $tempResult[0];
             $this->tableActive = 1;
 
         }
@@ -147,7 +153,7 @@ class WordActivityManagement extends Component
                 'nameToEdit.required' => 'Favor proveer un nombre.',
                 'nameToEdit.max' => 'El nombre de la lista no puede exceder 128 caracteres.',
             ],
-            ['word' => 'Palabra']);
+            ['nameToEdit' => 'Nombre', 'diffToEdit' => 'Dificultad']);
         $this->selectedGroup->name = $this->nameToEdit;
         $this->selectedGroup->save();
         $this->selectedGroup->difficulty()->dissociate();
@@ -196,6 +202,7 @@ class WordActivityManagement extends Component
         $this->resetOnClose();
     }
     public function assignList(){
+
         foreach($this->test as $g) {
             $this->testGroup = Group::find($g);
             $assigneeGroup = Group::find($g);
@@ -203,6 +210,8 @@ class WordActivityManagement extends Component
         }
         foreach($this->test2 as $s){
             $this->testStudent = User::find($s);
+            $assigneeStudent = User::find($s);
+            $this->selectedGroup->users()->attach($assigneeStudent);
         }
     $this->dispatchBrowserEvent('list-assigned');
 }
