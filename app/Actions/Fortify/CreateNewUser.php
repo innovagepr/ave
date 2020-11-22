@@ -2,14 +2,21 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Pet;
+use App\Models\PetType;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use App\Models\Role;
+use App\Rules\AgeProfessional;
+use App\Rules\AgeChild;
 
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
+
+    public $test;
 
     /**
      * Validate and create a newly registered user.
@@ -19,13 +26,43 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
-        Validator::make($input, [
-            'first_name' => ['required', 'string', 'max:128'],
-            'last_name' => ['required', 'string', 'max:128'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'dob' => ['required'],
-            'password' => $this->passwordRules(),
-        ])->validate();
+
+        if($input['role_id'] == 1)
+        {
+            Validator::make($input, [
+                'first_name' => ['required', 'string', 'max:128'],
+                'last_name' => ['required', 'string', 'max:128'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'dob' => ['required', new AgeProfessional()],
+                'password' => $this->passwordRules(),
+            ])->validate();
+            if(Role::find(1) == null)
+            {
+                $role = new Role;
+                $role->id = 1;
+                $role->name = 'Profesional';
+                $role->slug = 'professional';
+                $role->save();
+            }
+        }
+        else
+        {
+            Validator::make($input, [
+                'first_name' => ['required', 'string', 'max:128'],
+                'last_name' => ['required', 'string', 'max:128'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'dob' => ['required', new AgeChild()],
+                'password' => $this->passwordRules(),
+            ])->validate();
+            if(Role::find(2) == null)
+            {
+                $role = new Role;
+                $role->id = 2;
+                $role->name = 'Estudiante';
+                $role->slug = 'child';
+                $role->save();
+            }
+        }
 
         return User::create([
             'first_name' => $input['first_name'],

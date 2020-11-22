@@ -10,7 +10,7 @@ class ListExercise extends Model
     use HasFactory;
 
     public function users(){
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, 'list_user', 'list_id');
     }
 
     public function owner(){
@@ -18,7 +18,7 @@ class ListExercise extends Model
     }
 
     public function groups(){
-        return $this->hasMany(Group::class);
+        return $this->belongsToMany(Group::class, 'group_lists', 'list_id');
     }
 
     public function activity(){

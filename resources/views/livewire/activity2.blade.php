@@ -174,18 +174,18 @@
     </div>
 
     <!-- Paragraph and possible options -->
-    <div class="container mt-10" style="background-color:#FFFFFF; width: 40%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <div class="container mt-10" style="background-color:#FFFFFF; width: 40%; margin-top: 10%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
 
-        <p>
+        <pre>
             {{ $exercises[$step]['Paragraph'] }}
-        </p>
+        </pre>
     </div>
-    <form>
+    <form style="margin-left: 42%; margin-top: 2%">
         <fieldset>
             <legend> {{ __("Escoge la opción correcta:") }}</legend>
             @foreach($answers[$step]['options'] as $answer)
                 <div>
-                    <input name = "option" type="radio" value="{{ $answer }}" wire:model="option">{{ $answer }}
+                    <input name = "option" type="radio" value="{{ $answer }}" style="margin-right: 1%;" wire:model="option">{{ $answer }}
                 </div>
             @endforeach
             <div>

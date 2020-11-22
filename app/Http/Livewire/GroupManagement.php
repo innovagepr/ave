@@ -3,6 +3,12 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Group;
+use Livewire\WithPagination;
+use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 
 /**
  * Livewire Component for Group Management
@@ -11,9 +17,10 @@ use Livewire\Component;
  */
 class GroupManagement extends Component
 {
+    use WithPagination;
     protected $rules = [
         'name' => 'required|max:128',
-        'description' => 'required',
+        'description' => 'required'
     ];
     protected $messages = [
         'name.required' => 'Favor proveer un nombre.',
@@ -22,35 +29,29 @@ class GroupManagement extends Component
     ];
     public $tempDate;
     public $name;
+    public $something;
+    public $debug;
     public $tableActive;
     public $firstName;
     public $lastName;
+    public $dob;
     public $age;
     public $nameToEdit;
     public $descToEdit;
     public $groupID = 1;
     public $selectedGroup;
     public $description;
-    public $groupStudents = array();
+    public $groupStudents;
     public $selectedGroupName;
     public $creationdate;
+    public $groupToRemove;
+    public $studentToRemove;
     public $members;
     public $email;
     public $studentID = 7;
-    public $studentToAddEmail = "orlando.rivera@home.e";
     public $active = true;
-    public $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Activo", "Eliminar");
-    public $headersStudents = array("Nombre", "Edad", "Nivel", "último acceso", "Activo", "Eliminar");
-    public $groups = array(array("id"=> 0,"name" => "Grupo 1", "description" => "Grupo de tutorías martes y jueves 4pm a 6pm", "creation-date" => "10/septiembre/2020", "members" =>4, "active"=> 1, "deleted" => 0),
-        array("id" => 1,"name" => "Grupo 2", "description" => "Grupo de prueba.", "creation-date" =>"1/septiembre/2020", "members" =>4, "active" => 0, "deleted" => 0));
-    public $students = array(array("id" => 0, "groupID" => 0, "name" => "Miguel Rivera", "age" => 8, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1, "deleted" => 0),
-        array("id" => 1, "groupID" => 0, "name" => "Laura Perez", "age" => 10, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 0, "deleted" => 0),
-        array("id" => 2, "groupID" => 0, "name" => "María Vázquez", "age" => 8, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1, "deleted" => 0),
-        array("id" => 3, "groupID" => 0, "name" => "Pedro Colón", "age" => 9, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1, "deleted" => 0),
-        array("id" => 4, "groupID" => 1, "name" => "Manuel Díaz", "age" => 9, "level" => "Nivel 2", "last-access" => "12/octubre/2020", "active" => 1, "deleted" => 0),
-        array("id" => 5, "groupID" => 1, "name" => "Antonio Morales", "age" => 10, "level" => "Nivel 2", "last-access" => "15/octubre/2020", "active" => 1, "deleted" => 0),
-        array("id" => 6, "groupID" => 1, "name" => "Andrea Carro", "age" => 9, "level" => "Nivel 2", "last-access" => "18/octubre/2020", "active" => 0, "deleted" => 0),
-        array("id" => 7, "groupID" => 1,"name" => "Gabriel Lozada", "age" => 10, "level" => "Nivel 2", "last-access" => "10/octubre/2020", "active" => 1, "deleted" => 0));
+    public $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Eliminar");
+    public $students;
 
     /**
      * Renders the view associated with the component.
@@ -58,7 +59,12 @@ class GroupManagement extends Component
      */
     public function render()
     {
-        return view('livewire.group-management');
+        return view('livewire.group-management', ['groups' => Group::where('owner_id', '=', auth()->user()->id)
+                                                                        ->where('active', '=', 1)->paginate(3, ['*'], 'groups')]);
+    }
+
+    public function mount(){
+        $this->tempDate = today();
     }
 
     /**
@@ -85,6 +91,13 @@ class GroupManagement extends Component
         $this->email="";
         $this->nameToEdit="";
         $this->descToEdit="";
+        $this->studentToRemove= "";
+        $this->groupToRemove= "";
+        $this->groups = Group::where('owner_id', '=', auth()->user()->id)->get();
+        if($this->tableActive)
+        {
+            $this->selectedGroup = Group::find($this->selectedGroup->id);
+        }
     }
 
     /**
@@ -97,46 +110,27 @@ class GroupManagement extends Component
      * Sends a browser event to edit a group.
      */
     public function editModal(){
-        $this->nameToEdit = $this->groups[$this->selectedGroup]['name'];
-        $this->descToEdit = $this->groups[$this->selectedGroup]['description'];
+        $this->nameToEdit = $this->selectedGroup->name;
+        $this->descToEdit = $this->selectedGroup->description;
         $this->dispatchBrowserEvent('editModal');
     }
-    /**
-     * Sends a browser event to add a student.
-     */
-    public function newStudentModal(){
-        $this->dispatchBrowserEvent('newStudentModal');
-    }
-    /**
-     * Sends a browser event to add and register a new student.
-     */
-    public function regStudentModal(){
-        $this->dispatchBrowserEvent('regModal');
-    }
+
     /**
      * Sets the group depending on the clicked area of the view.
      * @param $groupNumber the group that has been selected.
      */
     public function clickGroup($groupNumber)
     {
-
-        if($this->tableActive === 1 && $this->selectedGroup === $groupNumber)
+        if($this->tableActive === 1 && $this->selectedGroup->id === $groupNumber)
         {
             $this->tableActive = 0;
-            $this->groupStudents = array();
+            $this->groupStudents = null;
+            $this->selectedGroup = null;
         }
         else
         {
-            $this->selectedGroup = $groupNumber;
-            $this->groupStudents = array();
+            $this->selectedGroup = Group::find($groupNumber);
             $this->tableActive = 1;
-
-        }
-        foreach($this->students as &$students)
-        {
-            if(array_key_exists($groupNumber, $this->students) && $students['groupID'] === $this->selectedGroup) {
-                array_push($this->groupStudents, $students);
-            }
         }
     }
 
@@ -146,8 +140,14 @@ class GroupManagement extends Component
     public function submitGroup()
     {
         $this->validate();
-        $this->groupID++;
-        array_push($this->groups, array("id" => $this->groupID, "name"=> $this->name, "description" => $this->description,  "creation-date"=> "6/noviembre/2020", "members" => 0, "active" => 1, "deleted" => 0));
+        $createdGroup = new Group;
+        $createdGroup->owner_id = auth()->user()->id;
+        $createdGroup->list_exercise_id = null;
+        $createdGroup->name = $this->name;
+        $createdGroup->description = $this->description;
+        $createdGroup->date_created = today();
+        $createdGroup->active = 1;
+        $createdGroup->save();
         $this->dispatchBrowserEvent('group-added');
         $this->resetOnClose();
     }
@@ -166,85 +166,46 @@ class GroupManagement extends Component
             ],
             ['nameToEdit' => 'Name to Edit',
                 'descToEdit' => 'Description to Edit']);
-        $this->groups[$this->selectedGroup]['name'] = $this->nameToEdit;
-        $this->groups[$this->selectedGroup]['description'] = $this->descToEdit;
-        if($this->active === true)
-        {
-            $this->groups[$this->selectedGroup]['active'] = 1;
-        }
-        else
-        {
-            $this->groups[$this->selectedGroup]['active'] = 0;
-        }
+        $this->selectedGroup->name = $this->nameToEdit;
+        $this->selectedGroup->description = $this->descToEdit;
+        $this->selectedGroup->save();
         $this->dispatchBrowserEvent('group-edited');
         $this->resetOnClose();
+    }
+
+    public function removeGroupModal($selectedGroup){
+        $this->groupToRemove = Group::find($selectedGroup);
+        $this->dispatchBrowserEvent('removeGroupModal');
     }
 
     /**
      * Removes a group depending on which area of the view it has been called.
      * @param $selectedGroup the group delete button that was selected.
      */
-    public function removeGroup($selectedGroup){
-        $this->tableActive = 0;
-        $this->groups[$selectedGroup]['deleted'] = 1;
+    public function removeGroup(){
+        if($this->groupToRemove->id === $this->selectedGroup->id){
+            $this->tableActive = 0;
+        }
+        $this->groupToRemove->active = 0;
+        $this->groupToRemove->save();
+        $this->resetOnClose();
+        $this->dispatchBrowserEvent('group-removed');
     }
 
+
+    public function removeStudentModal($selectedStudent){
+        $this->studentToRemove = User::find($selectedStudent);
+        $this->dispatchBrowserEvent('removeStudentModal');
+    }
     /**
      * Removes a student depending on which area of the view it has been called.
      * @param $selectedStudent the student delete button that was selected.
      */
-    public function removeStudent($selectedStudent){
-        $this->groupStudents[$selectedStudent]['deleted'] = 1;
-        $this->students[$selectedStudent]['deleted'] = 1;
+    public function removeStudent(){
+        $this->selectedGroup->members()->detach($this->studentToRemove);
+        $this->resetOnClose();
+        $this->dispatchBrowserEvent('student-removed');
     }
 
-    /**
-     * Adds a student to a group.
-     */
-    public function addStudent(){
-        $this->validate(['email' => 'required|email'],
-            [
-                'email.required' => 'Favor proveer un correo electrónico',
-                'email.email' => 'Formato incorrecto para correo electrónico',
-            ],
-            ['email' => 'Correo electrónico']);
-        $this->studentID++;
-        $studentToAdd = array("id" => $this->studentID, "groupID" => $this->selectedGroup, "name" => "Orlando Rivera", "age" => 9, "level" => "Nivel 2", "last-access" => "10/noviembre/2020", "active" => 1, "deleted" => 0);
-        array_push($this->students, $studentToAdd);
-        array_push($this->groupStudents, $studentToAdd);
-        $this->dispatchBrowserEvent('student-added');
-        $this->resetOnClose();
-    }
 
-    /**
-     * Adds and registers a student to a group.
-     */
-    public function registerStudent(){
-        $this->validate(['firstName' => 'required|max:128',
-                         'lastName' => 'required|max:128',
-                         'age' => 'required|numeric',
-                         'email' => 'required|email'],
-            [
-                'firstName.required' => 'Favor proveer un nombre.',
-                'firstName.max' => 'El nombre no puede exceder 128 caracteres.',
-                'lastName.required' => 'Favor proveer un apellido.',
-                'lastName.max' => 'El apellido no puede exceder 128 caracteres.',
-                'age.required' => 'Favor proveer la edad.',
-                'age.numeric' => 'La edad debe ser un número.',
-                'email.required' => 'Favor proveer un correo electrónico',
-                'email.email' => 'Formato incorrecto para correo electrónico'],
-            ['firstName' => 'Nombre',
-                'lastName' => 'Apellido',
-                'age' => 'Edad',
-                'email' => 'Correo electrónico',]);
-        $this->studentID++;
-        $this->firstName .= " ";
-        $this->firstName .= $this->lastName;
-        $studentToAdd = array("id" => $this->studentID, "groupID" => $this->selectedGroup, "name" => $this->firstName,
-            "age" => $this->age, "level" => "Nivel 1", "last-access" => "10/noviembre/2020", "active" => 1, "deleted" => 0);
-        array_push($this->students, $studentToAdd);
-        array_push($this->groupStudents, $studentToAdd);
-        $this->dispatchBrowserEvent('student-registered');
-        $this->resetOnClose();
-    }
 }
