@@ -95,42 +95,42 @@
 
                     <div class="modal-body" style="text-align: center;">
                         <form>
-                            <div class="mt-2">
+                            <div class="mt-0">
                                 <x-jet-label for="group_name" value="{{ __('Escriba el párrafo de la pregunta a ser añadida:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="word"/>
+                                <x-jet-input id="group_name" rows="5" type="textarea" style="display: inline-block; width:80%; height: 5rem" name="group_name" wire:model="paragraph"/>
                                 <div>
-                                    @error('word') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    @error('paragraph') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-0">
                                 <x-jet-label for="group_name" value="{{ __('Escriba la pregunta asociada al párrafo:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="word"/>
+                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="question"/>
                                 <div>
-                                    @error('word') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    @error('question') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-0">
                                 <x-jet-label for="group_name" value="{{ __('Opción correcta:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="word"/>
+                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="correctOption"/>
                                 <div>
-                                    @error('word') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    @error('correctOption') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-0">
                                 <x-jet-label for="group_name" value="{{ __('Opción incorrecta 1:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="word"/>
+                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="incorrectOption1"/>
                                 <div>
-                                    @error('word') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    @error('incorrectOption1') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+                            <div class="mt-0">
+                                <x-jet-label for="group_name" value="{{ __('Opción incorrecta 2:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="incorrectOption2"/>
+                                <div>
+                                    @error('incorrectOption2') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <x-jet-label for="group_name" value="{{ __('Opción incorrecta 2:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                <x-jet-input id="group_name" type="textarea" style="display: inline-block; width:80%;" name="group_name" wire:model="word"/>
-                                <div>
-                                    @error('word') <span class="text-danger error">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                            <div class="mt-4">
                                 <button type="submit" wire:click.prevent="addStudent()" class="button button1">
                                     {{ __('Añadir') }}
                                 </button>
@@ -223,7 +223,7 @@
                     </div>
 
                     <div class="modal-body" style="text-align: center;">
-                        <p>{{ __('¿Está seguro que quiere remover la palabra') }} {{ $studentToRemove->fullname }} {{ __('de la lista?') }}</p>
+                        <p>{{ __('¿Está seguro que quiere remover la pregunta de la lista?') }}</p>
                         <div class="mt-4">
                             <button type="submit" wire:click.prevent="removeWord()" class="button button1" style="width: 20%">
                                 {{ __('Sí') }}
@@ -275,7 +275,7 @@
                                             </x-table.cell>
                                         @endif
                                         <x-table.cell> {{ __($g->difficulty->name) }} </x-table.cell>
-                                        <x-table.cell> {{ __(count($g->words()->get())) }} </x-table.cell>
+                                        <x-table.cell> {{ __(count($g->questions()->get())) }} </x-table.cell>
                                         {{--@if($g->groups()->first() === null)
                                             <x-table.cell> {{ __('Ninguno') }}</x-table.cell>
                                         @else
@@ -325,12 +325,12 @@
                         <div style="height:240px;overflow-y:scroll">
                             <x-slot name="body">
 
-                                @foreach($selectedGroup->words()->get() as $g)
+                                @foreach($selectedGroup->questions()->get() as $g)
                                     <x-table.row>
-                                        <x-table.cell>{{__($g->word)}}</x-table.cell>
+                                        <x-table.cell>{{__($g->paragraph()->first()->text)}}</x-table.cell>
                                         <x-table.cell>
                                             <a href="#" class="text-danger error">
-                                                <span href="#" class="fa fa-trash-alt" wire:click.prevent="removeWordModal({{ $g->id }}})"></span>
+                                                <span href="#" class="fa fa-trash-alt" wire:click.prevent="removeWordModal({{ $g->id }})"></span>
                                             </a>
                                         </x-table.cell>
                                     </x-table.row>

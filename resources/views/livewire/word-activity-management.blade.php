@@ -195,7 +195,7 @@
                     </div>
 
                     <div class="modal-body" style="text-align: center;">
-                        <p>{{ __('¿Está seguro que quiere remover la palabra') }} {{ $studentToRemove->fullname }} {{ __('de la lista?') }}</p>
+                        <p>{{ __('¿Está seguro que quiere remover la palabra') }} {{ $wordToRemove->word }} {{ __('de la lista?') }}</p>
                         <div class="mt-4">
                             <button type="submit" wire:click.prevent="removeWord()" class="button button1" style="width: 20%">
                                 {{ __('Sí') }}
@@ -302,7 +302,7 @@
                                         <x-table.cell>{{__($g->word)}}</x-table.cell>
                                         <x-table.cell>
                                             <a href="#" class="text-danger error">
-                                                <span href="#" class="fa fa-trash-alt" wire:click.prevent="removeWordModal({{ $g->id }}})"></span>
+                                                <span href="#" class="fa fa-trash-alt" wire:click.prevent="removeWordModal({{ $g->id }})"></span>
                                             </a>
                                         </x-table.cell>
                                     </x-table.row>

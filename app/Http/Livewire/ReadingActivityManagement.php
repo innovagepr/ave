@@ -8,6 +8,9 @@ use App\Models\Group;
 use App\Models\ListExercise;
 use App\Models\User;
 use App\Models\Word;
+use App\Models\Paragraph;
+use App\Models\Question;
+use App\Models\QuestionOption;
 use App\Rules\IsDefault;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -28,7 +31,11 @@ class ReadingActivityManagement extends Component
     public $tempDate;
     public $name;
     public $tableActive;
-    public $word;
+    public $paragraph;
+    public $question;
+    public $correctOption;
+    public $incorrectOption1;
+    public $incorrectOption2;
     public $difficulty= "Fácil";
     public $nameToEdit;
     public $diffToEdit;
@@ -47,19 +54,41 @@ class ReadingActivityManagement extends Component
     public $creationdate;
     public $members;
     public $email;
+    public $activityType;
     public $studentID = 7;
     public $active = true;
     public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Grupo", "Eliminar");
-    public $headersStudents = array("Palabra", "Eliminar");
+    public $headersStudents = array("Párrafo", "Eliminar");
     //public $lists;
     public function mount()
     {
-        $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)->get();
+        if(Activity::where('slug', '=', 'Lectura')->first() === null)
+        {
+            $activity = new Activity();
+            $activity->name = "Lectura";
+            $activity->slug = "Lectura";
+            $activity->rules = "Lee el párrafo cuidadosamente y escoge la opción correcta!";
+            $activity->active = 1;
+            $activity->save();
+        }
+        $this->activityType = Activity::where('slug', '=', 'Lectura')->first();
+        $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
+                                    ->where('activity_id', '=', 2)->get();
     }
     public function render()
     {
+        if(Activity::where('slug', '=', 'Lectura')->first() === null)
+        {
+            $activity = new Activity();
+            $activity->name = "Lectura";
+            $activity->slug = "Lectura";
+            $activity->rules = "Lee el párrafo cuidadosamente y escoge la opción correcta!";
+            $activity->active = 1;
+            $activity->save();
+        }
+        $this->activityType = Activity::where('slug', '=', 'Lectura')->first();
         return view('livewire.reading-activity-management', ['lists' => ListExercise::where('user_id', '=', auth()->user()->id)
-            ->where('active', '=', 1)->paginate(3)]);
+            ->where('active', '=', 1)->where('activity_id', '=', $this->activityType->id)->paginate(3)]);
     }
     public function updated($propertyName)
     {
@@ -72,8 +101,13 @@ class ReadingActivityManagement extends Component
         $this->description="";
         $this->nameToEdit="";
         $this->diffToEdit="Fácil";
-        $this->word="";
-        $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)->get();
+        $this->paragraph = "";
+        $this->question = "";
+        $this->correctOption = "";
+        $this->incorrectOption1 = "";
+        $this->incorrectOption2 = "";
+        $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
+            ->where('activity_id', '=', 2)->get();
         if($this->tableActive)
         {
             $this->selectedGroup = ListExercise::find($this->selectedGroup->id);
@@ -121,16 +155,7 @@ class ReadingActivityManagement extends Component
         $this->validate(['name' => ['required', 'max:128', new IsDefault()]]);
         $list = new ListExercise();
         $list->name = $this->name;
-        if(Activity::where('slug', '=', 'Palabras')->first() === null)
-        {
-            $activity = new Activity();
-            $activity->name = "Palabras";
-            $activity->slug = "Palabras";
-            $activity->rules = "Ordena las palabras!";
-            $activity->active = 1;
-            $activity->save();
-        }
-        $list->activity_id = Activity::where('slug', '=', 'Palabras')->first()->id;
+        $list->activity_id = Activity::where('slug', '=', 'Lectura')->first()->id;
         $list->user_id = auth()->user()->id;
         if(Difficulty::where('name', '=', $this->difficulty)->first() === null)
         {
@@ -143,7 +168,7 @@ class ReadingActivityManagement extends Component
         $list->save();
         $list->owner()->associate(auth()->user()->id);
         $list->difficulty()->associate(Difficulty::where('name', '=', $this->difficulty)->first()->id);
-        $list->activity()->associate(Activity::where('slug', '=', 'Palabras')->first()->id);
+        $list->activity()->associate(Activity::where('slug', '=', 'Lectura')->first()->id);
         $this->resetOnClose();
         $this->dispatchBrowserEvent('group-added');
     }
@@ -187,18 +212,48 @@ class ReadingActivityManagement extends Component
         $this->dispatchBrowserEvent('list-removed');
     }
     public function addStudent(){
-        $this->validate(['word' => 'required|max:32'],
+        $this->validate(['paragraph' => 'required', 'question' => 'required|max:128', 'correctOption' => 'required|max:128',
+            'incorrectOption1' => 'required|max:128', 'incorrectOption2' => 'required|max:128',],
             [
-                'word.required' => 'Favor proveer una palabra.',
-                'word.max' => 'La palabra no puede exceder 32 caracteres.',
+                'paragraph.required' => 'Favor proveer un párrafo.',
+                'question.required' => 'Favor proveer una pregunta.',
+                'question.max' => 'La pregunta no debe exceder 128 caracteres.',
+                'correctOption.required' => 'Favor proveer la opción correcta.',
+                'correctOption.max' => 'El texto de la opción no debe exceder 128 caracteres.',
+                'incorrectOption1.required' => 'Favor proveer la opción incorrecta.',
+                'incorrectOption1.max' => 'El texto de la opción no debe exceder 128 caracteres.',
+                'incorrectOption2.required' => 'Favor proveer la opción incorrecta.',
+                'incorrectOption2.max' => 'El texto de la opción no debe exceder 128 caracteres.',
             ],
-            ['word' => 'Palabra']);
-        $wordToAdd = new Word();
-        $wordToAdd->difficulty_id = $this->selectedGroup->difficulty_id;
-        $wordToAdd->word = $this->word;
-        $wordToAdd->save();
-        $group = ListExercise::find($this->selectedGroup->id);
-        $group->words()->attach($wordToAdd);
+            ['paragraph' => 'Párrafo', 'question' => 'Pregunta', 'correctOption' => 'Opción Correcta',
+                'incorrectOption1' => 'Opción Incorrecta 1', 'incorrectOption2' => 'Opción Incorrecta 2']);
+        $paragraphToAdd = new Paragraph();
+        $paragraphToAdd->text = $this->paragraph;
+        $paragraphToAdd->save();
+        $questionToAdd = new Question();
+        $questionToAdd->paragraph_id = $paragraphToAdd->id;
+        $questionToAdd->list_id = $this->selectedGroup->id;
+        $questionToAdd->difficulty_id = $this->selectedGroup->difficulty_id;
+        $questionToAdd->question = $this->question;
+        $questionToAdd->save();
+        $this->selectedGroup->questions()->attach($questionToAdd);
+        $questionToAdd->paragraph()->associate($paragraphToAdd);
+        $correctOptionToAdd = new QuestionOption();
+        $correctOptionToAdd->question_id = $questionToAdd->id;
+        $correctOptionToAdd->option = $this->correctOption;
+        $correctOptionToAdd->is_correct = 1;
+        $correctOptionToAdd->save();
+        $incorrectOption1ToAdd = new QuestionOption();
+        $incorrectOption1ToAdd->question_id = $questionToAdd->id;
+        $incorrectOption1ToAdd->option = $this->incorrectOption1;
+        $incorrectOption1ToAdd->is_correct = 0;
+        $incorrectOption1ToAdd->save();
+        $incorrectOption2ToAdd = new QuestionOption();
+        $incorrectOption2ToAdd->question_id = $questionToAdd->id;
+        $incorrectOption2ToAdd->option = $this->incorrectOption2;
+        $incorrectOption2ToAdd->is_correct = 0;
+        $incorrectOption2ToAdd->save();
+        $questionToAdd->options()->saveMany([$correctOptionToAdd, $incorrectOption1ToAdd, $incorrectOption2ToAdd]);
         $this->dispatchBrowserEvent('student-added');
         $this->resetOnClose();
     }
@@ -225,8 +280,10 @@ class ReadingActivityManagement extends Component
      * @param $selectedStudent the student delete button that was selected.
      */
     public function removeWord(){
-        $this->selectedGroup->words()->detach($this->wordToRemove);
+        $this->selectedGroup->questions()->detach($this->wordToRemove);
         $this->resetOnClose();
         $this->dispatchBrowserEvent('word-removed');
     }
+
+
 }

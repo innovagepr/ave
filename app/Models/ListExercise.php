@@ -34,7 +34,7 @@ class ListExercise extends Model
     }
 
     public function questions(){
-        return $this->hasMany(Question::class);
+        return $this->belongsToMany(Question::class, 'list_questions', 'list_id');
     }
 
 }

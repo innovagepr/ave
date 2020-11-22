@@ -1,95 +1,5 @@
 {{-- The Master doesn't talk, he acts. --}}
 <div>
-    <!-- Custom styling for progress bar -->
-    <style>
-        .container1 {
-            width: 600px;
-            margin: 100px auto;
-        }
-        .progressbar {
-            counter-reset: step;
-        }
-        .progressbar li {
-            list-style-type: none;
-            width: 10%;
-            float: left;
-            font-size: 12px;
-            position: relative;
-            text-align: center;
-            text-transform: uppercase;
-            color: #7d7d7d;
-        }
-        .progressbar li:before {
-            width: 30px;
-            height: 30px;
-            content: counter(step);
-            counter-increment: step;
-            line-height: 30px;
-            border: 3px solid #7d7d7d;
-            display: block;
-            text-align: center;
-            margin: 0 auto 10px auto;
-            border-radius: 50%;
-            background-color: white;
-        }
-        .progressbar li:after {
-            width: 100%;
-            height: 4px;
-            content: '';
-            position: absolute;
-            background-color: #7d7d7d;
-            top: 15px;
-            left: -50%;
-            z-index: -1;
-        }
-        .progressbar li:first-child:after {
-            content: none;
-        }
-        .progressbar li.active {
-            color: green;
-        }
-        .progressbar li.active:before {
-            border-color: #55b776;
-        }
-        .progressbar li.active + li:after {
-            background-color: #55b776;
-        }
-        .iconAudio{
-            font-size: 40px;
-        }
-        .a {
-            display: inline-block;
-            position: relative;
-            margin: 1%;
-            float: left;
-            width: 70px;
-            height: 70px;
-            background-color: white;
-            border: 4px solid #2576AC;
-            text-align: center;
-            font-family: "Berlin Sans FB";
-            font-size: 45px;
-            vertical-align: center;
-        }
-        .b {
-            display: inline-block;
-            position: relative;
-            margin: 1%;
-            float: left;
-            width: 60px;
-            height: 60px;
-            background-color: white;
-            border: 4px solid #2576AC;
-            text-align: center;
-            font-family: "Berlin Sans FB";
-            font-size: 45px;
-            vertical-align: center;
-            cursor: pointer;
-        }
-        .b:hover{
-            background-color: lightskyblue;
-        }
-    </style>
 
     <!-- Modal that shows if child answers question correctly -->
     <div class="modal fade" id="modalCorrect" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
@@ -160,16 +70,16 @@
     <!-- Progress bar for activity -->
     <div class="main-block-ses">
         <ul class="progressbar">
-            <li id="0" class="{{$step == 0 ? 'active':''}}"></li>
-            <li id="1" class="{{$step == 1 ? 'active':''}}"></li>
-            <li id="2" class="{{$step == 2 ? 'active':''}}"></li>
-            <li id="3" class="{{$step == 3 ? 'active':''}}"></li>
-            <li id="4" class="{{$step == 4 ? 'active':''}}"></li>
-            <li id="5" class="{{$step == 5 ? 'active':''}}"></li>
-            <li id="6" class="{{$step == 6 ? 'active':''}}"></li>
-            <li id="7" class="{{$step == 7 ? 'active':''}}"></li>
-            <li id="8" class="{{$step == 8 ? 'active':''}}"></li>
-            <li id="9" class="{{$step == 9 ? 'active':''}}"></li>
+            <li id="0" class="{{$step == 0 ? 'active':''}}" wire:click="goTo({{0}})"></li>
+            <li id="1" class="{{$step == 1 ? 'active':''}}" wire:click="goTo({{1}})"></li>
+            <li id="2" class="{{$step == 2 ? 'active':''}}" wire:click="goTo({{2}})"></li>
+            <li id="3" class="{{$step == 3 ? 'active':''}}" wire:click="goTo({{3}})"></li>
+            <li id="4" class="{{$step == 4 ? 'active':''}}" wire:click="goTo({{4}})"></li>
+            <li id="5" class="{{$step == 5 ? 'active':''}}" wire:click="goTo({{5}})"></li>
+            <li id="6" class="{{$step == 6 ? 'active':''}}" wire:click="goTo({{6}})"></li>
+            <li id="7" class="{{$step == 7 ? 'active':''}}" wire:click="goTo({{7}})"></li>
+            <li id="8" class="{{$step == 8 ? 'active':''}}" wire:click="goTo({{8}})"></li>
+            <li id="9" class="{{$step == 9 ? 'active':''}}" wire:click="goTo({{9}})"></li>
         </ul>
     </div>
 
@@ -177,15 +87,16 @@
     <div class="container mt-10" style="background-color:#FFFFFF; width: 40%; margin-top: 10%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
 
         <pre>
-            {{ $exercises[$step]['Paragraph'] }}
+            {{ $currentExercise->paragraph->text }}
         </pre>
     </div>
     <form style="margin-left: 42%; margin-top: 2%">
         <fieldset>
-            <legend> {{ __("Escoge la opción correcta:") }}</legend>
-            @foreach($answers[$step]['options'] as $answer)
+            <span>{{ __('DEBUG:') }} {{ __($option) }}</span>
+            <legend> {{ __($currentExercise->question) }}</legend>
+            @foreach($currentExercise->options()->get()->shuffle() as $answer)
                 <div>
-                    <input name = "option" type="radio" value="{{ $answer }}" style="margin-right: 1%;" wire:model="option">{{ $answer }}
+                    <input name = "option" type="radio" value="{{ $answer }}" style="margin-right: 1%;" wire:model="option">{{ $answer->option }}
                 </div>
             @endforeach
             <div>
