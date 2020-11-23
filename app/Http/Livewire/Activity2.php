@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\ListExercise;
 use App\Models\Question;
+use App\Models\QuestionOption;
 use Livewire\Component;
 
 /**
@@ -30,9 +31,11 @@ class Activity2 extends Component
     public $tempAnswers = [];
     public $exerciseList;
     public $exercises;
+    public $answeredFlag = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     public $currentExercise;
     public $answers;
-    public $correctAnswers;
+    public $correctAnswer;
+    public $incorrectAnswer;
 
 
     public function resetOnAdvance(){
@@ -46,7 +49,7 @@ class Activity2 extends Component
         $this->option= $option;
     }
     public function goTo($step1){
-        if($this->step != $step1) {
+        if($this->step != $step1 && !$this->answeredFlag[$step1]) {
             $this->step = $step1;
             $this->currentExercise = $this->exercises[$this->step];
             $this->resetOnAdvance();
@@ -56,24 +59,36 @@ class Activity2 extends Component
      *Proceeds to the next exercise, and instructs the front-end to show a modal detailing if the exercise was correct or not.
      */
     public function nextExercise(){
-        if($this->step == 9){
-            $this->dispatchBrowserEvent('results' );
-        }
-        else{
             $this->validate();
+            $this->option = QuestionOption::find($this->option);
             if($this->option->is_correct){
                 $this->score++;
-                $this->dispatchBrowserEvent('correctAnswer' );
+                $this->dispatchBrowserEvent('correctAnswer');
             }
             else{
-                $this->dispatchBrowserEvent('incorrectAnswer' );
+                $this->incorrectAnswer = $this->option->option;
+                $this->correctAnswer = $this->currentExercise->options()->get()->where('is_correct', '=', 1)->first()->option;
+                $this->dispatchBrowserEvent('incorrectAnswer');
             }
-            $this->step++;
-            $this->exerciseNumber++;
-            $this->idNumber++;
-            $this->resetOnAdvance();
-        }
+                $this->answeredFlag[$this->step] = 1;
+            if($this->step === 9){
+                if(array_search(0, $this->answeredFlag) != FALSE)
+                {
+                    $this->goTo(array_search(0, $this->answeredFlag));
+                }
+                else{
+                    $this->dispatchBrowserEvent('results' );
+                }
+            }
+                else if ($this->answeredFlag[$this->step + 1] && $this->step + 1 < 9) {
+                    $this->goTo(array_search(0, $this->answeredFlag));
+                } else if ($this->answeredFlag[$this->step + 1] && $this->step + 1 == 9) {
+                    $this->dispatchBrowserEvent('results');
+                } else {
+                    $this->step++;
+                }
 
+                $this->resetOnAdvance();
     }
 
     /**

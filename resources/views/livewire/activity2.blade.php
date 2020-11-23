@@ -5,36 +5,48 @@
     <div class="modal fade" id="modalCorrect" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                    <span class="text-center">{{ __('¡Bien hecho!') }}</span>
+                <div>
+                    <h1 style ="font-family: Berlin Sans FB; font-size: 40px; color: #2576AC; text-align: center; margin: 10px;" >¡Bien Hecho!</h1>
+                    <h1 style ="font-family: Berlin Sans FB; font-size: 40px; color: #2576AC; text-align: center; margin: 10px;">Contestaste la pregunta correctamente.</h1>
                 </div>
 
                 <div class="modal-body" style="text-align: center;">
-                    <div class="mt-2">
-                        {{ __('¡Acertaste!') }}
-                    </div>
-                    <div class="mt-4">
+                    <p style="font-family: 'Berlin Sans FB'; font-size: 25px; vertical-align: middle; color: #19D519; margin: 10px;"><img style="width:35px; height:35px; float: inherit; vertical-align: middle; display: inline;" src="{{asset('images/satisfaction.png')}}"> +2 puntos</p>
+                    <p style="font-family: 'Berlin Sans FB'; font-size: 25px; vertical-align: middle; color: #19D519; margin: 10px;"><img style="width:35px; height:35px; float: inherit; vertical-align: middle; display: inline;" src="{{asset('images/savings.png')}}"> +5 monedas</p>
+                </div>
+                    <div class="mt-4" style="text-align: center;">
                         <button type="submit" data-dismiss="modal" class="button button1">
                             {{ __('Continuar') }}
                         </button>
                     </div>
-                </div>
             </div>
         </div>
     </div>
 
+
     <!-- Modal that shows if child answers question incorrectly -->
     <div class="modal fade" id="modalIncorrect" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                    <span class="text-center">{{ __('¡No te desanimes!') }}</span>
+            <div class="modal-content" style="border: 3px solid #2576AC; border-radius: 40px">
+                <div>
+                    <h1 style ="font-family: Berlin Sans FB; font-size: 40px; color: #2576AC; text-align: center; margin: 10px;">¡No te desanimes! La próxima vez te irá mejor.</h1>
                 </div>
 
                 <div class="modal-body" style="text-align: center;">
-                    <div class="mt-2">
-                        {{ __('La contestación correcta era ') }} {{ $key }}
-                    </div>
+                    <table style="text-align: center; font-family: 'Berlin Sans FB'; font-size: 25px; width:100%; border: 2px solid red; margin: 5px;">
+                        <tr>
+                            <th style="font-weight: lighter; text-align: center; color: #2576AC">Tu Respuesta  | </th>
+                            <th style="font-weight: lighter; text-align: center; color: #2576AC">Respuesta Correcta </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{$incorrectAnswer}}
+                            </td>
+                            <td style="color: #19D519">
+                                {{$correctAnswer}}
+                            </td>
+                        </tr>
+                    </table>
                     <div class="mt-4">
                         <button type="submit" data-dismiss="modal" class="button button1">
                             {{ __('Continuar') }}
@@ -96,7 +108,7 @@
             <legend> {{ __($currentExercise->question) }}</legend>
             @foreach($currentExercise->options()->get()->shuffle() as $answer)
                 <div>
-                    <input name = "option" type="radio" value="{{ $answer }}" style="margin-right: 1%;" wire:model="option">{{ $answer->option }}
+                    <input name = "option" type="radio" value="{{ $answer->id }}" style="margin-right: 1%;" wire:model="option">{{ $answer->option }}
                 </div>
             @endforeach
             <div>
