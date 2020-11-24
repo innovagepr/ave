@@ -100,5 +100,11 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
+    public function buystuff($cost){
+        $this->coins = $this->coins - $cost;
+        $this->save();
+    }
+
+
 }
 

@@ -14,4 +14,13 @@ class PetSummary extends Component
         return view('livewire.pet-summary');
     }
 
+    public function changeColor($color){
+        $this->pet->background_Color = $color;
+        $this->pet->save();
+        $this->pet = $this->pet->fresh();
+    }
+
+    public function quitHat(){
+        dd("Sombrero");
+    }
 }

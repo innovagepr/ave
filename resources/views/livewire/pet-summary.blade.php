@@ -20,7 +20,14 @@
             <div class="columnPet1">
                 <div class="dashboard-petCard" style="background-color: {{$pet->background_color}}">
                     {{--                    <img src="{{$pet->petType->icon_url}}">--}}
-                    <img style="width: 65%; height: 65%; margin: auto; display: block; margin-top: 20%" src="{{asset('images/dog.png')}}">
+                    <img style="width: 250px; height: 250px; margin: auto; display: block; margin-top: 20%" src="{{asset('images/dog.png')}}" usemap="#petmap">
+
+                    <map name="petmap">
+                        <area shape="circle" coords="125,0,40" alt="hat" wire:click="quitHat()">
+                        {{--                        <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">--}}
+                        {{--                        <area shape="circle" coords="337,300,44" alt="Cup of coffee" href="coffee.htm">--}}
+                    </map>
+
                 </div>
             </div>
             <div class="columnPet2">
@@ -52,22 +59,29 @@
                     <p >Color de Fondo:</p>
                 </div>
                 <div class="pet-row">
-                    <div class="colorBox" style="background-color: #52C5AB">
+                    <div class="colorBox" style="background-color: #52C5AB" wire:click="changeColor('#52C5AB')">
+                        {{--                        Aquí--}}
+
+                    </div>
+                    <div class="colorBox" style="background-color: lightgreen" wire:click="changeColor('lightgreen')">
+
+                    </div>
+                    <div class="colorBox" style="background-color: lightpink" wire:click="changeColor('lightpink')">
                         {{--                        Aquí--}}
                     </div>
-                    <div class="colorBox" style="background-color: lightgreen">
+                    <div class="colorBox" style="background-color: crimson" wire:click="changeColor('crimson')">
                         {{--                        Aquí--}}
                     </div>
-                    <div class="colorBox" style="background-color: lightpink">
+                    <div class="colorBox" style="background-color: #398BF6" wire:click="changeColor('#398BF6')">
                         {{--                        Aquí--}}
                     </div>
-                    <div class="colorBox" style="background-color: crimson">
+                    <div class="colorBox" style="background-color: goldenrod" wire:click="changeColor('goldenrod')">
                         {{--                        Aquí--}}
                     </div>
-                    <div class="colorBox" style="background-color: #398BF6">
+                    <div class="colorBox" style="background-color: purple" wire:click="changeColor('purple')">
                         {{--                        Aquí--}}
                     </div>
-                    <div class="colorBox" style="background-color: goldenrod">
+                    <div class="colorBox" style="background-color: coral" wire:click="changeColor('coral')">
                         {{--                        Aquí--}}
                     </div>
                 </div>
@@ -76,3 +90,10 @@
 
     </div>
 </div>
+
+<script>
+    function checkMark(){
+        var x = document.getElementById('check');
+        x.hidden;
+    }
+</script>
