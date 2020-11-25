@@ -48,9 +48,10 @@ class GroupManagement extends Component
     public $studentToRemove;
     public $members;
     public $email;
+    public $groupActive;
     public $studentID = 7;
     public $active = true;
-    public $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Eliminar");
+    public $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Activo", "Eliminar");
     public $students;
 
     /**
@@ -60,7 +61,7 @@ class GroupManagement extends Component
     public function render()
     {
         return view('livewire.group-management', ['groups' => Group::where('owner_id', '=', auth()->user()->id)
-                                                                        ->where('active', '=', 1)->paginate(3, ['*'], 'groups')]);
+                                                                            ->paginate(3, ['*'], 'groups')]);
     }
 
     public function mount(){
@@ -112,6 +113,14 @@ class GroupManagement extends Component
     public function editModal(){
         $this->nameToEdit = $this->selectedGroup->name;
         $this->descToEdit = $this->selectedGroup->description;
+        if($this->selectedGroup->active === 1)
+        {
+            $this->groupActive = true;
+        }
+        else
+            {
+            $this->groupActive = false;
+        }
         $this->dispatchBrowserEvent('editModal');
     }
 
@@ -168,6 +177,12 @@ class GroupManagement extends Component
                 'descToEdit' => 'Description to Edit']);
         $this->selectedGroup->name = $this->nameToEdit;
         $this->selectedGroup->description = $this->descToEdit;
+        if($this->groupActive === true){
+            $this->selectedGroup->active = 1;
+        }
+        else{
+            $this->selectedGroup->active = 0;
+        }
         $this->selectedGroup->save();
         $this->dispatchBrowserEvent('group-edited');
         $this->resetOnClose();

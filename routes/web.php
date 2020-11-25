@@ -4,6 +4,7 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\RegisterProvisional;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +29,13 @@ Route::get('/class', [ClassGroupController::class, 'index']);
 
 //Test-Albert:
 Route::get('/test', function(){
-    //return 'Hello World';
-    //return ['foo' => 'bar'];
-    //return view('test');
     $name = request('name');
     return $name;
 });
+
+Route::get('/register/provisional', function(){
+    return view('auth.register-provisional');
+})->name('register-provisional');
 
 Route::get('/homepage', function(){
     return view('homepage');

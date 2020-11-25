@@ -116,6 +116,37 @@
             </div>
         </div>
     @endif
+    @if($selectedGroup === 0 || $selectedGroup)
+        <div class="modal fade" id="modalEditWord" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
+                        <p class="text-center">{{ __('Editar Palabra') }}</p>
+                    </div>
+
+                    <div class="modal-body" style="text-align: center;">
+                        <form>
+                            <div class="mt-2">
+                                <x-jet-label for="group_name" value="{{ __('Escriba la palabra a ser editada:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                                <x-jet-input id="group_name" type="text" style="display: inline-block; width:80%;" name="group_name" wire:model="word"/>
+                                <div>
+                                    @error('word') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" wire:click.prevent="editWord()" class="button button1">
+                                    {{ __('Añadir') }}
+                                </button>
+                            </div>
+                        </form>
+                        <i type="button" class="close" wire:click.prevent="resetOnClose()" data-dismiss="modal" aria-label="Close" style="float: left; cursor: pointer; color: #8F8F8F;">
+                            <span class="fa fa-arrow-alt-circle-left fa-2x"></span>
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     @if($tableActive)
         <div class="modal fade" id="modalRegStudent" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -248,11 +279,26 @@
                                     @endif
                                         <x-table.cell> {{ __($g->difficulty->name) }} </x-table.cell>
                                         <x-table.cell> {{ __(count($g->words()->get())) }} </x-table.cell>
-                                    {{--@if($g->groups()->first() === null)
+                                    @if($g->groups()->first() === null)
                                         <x-table.cell> {{ __('Ninguno') }}</x-table.cell>
                                     @else
-                                        <x-table.cell> {{ __($g->groups()->first()) }} </x-table.cell>
-                                    @endif--}}
+                                        <x-table.cell>
+                                            @foreach($g->groups()->get() as $gs)
+                                            <div>{{ __($gs->name) }}</div>
+                                            @endforeach
+                                            @if($g->users()->first())
+                                                @foreach($g->users()->get() as $gp)
+                                                        <div>{{ __($gp->fullname) }}</div>
+                                                    @endforeach
+                                                @endif
+                                        </x-table.cell>
+
+                                    @endif
+                                        @if($g->active === 1)
+                                            <x-table.cell>{{__('Sí')}}</x-table.cell>
+                                        @else
+                                            <x-table.cell>{{__('No')}}</x-table.cell>
+                                        @endif
                                     @if($g->name === "Default")
                                         <x-table.cell>{{__(' ')}}</x-table.cell>
                                     @else
@@ -299,7 +345,9 @@
 
                                 @foreach($selectedGroup->words()->get() as $g)
                                     <x-table.row>
-                                        <x-table.cell>{{__($g->word)}}</x-table.cell>
+                                        <x-table.cell>
+                                            <a href="/#" wire:click.prevent="editWordModal({{ $g->id }})" style="text-decoration: none;">{{__($g->word)}}</a>
+                                        </x-table.cell>
                                         <x-table.cell>
                                             <a href="#" class="text-danger error">
                                                 <span href="#" class="fa fa-trash-alt" wire:click.prevent="removeWordModal({{ $g->id }})"></span>
@@ -341,6 +389,12 @@
         })
     </script>
     <script>
+        window.addEventListener('editWordModal', event => {
+            $("#modalEditWord").addClass("fade");
+            $("#modalEditWord").modal('show');
+        })
+    </script>
+    <script>
         window.addEventListener('assignListModal', event => {
             $("#modalRegStudent").addClass("fade");
             $("#modalRegStudent").modal('show');
@@ -377,6 +431,13 @@
         window.addEventListener('student-added', event => {
             $("#modalAddStudent").modal('hide');
             $("#modalAddStudent").removeClass("fade");
+            $(".modal-backdrop").remove();
+        })
+    </script>
+    <script>
+        window.addEventListener('word-edited', event => {
+            $("#modalEditWord").modal('hide');
+            $("#modalEditWord").removeClass("fade");
             $(".modal-backdrop").remove();
         })
     </script>

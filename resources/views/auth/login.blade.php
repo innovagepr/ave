@@ -22,8 +22,6 @@
 <i type="button" onclick="location.href='/homepage'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
     <span class="fa fa-home fa-5x"></span>
 </i>
-<!-- Allows for validation of user account information -->
-    <x-jet-validation-errors class="mb-4" />
 
     @if (session('status'))
         <div class="mb-4 font-medium text-sm text-green-600">
@@ -33,7 +31,10 @@
 
 <!-- Login form -->
     <div class="container-fluid mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
-    <form method="POST" action="{{ route('login') }}">
+        <!-- Allows for validation of user account information -->
+        <x-jet-validation-errors class="mb-4" />
+
+        <form method="POST" action="{{ route('login') }}">
         @csrf
                 <div class="mt-4">
             <a style="color: #2576AC; font-size:4rem;">{{ __('Iniciar Sesión') }}</a>
@@ -69,21 +70,32 @@
         </div>
         <div><hr class="mt-4" style="width:96%; border-color: #2576AC; border-width:2px; border-style: solid;"></div>
         <div class="mt-4" style="color: #2576AC;">
-            <a>
+            <a style="text-align: left;">
                 {{ __('¿No tiene cuenta aún?') }}
+            </a>
+            <a>
+                {{ __('¿Tiene credenciales provisionales?') }}
             </a>
         </div>
     </form>
     <form method="GET" action="{{ route('register') }}">
         @csrf
-        <div class="mt-4">
-            <button class="button button1">
+            <button class="button button1 inline-flex">
                 {{ __('Crear Cuenta') }}
             </button>
-        </div>
-
     </form>
+        <form method="GET" action="{{ route('register-provisional') }}">
+            @csrf
+        <button class="button button1 inline-flex">
+            {{ __('Activar cuenta') }}
+        </button>
+        </form>
+        </form>
+
     </div>
+    </div>
+
+
 
 <!-- Footer with modal for contact information and information about team -->
     @extends('layouts/contactModalLayout')

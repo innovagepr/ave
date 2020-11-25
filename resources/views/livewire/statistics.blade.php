@@ -28,15 +28,15 @@
             <select id="group" name="filter" wire:model="filter">
                 @if($option === 'Grupo')
                 @foreach($groups as $l)
-                    <option value="{{ $l['id'] }}">{{ $l['name'] }}</option>
+                    <option value="{{ $l->id }}">{{ $l->name }}</option>
                 @endforeach
                     @elseif($option === 'Estudiante')
                     @foreach($students as $l)
-                        <option value="{{ $l['id'] }}">{{ $l['name'] }}</option>
+                        <option value="{{ $l->id }}">{{ $l->fullname }}</option>
                     @endforeach
                 @else
                     @foreach($activities as $l)
-                        <option value="{{ $l['id'] }}">{{ $l['name'] }}</option>
+                        <option value="{{ $l->id }}">{{ $l->name }}</option>
                     @endforeach
                     @endif
 
@@ -45,8 +45,8 @@
         </div>
         @if($option === 'Grupo')
         <div class="mt-0">
-            <div>{{ __('Total de Miembros Activos: ') }} {{ $activeMembers[$filter]['numberActive'] }}</div>
-            <div>{{ __('Total de Participantes: ') }} {{ $totalParticipants[$filter]['total'] }}</div>
+            <div>{{ __('Total de Miembros Activos: ') }} {{ count($activeMembers) }}</div>
+            <div>{{ __('Total de Participantes: ') }} {{ count($totalParticipants) }}</div>
         </div>
             @endif
     </div>
@@ -60,6 +60,32 @@
                 <option value="Medio">{{ __('Medio') }}</option>
                 <option value="Difícil">{{ __('Difícil') }}</option>
             </select>
+        </div>
+        <div>
+            <x-jet-label for="difficulty" value="{{ __('Mes:') }}" />
+            <select id="month" name="month" wire:model="month">
+                @foreach($months as $m)
+                    <option value="{{$m}}"> {{ __($m) }} </option>
+                @endforeach
+            </select>
+        </div>
+
+    </div>
+
+    <div class="container" style="float: inside; text-align: right;">
+        <div>
+            <i class="fas fa-book-reader"></i>
+            <x-jet-label for="statsReading" value="{{ __('Lectura') }}"/>
+            <div>
+                <span> {{ __('No hay récords disponibles al momento.') }} </span>
+            </div>
+        </div>
+        <div>
+            <i class="fas fa-pencil-ruler"></i>
+            <x-jet-label for="statsWords" value="{{ __('Palabras') }}"/>
+            <div>
+                <span> {{ __('No hay récords disponibles al momento.') }} </span>
+            </div>
         </div>
 
     </div>

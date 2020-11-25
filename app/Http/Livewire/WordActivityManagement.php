@@ -28,6 +28,7 @@ class WordActivityManagement extends Component
     public $name;
     public $tableActive;
     public $word;
+    public $wordToEdit;
     public $difficulty= "Fácil";
     public $nameToEdit;
     public $diffToEdit;
@@ -49,9 +50,8 @@ class WordActivityManagement extends Component
     public $activityType;
     public $studentID = 7;
     public $active = true;
-    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Grupo", "Eliminar");
+    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Asignado a", "Activa", "Eliminar");
     public $headersStudents = array("Palabra", "Eliminar");
-    //public $lists;
     public function mount()
     {
         if(Activity::where('slug', '=', 'Palabras')->first() === null)
@@ -112,6 +112,11 @@ class WordActivityManagement extends Component
     }
     public function newStudentModal(){
         $this->dispatchBrowserEvent('newStudentModal');
+    }
+    public function editWordModal($selectedWord){
+        $this->wordToEdit = Word::find($selectedWord);
+        $this->word = $this->wordToEdit->word;
+        $this->dispatchBrowserEvent('editWordModal');
     }
     public function assignListModal(){
         $this->dispatchBrowserEvent('assignListModal');
@@ -216,6 +221,11 @@ class WordActivityManagement extends Component
         $group->words()->attach($wordToAdd);
         $this->dispatchBrowserEvent('student-added');
         $this->resetOnClose();
+    }
+    public function editWord(){
+        $this->wordToEdit->word = $this->word;
+        $this->wordToEdit->save();
+        $this->dispatchBrowserEvent('word-edited');
     }
     public function assignList(){
 
