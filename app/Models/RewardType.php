@@ -10,9 +10,6 @@ class RewardType extends Model
 {
     use HasFactory;
 
-
-
-
     public function owned(){
 
         $rewards = Auth::user()->rewards;
