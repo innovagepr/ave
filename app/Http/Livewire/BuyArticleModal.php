@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Reward;
+use App\Models\RewardType;
 use Livewire\Component;
 use phpDocumentor\Reflection\Location;
 
@@ -28,8 +29,6 @@ class BuyArticleModal extends Component
         $user->buystuff($itemprice);
         $user->save();
         $this->open = true;
-//        Reward::Refresh();
-
     }
 
     public function render()

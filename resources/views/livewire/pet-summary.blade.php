@@ -19,14 +19,14 @@
         <div class="pet-row">
             <div class="columnPet1">
                 <div class="dashboard-petCard" style="background-color: {{$pet->background_color}}">
-                    {{--                    <img src="{{$pet->petType->icon_url}}">--}}
-                    <img style="width: 250px; height: 250px; margin: auto; display: block; margin-top: 20%" src="{{asset('images/dog.png')}}" usemap="#petmap">
+                    <img style="width: 250px; height: 250px; margin: auto; display: block; margin-top: 20%" src="{{$pet->petType->icon_url}}">
+                    {{--                    <img style="width: 250px; height: 250px; margin: auto; display: block; margin-top: 20%" src="{{asset('images/dog.png')}}" usemap="#petmap">--}}
 
-                    <map name="petmap">
-                        <area shape="circle" coords="125,0,40" alt="hat" wire:click="quitHat()">
-                        {{--                        <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">--}}
-                        {{--                        <area shape="circle" coords="337,300,44" alt="Cup of coffee" href="coffee.htm">--}}
-                    </map>
+                    {{--                    <map name="petmap">--}}
+                    {{--                        <area shape="circle" coords="125,0,40" alt="hat" wire:click="quitHat()" style="cursor: pointer">--}}
+                    {{--                        --}}{{--                        <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">--}}
+                    {{--                        --}}{{--                        <area shape="circle" coords="337,300,44" alt="Cup of coffee" href="coffee.htm">--}}
+                    {{--                    </map>--}}
 
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         @if($pet->petType->slug=='perro')
                             <img class="level-img" src="{{asset('images/dogadult.png')}}">
                         @else
-                            <img class="level-img" src="{{asset('images/catadult.png.png')}}">
+                            <img class="level-img" src="{{asset('images/catadult.png')}}">
                         @endif
                     </div>
                 </div>
@@ -54,7 +54,16 @@
                 </div>
 
                 <div class="pet-articles-card">
+                    @foreach($data['rewards'] as $item)
+                        @if($item->owned())
+                            <div class="article-box" wire:click="buildAvatar()">
+                                <img class ="img-grid-pet" src="{{$item->image_url}}">
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
+
+
                 <div class="article-text">
                     <p >Color de Fondo:</p>
                 </div>

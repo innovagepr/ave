@@ -39,6 +39,6 @@ class SelectPetModal extends Component
             'name'=>$this->name
         ]);
         $user->save();
-        return view ('livewire.child-summary');
+        return redirect('/dashboard');
     }
 }

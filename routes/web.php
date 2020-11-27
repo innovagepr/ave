@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(['verify' => true]);
+//Auth::routes(['verify' => true]);
 Route::get('/', function () {
     return view('homepage');
 });
@@ -95,3 +95,5 @@ Route::get('/editarPerfil', function (){
 });
 
 Route::get('/tienda',[RewardController::class, 'index']);
+
+Route::get('/seleccionar-mascota',[PetController::class, 'select']);
