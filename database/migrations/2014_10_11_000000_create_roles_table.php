@@ -13,6 +13,7 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
+        DB::statement('SET SESSION sql_require_primary_key=0');
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name', 128);
