@@ -21,6 +21,7 @@ class CreateGroupsTable extends Migration
             $table->text('description');
             $table->date('date_created');
             $table->integer('active');
+            $table->boolean('deleted');
             $table->timestamps();
         });
     }

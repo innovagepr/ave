@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\LoginRecord;
 use App\Models\Pet;
 use App\Models\PetType;
 use App\Models\User;
@@ -64,13 +65,22 @@ class CreateNewUser implements CreatesNewUsers
             }
         }
 
-        return User::create([
+        $user = User::create([
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
             'role_id' => $input['role_id'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'dob'=> $input['dob'],
+            'deleted' => 0,
         ]);
+        $loginRecord = new LoginRecord();
+        $loginRecord->user_id = $user->id;
+        $loginRecord->type = 'login';
+        $loginRecord->date = now();
+        $loginRecord->created_at = now();
+        $loginRecord->updated_at = now();
+        $loginRecord->save();
+        return $user;
     }
 }

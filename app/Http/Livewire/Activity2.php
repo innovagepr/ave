@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\ListExercise;
+use App\Models\Question;
+use App\Models\QuestionOption;
 use Livewire\Component;
 
 /**
@@ -25,35 +28,19 @@ class Activity2 extends Component
     public $score = 0;
     public $option;
     public $studentAnswers = array();
-    public $exerciseList = array("#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9", "#10");
-    public $exercises = array(array("id" => 1, "Paragraph" => "Hola, Santiago: Te escribo porque quiero invitarte a ver
-    una Película en mi casa. Mi mamá dice que puede ser el sábado que viene.\n Invité a Josué y a Omar, así que no te la
-    puedes perder. \n Te espero, \nTu amigo Ismael"), array("id" => 2, "Paragraph" => "Párrafo de prueba 2"),
-        array("id" => 3, "Paragraph" => "Párrafo de prueba 3"), array("id" => 4, "Paragraph" => "Párrafo de prueba 4"),
-        array("id" => 5, "Paragraph" => "Párrafo de prueba 5"), array("id" => 6, "Paragraph" => "Párrafo de prueba 6"),
-        array("id" => 7, "Paragraph" => "Párrafo de prueba 7"), array("id" => 8, "Paragraph" => "Párrafo de prueba 8"),
-        array("id" => 9, "Paragraph" => "Párrafo de prueba 9"), array("id" => 10, "Paragraph" => "Párrafo de prueba 10"));
-    public $answers = array(array("id" =>1, "options" => array("Cambiar invitarte por inbitarte", "Cambiar Película por película",
-        "Cambiar casa por caza")), array("id" =>2, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>3, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>4, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>5, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>6, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>7, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>8, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>9, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")),
-        array("id" =>10, "options" => array("opción correcta", "opción incorrecta 1", "opción incorrecta 2")));
-    public $correctAnswers = array(array( "id" => 1, "key" => "Cambiar Película por película"),
-                                    array("id" => 2, "key" => "opción correcta"),
-                                    array("id" => 3, "key" => "opción correcta"),
-        array("id" => 4, "key" => "opción correcta"),
-        array("id" => 5, "key" => "opción correcta"),
-        array("id" => 6, "key" => "opción correcta"),
-        array("id" => 7, "key" => "opción correcta"),
-        array("id" => 8, "key" => "opción correcta"),
-        array("id" => 9, "key" => "opción correcta"),
-        array("id" => 10, "key" => "opción correcta"));
+    public $tempAnswers = [];
+    public $exerciseList;
+    public $exercises;
+    public $answeredFlag = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    public $currentExercise;
+    public $answers;
+    public $correctAnswer;
+    public $incorrectAnswer;
 
+
+    public function resetOnAdvance(){
+        $this->option = "";
+    }
     /**
      * Sets the currently selected answer based on the radio button that is pressed.
      * @param $option the answer that has been chosen
@@ -61,30 +48,47 @@ class Activity2 extends Component
     public function setAnswer($option){
         $this->option= $option;
     }
-
+    public function goTo($step1){
+        if($this->step != $step1 && !$this->answeredFlag[$step1]) {
+            $this->step = $step1;
+            $this->currentExercise = $this->exercises[$this->step];
+            $this->resetOnAdvance();
+        }
+    }
     /**
      *Proceeds to the next exercise, and instructs the front-end to show a modal detailing if the exercise was correct or not.
      */
     public function nextExercise(){
-        $this->key = $this->correctAnswers[$this->exerciseNumber]['key'];
-        if($this->step == 9){
-            $this->dispatchBrowserEvent('results' );
-        }
-        else{
             $this->validate();
-            if($this->option === $this->correctAnswers[$this->exerciseNumber]['key']){
+            $this->option = QuestionOption::find($this->option);
+            if($this->option->is_correct){
                 $this->score++;
-                $this->dispatchBrowserEvent('correctAnswer' );
+                $this->dispatchBrowserEvent('correctAnswer');
             }
             else{
-                $this->dispatchBrowserEvent('incorrectAnswer' );
+                $this->incorrectAnswer = $this->option->option;
+                $this->correctAnswer = $this->currentExercise->options()->get()->where('is_correct', '=', 1)->first()->option;
+                $this->dispatchBrowserEvent('incorrectAnswer');
             }
-            $this->step++;
-            $this->exerciseNumber++;
-            $this->idNumber++;
+                $this->answeredFlag[$this->step] = 1;
+            if($this->step === 9){
+                if(array_search(0, $this->answeredFlag) != FALSE)
+                {
+                    $this->goTo(array_search(0, $this->answeredFlag));
+                }
+                else{
+                    $this->dispatchBrowserEvent('results' );
+                }
+            }
+                else if ($this->answeredFlag[$this->step + 1] && $this->step + 1 < 9) {
+                    $this->goTo(array_search(0, $this->answeredFlag));
+                } else if ($this->answeredFlag[$this->step + 1] && $this->step + 1 == 9) {
+                    $this->dispatchBrowserEvent('results');
+                } else {
+                    $this->step++;
+                }
 
-        }
-
+                $this->resetOnAdvance();
     }
 
     /**
@@ -95,5 +99,12 @@ class Activity2 extends Component
     public function render()
     {
         return view('livewire.activity2');
+    }
+
+    public function mount(){
+    $this->exercises = ListExercise::find(3)->questions()->get();
+    $this->exercises = $this->exercises->shuffle();
+    $this->currentExercise = $this->exercises[0];
+
     }
 }

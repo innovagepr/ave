@@ -68,6 +68,11 @@
                                     <option value="Difícil">{{ __('Difícil') }}</option>
                                 </select>
                             </div>
+                            <div class="mt-0">
+                                <x-jet-label for="difficulty" value="{{ __('Activa:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                                <input type="checkbox" id="difficulty" name="difficulty" wire:model="listActive">
+                            </div>
+
 
                             <div class="mt-4">
                                 <button type="submit" wire:click.prevent="editGroup()" class="button button1">
@@ -104,6 +109,37 @@
                             </div>
                             <div class="mt-4">
                                 <button type="submit" wire:click.prevent="addStudent()" class="button button1">
+                                    {{ __('Añadir') }}
+                                </button>
+                            </div>
+                        </form>
+                        <i type="button" class="close" wire:click.prevent="resetOnClose()" data-dismiss="modal" aria-label="Close" style="float: left; cursor: pointer; color: #8F8F8F;">
+                            <span class="fa fa-arrow-alt-circle-left fa-2x"></span>
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    @if($selectedGroup === 0 || $selectedGroup)
+        <div class="modal fade" id="modalEditWord" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
+                        <p class="text-center">{{ __('Editar Palabra') }}</p>
+                    </div>
+
+                    <div class="modal-body" style="text-align: center;">
+                        <form>
+                            <div class="mt-2">
+                                <x-jet-label for="group_name" value="{{ __('Escriba la palabra a ser editada:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                                <x-jet-input id="group_name" type="text" style="display: inline-block; width:80%;" name="group_name" wire:model="word"/>
+                                <div>
+                                    @error('word') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" wire:click.prevent="editWord()" class="button button1">
                                     {{ __('Añadir') }}
                                 </button>
                             </div>
@@ -195,7 +231,7 @@
                     </div>
 
                     <div class="modal-body" style="text-align: center;">
-                        <p>{{ __('¿Está seguro que quiere remover la palabra') }} {{ $studentToRemove->fullname }} {{ __('de la lista?') }}</p>
+                        <p>{{ __('¿Está seguro que quiere remover la palabra') }} {{ $wordToRemove->word }} {{ __('de la lista?') }}</p>
                         <div class="mt-4">
                             <button type="submit" wire:click.prevent="removeWord()" class="button button1" style="width: 20%">
                                 {{ __('Sí') }}
@@ -223,9 +259,15 @@
                     <i class="fa fa-edit"></i>
                     {{ __('Editar lista') }}
                 </button>
+                @if(count($selectedGroup->words()->get()) >= 10)
+                    <button class="button button1" href="#" wire:click.prevent="assignListModal()" style="float:right; width: 20%; height: 2%; font-size: 1.2rem;">
+                        <i class="fas fa-user-plus"></i>
+                        {{ __('Asignar lista') }}
+                    </button>
+                    @endif
                     @endif
             </div>
-            <div class="py simple-table align-middle text-center inline-block max-w-5xl sm:px-6 lg:px-8">
+            <div class="py simple-table align-middle text-center inline-block max-w-5xl sm:px-6 lg:px-8" style="word-wrap: break-word;">
                 <x-jet-label class="m-auto" style="float:left;">{{__('Listas')}}</x-jet-label>
                 <x-table>
                     <x-slot name="head">
@@ -237,7 +279,6 @@
                         <x-slot name="body">
 
                             @foreach($lists as $g)
-                                @if(($g->active === 1))
                                 <x-table.row>
                                     @if($g->name === 'Default')
                                         <x-table.cell>{{__($g->name)}}</x-table.cell>
@@ -248,11 +289,25 @@
                                     @endif
                                         <x-table.cell> {{ __($g->difficulty->name) }} </x-table.cell>
                                         <x-table.cell> {{ __(count($g->words()->get())) }} </x-table.cell>
-                                    {{--@if($g->groups()->first() === null)
+                                    @if($g->groups()->first() === null)
                                         <x-table.cell> {{ __('Ninguno') }}</x-table.cell>
                                     @else
-                                        <x-table.cell> {{ __($g->groups()->first()) }} </x-table.cell>
-                                    @endif--}}
+                                        <x-table.cell>
+                                            @foreach($g->groups()->get() as $gs)
+                                            <div>{{ __($gs->name) }}</div>
+                                            @endforeach
+                                            @if($g->users()->first())
+                                                    @foreach($g->users()->get() as $gp)
+                                                        <div>{{ __($gp->fullname) }}</div>
+                                                    @endforeach
+                                            @endif
+                                        </x-table.cell>
+                                    @endif
+                                        @if($g->active === 1)
+                                            <x-table.cell>{{__('Sí')}}</x-table.cell>
+                                        @else
+                                            <x-table.cell>{{__('No')}}</x-table.cell>
+                                        @endif
                                     @if($g->name === "Default")
                                         <x-table.cell>{{__(' ')}}</x-table.cell>
                                     @else
@@ -263,9 +318,7 @@
                                         </x-table.cell>
                                     @endif
                                 </x-table.row>
-                                @endif
                             @endforeach
-
                         </x-slot>
                     </div>
                 </x-table>
@@ -281,10 +334,6 @@
                         <i class="fa fa-plus"></i>
                         {{ __('Añadir palabra') }}
                     </button>
-                    <button class="button button1" href="#" wire:click.prevent="assignListModal()" style="float:right; width: 40%; height: 2%; font-size: 1.2rem;">
-                        <i class="fas fa-user-plus"></i>
-                        {{ __('Asignar lista') }}
-                    </button>
                 </div>
                 <div class="py simple-table align-middle text-center inline-block max-w-2xl sm:px-6 lg:px-8">
                     <x-jet-label class="m-auto" style="float:left;">{{ $selectedGroup->name }}</x-jet-label>
@@ -299,10 +348,12 @@
 
                                 @foreach($selectedGroup->words()->get() as $g)
                                     <x-table.row>
-                                        <x-table.cell>{{__($g->word)}}</x-table.cell>
+                                        <x-table.cell>
+                                            <a href="/#" wire:click.prevent="editWordModal({{ $g->id }})" style="text-decoration: none;">{{__($g->word)}}</a>
+                                        </x-table.cell>
                                         <x-table.cell>
                                             <a href="#" class="text-danger error">
-                                                <span href="#" class="fa fa-trash-alt" wire:click.prevent="removeWordModal({{ $g->id }}})"></span>
+                                                <span href="#" class="fa fa-trash-alt" wire:click.prevent="removeWordModal({{ $g->id }})"></span>
                                             </a>
                                         </x-table.cell>
                                     </x-table.row>
@@ -338,6 +389,12 @@
         window.addEventListener('newStudentModal', event => {
             $("#modalAddStudent").addClass("fade");
             $("#modalAddStudent").modal('show');
+        })
+    </script>
+    <script>
+        window.addEventListener('editWordModal', event => {
+            $("#modalEditWord").addClass("fade");
+            $("#modalEditWord").modal('show');
         })
     </script>
     <script>
@@ -377,6 +434,13 @@
         window.addEventListener('student-added', event => {
             $("#modalAddStudent").modal('hide');
             $("#modalAddStudent").removeClass("fade");
+            $(".modal-backdrop").remove();
+        })
+    </script>
+    <script>
+        window.addEventListener('word-edited', event => {
+            $("#modalEditWord").modal('hide');
+            $("#modalEditWord").removeClass("fade");
             $(".modal-backdrop").remove();
         })
     </script>

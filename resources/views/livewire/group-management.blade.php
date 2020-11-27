@@ -66,6 +66,13 @@
                                 @error('descToEdit') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                         </div>
+                        <div class="mt-0">
+                            <x-jet-label for="description" value="{{ __('Activo:') }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; color: #050404;" />
+                            <input id="groupActive" type="checkbox" style="display: inline-block;" name="groupActive" wire:model="groupActive">
+                            <div>
+                                @error('descToEdit') <span class="text-danger error">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
                         <div class="mt-4">
                             <button type="submit" wire:click.prevent="editGroup()" class="button button1">
                                 {{ __('Salvar') }}
@@ -145,6 +152,11 @@
                                 </x-table.cell>
                                 <x-table.cell>{{__($g->date_created)}}</x-table.cell>
                                 <x-table.cell>{{__(count($g->members()->get()))}}</x-table.cell>
+                                @if($g->active === 1)
+                                    <x-table.cell>{{__('Sí')}}</x-table.cell>
+                                @else
+                                    <x-table.cell>{{__('No')}}</x-table.cell>
+                                @endif
                                 <x-table.cell>
                                     <a href="#" class="text-danger">
                                         <span class="fa fa-trash-alt" wire:click.prevent="removeGroupModal({{ $g->id }})"></span>

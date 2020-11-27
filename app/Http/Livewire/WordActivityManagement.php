@@ -18,6 +18,7 @@ class WordActivityManagement extends Component
     use WithPagination;
     protected $rules = [
         'name' => 'required|max:128',
+        'diffToEdit' => 'required'
 
     ];
     protected $messages = [
@@ -27,7 +28,9 @@ class WordActivityManagement extends Component
     public $tempDate;
     public $name;
     public $tableActive;
+    public $listActive;
     public $word;
+    public $wordToEdit;
     public $difficulty= "Fácil";
     public $nameToEdit;
     public $diffToEdit;
@@ -46,20 +49,43 @@ class WordActivityManagement extends Component
     public $creationdate;
     public $members;
     public $email;
+    public $activityType;
     public $studentID = 7;
     public $active = true;
-    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Grupo", "Eliminar");
+    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Asignado a", "Activa", "Eliminar");
     public $headersStudents = array("Palabra", "Eliminar");
-    //public $lists;
     public function mount()
     {
-        $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)->get();
+        if(Activity::where('slug', '=', 'Palabras')->first() === null)
+        {
+            $activity = new Activity();
+            $activity->name = "Palabras";
+            $activity->slug = "Palabras";
+            $activity->rules = "Ordena las palabras!";
+            $activity->active = 1;
+            $activity->save();
+        }
+        $this->activityType = Activity::where('slug', '=', 'Palabras')->first();
+        $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
+                                    ->where('activity_id', '=', $this->activityType->id)->get();
     }
     public function render()
     {
+        if(Activity::where('slug', '=', 'Palabras')->first() === null)
+        {
+            $activity = new Activity();
+            $activity->name = "Palabras";
+            $activity->slug = "Palabras";
+            $activity->rules = "¡Ordena las palabras!";
+            $activity->active = 1;
+            $activity->save();
+        }
+        $this->activityType = Activity::where('slug', '=', 'Palabras')->first();
         return view('livewire.word-activity-management', ['lists' => ListExercise::where('user_id', '=', auth()->user()->id)
-                                                                ->where('active', '=', 1)->paginate(3)]);
+                                                                ->where('deleted', '=', 0)
+                                                                ->where('activity_id', '=', $this->activityType->id)->paginate(3)]);
     }
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -89,6 +115,11 @@ class WordActivityManagement extends Component
     public function newStudentModal(){
         $this->dispatchBrowserEvent('newStudentModal');
     }
+    public function editWordModal($selectedWord){
+        $this->wordToEdit = Word::find($selectedWord);
+        $this->word = $this->wordToEdit->word;
+        $this->dispatchBrowserEvent('editWordModal');
+    }
     public function assignListModal(){
         $this->dispatchBrowserEvent('assignListModal');
     }
@@ -103,14 +134,19 @@ class WordActivityManagement extends Component
         {
             $this->selectedGroup = ListExercise::find($groupNumber);
             $this->groups = Group::where('owner_id', '=', auth()->user()->id)->get()
-                                    ->where('active', '=', 1);
+                ->where('active', '=', 1);
+            $this->listActive = $this->selectedGroup->active;
             $tempResult = Group::with('members')->where('owner_id', '=', auth()->user()->id)
-                ->where('active', '=', 1)->get()->pluck('members')->all();
+                ->where('deleted', '=', 0)->get()->pluck('members')->all();
             $this->students = new Collection();
+            if($tempResult)
+            {
             for($j=0; $j < count($tempResult); $j++){
                 $tempResult[0] = $tempResult[0]->merge($tempResult[$j]);
             }
-            $this->students = $tempResult[0];
+                $this->students = $tempResult[0];
+            }
+
             $this->tableActive = 1;
 
         }
@@ -120,16 +156,8 @@ class WordActivityManagement extends Component
         $this->validate(['name' => ['required', 'max:128', new IsDefault()]]);
         $list = new ListExercise();
         $list->name = $this->name;
-        if(Activity::where('slug', '=', 'Lectura')->first() === null)
-        {
-            $activity = new Activity();
-            $activity->name = "Lectura";
-            $activity->slug = "Lectura";
-            $activity->rules = "Lee el párrafo cuidadosamente y escoge la opción correcta!";
-            $activity->active = 1;
-            $activity->save();
-        }
-        $list->activity_id = Activity::where('slug', '=', 'Lectura')->first()->id;
+
+        $list->activity_id = Activity::where('slug', '=', 'Palabras')->first()->id;
         $list->user_id = auth()->user()->id;
         if(Difficulty::where('name', '=', $this->difficulty)->first() === null)
         {
@@ -139,10 +167,11 @@ class WordActivityManagement extends Component
         }
         $list->difficulty_id = Difficulty::where('name', '=', $this->difficulty)->first()->id;
         $list->active = 1;
+        $list->deleted = 0;
         $list->save();
         $list->owner()->associate(auth()->user()->id);
         $list->difficulty()->associate(Difficulty::where('name', '=', $this->difficulty)->first()->id);
-        $list->activity()->associate(Activity::where('slug', '=', 'Lectura')->first()->id);
+        $list->activity()->associate(Activity::where('slug', '=', 'Palabras')->first()->id);
         $this->resetOnClose();
         $this->dispatchBrowserEvent('group-added');
     }
@@ -152,17 +181,21 @@ class WordActivityManagement extends Component
             [
                 'nameToEdit.required' => 'Favor proveer un nombre.',
                 'nameToEdit.max' => 'El nombre de la lista no puede exceder 128 caracteres.',
+                'diffToEdit.required' => 'Favor proveer la dificultad.',
             ],
             ['nameToEdit' => 'Nombre', 'diffToEdit' => 'Dificultad']);
         $this->selectedGroup->name = $this->nameToEdit;
-        $this->selectedGroup->save();
-        $this->selectedGroup->difficulty()->dissociate();
+
+        $this->selectedGroup->active = $this->listActive;
         if(Difficulty::where('name', '=', $this->diffToEdit)->first() === null)
         {
             $difficulty = new Difficulty();
-            $difficulty->name = $this->difficulty;
+            $difficulty->name = $this->diffToEdit;
             $difficulty->save();
         }
+        $this->selectedGroup->difficulty_id = Difficulty::where('name', '=', $this->diffToEdit)->first()->id;
+        $this->selectedGroup->save();
+        $this->selectedGroup->difficulty()->dissociate();
         $this->selectedGroup->difficulty()->associate($this->diffToEdit);
         $this->dispatchBrowserEvent('group-edited');
         $this->resetOnClose();
@@ -201,6 +234,11 @@ class WordActivityManagement extends Component
         $this->dispatchBrowserEvent('student-added');
         $this->resetOnClose();
     }
+    public function editWord(){
+        $this->wordToEdit->word = $this->word;
+        $this->wordToEdit->save();
+        $this->dispatchBrowserEvent('word-edited');
+    }
     public function assignList(){
 
         foreach($this->test as $g) {
@@ -213,8 +251,8 @@ class WordActivityManagement extends Component
             $assigneeStudent = User::find($s);
             $this->selectedGroup->users()->attach($assigneeStudent);
         }
-    $this->dispatchBrowserEvent('list-assigned');
-}
+        $this->dispatchBrowserEvent('list-assigned');
+    }
     public function removeWordModal($selectedWord){
         $this->wordToRemove = Word::find($selectedWord);
         $this->dispatchBrowserEvent('removeWordModal');

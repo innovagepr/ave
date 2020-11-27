@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->integer('points')->default(0);
             $table->integer('coins')->default(0);
             $table-> integer('level')->default(0);
+            $table->boolean('deleted')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });

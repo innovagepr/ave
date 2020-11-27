@@ -20,7 +20,7 @@ class GroupManagement extends Component
     use WithPagination;
     protected $rules = [
         'name' => 'required|max:128',
-        'description' => 'required'
+        'description' => 'required',
     ];
     protected $messages = [
         'name.required' => 'Favor proveer un nombre.',
@@ -48,9 +48,10 @@ class GroupManagement extends Component
     public $studentToRemove;
     public $members;
     public $email;
+    public $groupActive;
     public $studentID = 7;
     public $active = true;
-    public $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Eliminar");
+    public $headersGroups = array("Nombre", "Fecha de creación", "Cantidad de miembros", "Activo", "Eliminar");
     public $students;
 
     /**
@@ -60,7 +61,8 @@ class GroupManagement extends Component
     public function render()
     {
         return view('livewire.group-management', ['groups' => Group::where('owner_id', '=', auth()->user()->id)
-                                                                        ->where('active', '=', 1)->paginate(3, ['*'], 'groups')]);
+                                                                            ->where('deleted', '=', 0)
+                                                                            ->paginate(3, ['*'], 'groups')]);
     }
 
     public function mount(){
@@ -93,7 +95,7 @@ class GroupManagement extends Component
         $this->descToEdit="";
         $this->studentToRemove= "";
         $this->groupToRemove= "";
-        $this->groups = Group::where('owner_id', '=', auth()->user()->id)->get();
+        $this->groups = Group::where('owner_id', '=', auth()->user()->id)->where('deleted', '=', 0)->get();
         if($this->tableActive)
         {
             $this->selectedGroup = Group::find($this->selectedGroup->id);
@@ -112,6 +114,14 @@ class GroupManagement extends Component
     public function editModal(){
         $this->nameToEdit = $this->selectedGroup->name;
         $this->descToEdit = $this->selectedGroup->description;
+        if($this->selectedGroup->active === 1)
+        {
+            $this->groupActive = true;
+        }
+        else
+            {
+            $this->groupActive = false;
+        }
         $this->dispatchBrowserEvent('editModal');
     }
 
@@ -142,11 +152,11 @@ class GroupManagement extends Component
         $this->validate();
         $createdGroup = new Group;
         $createdGroup->owner_id = auth()->user()->id;
-        $createdGroup->list_exercise_id = null;
         $createdGroup->name = $this->name;
         $createdGroup->description = $this->description;
         $createdGroup->date_created = today();
         $createdGroup->active = 1;
+        $createdGroup->deleted = 0;
         $createdGroup->save();
         $this->dispatchBrowserEvent('group-added');
         $this->resetOnClose();
@@ -168,6 +178,12 @@ class GroupManagement extends Component
                 'descToEdit' => 'Description to Edit']);
         $this->selectedGroup->name = $this->nameToEdit;
         $this->selectedGroup->description = $this->descToEdit;
+        if($this->groupActive === true){
+            $this->selectedGroup->active = 1;
+        }
+        else{
+            $this->selectedGroup->active = 0;
+        }
         $this->selectedGroup->save();
         $this->dispatchBrowserEvent('group-edited');
         $this->resetOnClose();
@@ -183,10 +199,10 @@ class GroupManagement extends Component
      * @param $selectedGroup the group delete button that was selected.
      */
     public function removeGroup(){
-        if($this->groupToRemove->id === $this->selectedGroup->id){
+        if(($this->tableActive === 1) && $this->groupToRemove->id === $this->selectedGroup->id){
             $this->tableActive = 0;
         }
-        $this->groupToRemove->active = 0;
+        $this->groupToRemove->deleted = 1;
         $this->groupToRemove->save();
         $this->resetOnClose();
         $this->dispatchBrowserEvent('group-removed');

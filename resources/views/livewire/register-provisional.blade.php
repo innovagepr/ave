@@ -1,5 +1,5 @@
 <div>
-    {{-- In work, do what you enjoy. --}}
+    {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day --}}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{asset('images/avelogo.ico')}}">
@@ -20,13 +20,35 @@
     <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
     <!-- Link to homepage -->
     <form method="GET" action="{{ route('register') }}" wire:ignore>
-    <i type="button" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
-        <span class="fa fa-home fa-5x"></span>
-    </i>
+        <i type="button" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
+            <span class="fa fa-home fa-5x"></span>
+        </i>
     </form>
 
+@if($topActive)
+    <div class="container mt-4" style="background-color:#FFFFFF; width: 40%; font-size: 1.5rem; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+        <div class="mt-2">
+            <a style="color: #2576AC; font-size: 2rem;">{{ __('Complete su información') }}</a>
+        </div>
+
+        <div class="mt-0">
+            <x-jet-label for="email" value="{{ __('Nombre de usuario provisional:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+            <x-jet-input id="email"  type="email" style="display: inline-block; width:80%;" name="email" placeholder="Escriba el nombre de usuario provisto" :value="old('email')" wire:model="provisionalUsername" required />
+        </div>
+        <div class="mt-0">
+            <x-jet-label for="password" value="{{ __('Contraseña Provisional:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+            <x-jet-input id="password"  type="password" style="display: inline-block; width:80%;" name="password" placeholder="**********" wire:model="provisionalPassword" required autocomplete="new-password" />
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="button button1" wire:click.prevent="checkUser()">
+                {{ __('Revisar') }}
+            </button>
+        </div>
+    </div>
+    @endif
     <!-- Registration form -->
-    <form method="POST" action="{{ route('register') }}">
+    @if($userValid)
+    <form>
         @csrf
         <div class="container mt-4" style="background-color:#FFFFFF; width: 40%; font-size: 1.5rem; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
             <!-- Allows for validation of user account information -->
@@ -34,28 +56,20 @@
             <div class="mt-2">
                 <a style="color: #2576AC; font-size: 2rem;">{{ __('Complete su información') }}</a>
             </div>
-            <div class="mt-2">
-                <x-jet-label for="first_name" value="{{ __('Nombre:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="first_name" type="text" style="display: inline-block; width:80%;" name="first_name" placeholder="Escriba su nombre" :value="old('first_name')" required autofocus autocomplete="name" />
-            </div>
-
-            <div class="mt-0">
-                <x-jet-label for="last_name" value="{{ __('Apellido:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="last_name" type="text" style="display: inline-block; width:80%;" name="last_name"  placeholder="Escriba su apellido" :value="old('last_name')" required autofocus autocomplete="name" />
-            </div>
 
             <div class="mt-0">
                 <x-jet-label for="email" value="{{ __('Email:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="email"  type="email" style="display: inline-block; width:80%;" name="email" placeholder="Escriba su correo electrónico" :value="old('email')" required />
+                <x-jet-input id="email"  type="email" style="display: inline-block; width:80%;" name="email" placeholder="Escriba su correo electrónico" :value="old('email')" wire:model="email" required />
             </div>
 
             <div class="mt-0">
-                <x-jet-label for="password" value="{{ __('Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="password"  type="password" style="display: inline-block; width:80%;" name="password" placeholder="**********" wire:model="test" required autocomplete="new-password" />
+                <x-jet-label for="password" value="{{ __('Contraseña nueva:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+                <x-jet-input id="password"  type="password" style="display: inline-block; width:80%;" name="password" placeholder="**********" wire:model="password" required autocomplete="new-password" />
             </div>
+
             <div class="mt-0">
                 <div class="mt-0">
-                    @if(strlen($test) < 8)
+                    @if(strlen($password) < 8)
                         <span style="color: red"> {{ __('No') }}</span>
                     @else
                         <span style="color: green"> {{ __('Sí') }}</span>
@@ -64,7 +78,7 @@
                 </div>
 
                 <div class="mt-0">
-                @if(preg_match('/\\d/', $test) != 1)
+                    @if(preg_match('/\\d/', $password) != 1)
                         <span style="color: red"> {{ __('No') }}</span>
                     @else
                         <span style="color: green"> {{ __('Sí') }}</span>
@@ -72,31 +86,19 @@
                     {{ __('contiene un número') }}
                 </div>
                 <div class="mt-0">
-                    @if(preg_match('/[^a-zA-Z\d]/', $test) != 1)
+                    @if(preg_match('/[^a-zA-Z\d]/', $password) != 1)
                         <span style="color: red"> {{ __('No') }}</span>
                     @else
                         <span style="color: green"> {{ __('Sí') }}</span>
                     @endif
-                        {{ __('contiene un caracter especial') }}
+                    {{ __('contiene un caracter especial') }}
                 </div>
             </div>
             <div class="mt-0">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirme Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+                <x-jet-label for="password_confirmation" value="{{ __('Confirme Contraseña nueva:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <x-jet-input id="password_confirmation"  type="password"  style="display: inline-block; width:80%;" placeholder="**********" name="password_confirmation" required/>
             </div>
 
-            <div class="mt-0">
-                <x-jet-label for="dob" value="{{ __('Fecha de Nacimiento:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="dob"  type="date" name="dob" style="display: inline-block; width:80%;" required/>
-            </div>
-
-            <div class="mt-0">
-                <x-jet-label for="role_id" value="{{ __('Tipo de cuenta:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <select id="role_id" type="select" style="display: inline-block; width:80%;" name="role_id" required>
-                    <option value="1">{{ __('Profesional') }}</option>
-                    <option value="2">{{ __('Estudiante') }}</option>
-                </select>
-            </div>
             <div class="mt-4">
                 <label for="accepted_terms" style="display: block; text-align: left; padding-left: 10%;">
                     <input id="accepted_terms" type="checkbox" class="form-checkbox" name="accepted_terms" required>
@@ -105,13 +107,13 @@
             </div>
 
             <div class="mt-4">
-                <button class="button button1">
+                <button class="button button1" wire:click.prevent="registerProvisional()">
                     {{ __('Completar') }}
                 </button>
             </div>
         </div>
-
     </form>
+    @endif
 
     <!-- Footer with modal for contact information and information about team -->
     @extends('layouts/contactModalLayout')
@@ -122,5 +124,4 @@
 
     </footer>
     </body>
-
 </div>
