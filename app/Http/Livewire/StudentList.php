@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Group;
+use App\Models\Role;
 use App\Models\User;
+use App\Rules\AgeChild;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -114,16 +116,25 @@ $this->dispatchBrowserEvent('toggleStudentModal');
     public function registerStudent(){
         $this->validate(['firstName' => 'required|max:128',
             'lastName' => 'required|max:128',
-            'dob' => 'required'],
+            'dob' => 'required', 'dob' => new AgeChild()],
             [
                 'firstName.required' => 'Favor proveer un nombre.',
                 'firstName.max' => 'El nombre no puede exceder 128 caracteres.',
                 'lastName.required' => 'Favor proveer un apellido.',
                 'lastName.max' => 'El apellido no puede exceder 128 caracteres.',
-                'dob.required' => 'Favor proveer la fecha de nacimiento.',],
+                'dob.required' => 'Favor proveer la fecha de nacimiento.',
+                'dob.AgeChild()' => 'Niño debe tener edad entre 8 y 10 años.'],
             ['firstName' => 'Nombre',
                 'lastName' => 'Apellido',
                 'dob' => 'Fecha de Nacimiento',]);
+        if(Role::find(2) == null)
+        {
+            $role = new Role;
+            $role->id = 2;
+            $role->name = 'Estudiante';
+            $role->slug = 'child';
+            $role->save();
+        }
         $studentToAdd = new User;
         $studentToAdd->role_id = 2;
         $studentToAdd->first_name = $this->firstName;
@@ -132,7 +143,6 @@ $this->dispatchBrowserEvent('toggleStudentModal');
         $maxId = User::get()->max('id');
         $maxId++;
         $this->provisionalEmail .= $maxId;
-        $this->provisionalEmail .= "@provisional";
         $studentToAdd->email = $this->provisionalEmail;
         $this->provisionalPassword = Str::random(10);
         $studentToAdd->password = Hash::make($this->provisionalPassword);

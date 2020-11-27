@@ -72,6 +72,7 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'dob'=> $input['dob'],
+            'deleted' => 0,
         ]);
         $loginRecord = new LoginRecord();
         $loginRecord->user_id = $user->id;

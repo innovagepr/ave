@@ -68,6 +68,11 @@
                                     <option value="Difícil">{{ __('Difícil') }}</option>
                                 </select>
                             </div>
+                            <div class="mt-0">
+                                <x-jet-label for="difficulty" value="{{ __('Activa:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                                <input type="checkbox" id="difficulty" name="difficulty" wire:model="listActive">
+                            </div>
+
 
                             <div class="mt-4">
                                 <button type="submit" wire:click.prevent="editGroup()" class="button button1">
@@ -254,9 +259,15 @@
                     <i class="fa fa-edit"></i>
                     {{ __('Editar lista') }}
                 </button>
+                @if(count($selectedGroup->words()->get()) >= 10)
+                    <button class="button button1" href="#" wire:click.prevent="assignListModal()" style="float:right; width: 20%; height: 2%; font-size: 1.2rem;">
+                        <i class="fas fa-user-plus"></i>
+                        {{ __('Asignar lista') }}
+                    </button>
+                    @endif
                     @endif
             </div>
-            <div class="py simple-table align-middle text-center inline-block max-w-5xl sm:px-6 lg:px-8">
+            <div class="py simple-table align-middle text-center inline-block max-w-5xl sm:px-6 lg:px-8" style="word-wrap: break-word;">
                 <x-jet-label class="m-auto" style="float:left;">{{__('Listas')}}</x-jet-label>
                 <x-table>
                     <x-slot name="head">
@@ -268,7 +279,6 @@
                         <x-slot name="body">
 
                             @foreach($lists as $g)
-                                @if(($g->active === 1))
                                 <x-table.row>
                                     @if($g->name === 'Default')
                                         <x-table.cell>{{__($g->name)}}</x-table.cell>
@@ -287,12 +297,11 @@
                                             <div>{{ __($gs->name) }}</div>
                                             @endforeach
                                             @if($g->users()->first())
-                                                @foreach($g->users()->get() as $gp)
+                                                    @foreach($g->users()->get() as $gp)
                                                         <div>{{ __($gp->fullname) }}</div>
                                                     @endforeach
-                                                @endif
+                                            @endif
                                         </x-table.cell>
-
                                     @endif
                                         @if($g->active === 1)
                                             <x-table.cell>{{__('Sí')}}</x-table.cell>
@@ -309,9 +318,7 @@
                                         </x-table.cell>
                                     @endif
                                 </x-table.row>
-                                @endif
                             @endforeach
-
                         </x-slot>
                     </div>
                 </x-table>
@@ -326,10 +333,6 @@
                     <button class="button button1" href="#" wire:click.prevent="newStudentModal()" style="float:right; width: 40%; height: 2%; font-size: 1.2rem;">
                         <i class="fa fa-plus"></i>
                         {{ __('Añadir palabra') }}
-                    </button>
-                    <button class="button button1" href="#" wire:click.prevent="assignListModal()" style="float:right; width: 40%; height: 2%; font-size: 1.2rem;">
-                        <i class="fas fa-user-plus"></i>
-                        {{ __('Asignar lista') }}
                     </button>
                 </div>
                 <div class="py simple-table align-middle text-center inline-block max-w-2xl sm:px-6 lg:px-8">

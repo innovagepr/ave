@@ -46,7 +46,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                            <span class="text-center">{{ __('Remover Estudiante') }}</span>
+                            <span class="text-center">{{ __('Editar Estado de Estudiante') }}</span>
                         </div>
 
                         <div class="modal-body" style="text-align: center;">
@@ -119,7 +119,7 @@
                                 <x-jet-label for="dob" value="{{ __('Edad:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
                                 <x-jet-input id="dob" type="date" style="display: inline-block; width:80%;" name="dob" wire:model="dob"/>
                                 <div>
-                                    @error('age') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    @error('dob') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                             <div class="mt-4">

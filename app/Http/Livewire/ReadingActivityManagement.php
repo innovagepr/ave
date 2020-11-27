@@ -22,6 +22,7 @@ class ReadingActivityManagement extends Component
     use WithPagination;
     protected $rules = [
         'name' => 'required|max:128',
+        'diffToEdit' => 'required'
 
     ];
     protected $messages = [
@@ -33,15 +34,22 @@ class ReadingActivityManagement extends Component
     public $tableActive;
     public $paragraph;
     public $question;
+    public $selectedQuestion;
     public $correctOption;
     public $incorrectOption1;
     public $incorrectOption2;
+    public $paragraphToEdit;
+    public $questionToEdit;
+    public $correctOptionToEdit;
+    public $incorrectOption1ToEdit;
+    public $incorrectOption2ToEdit;
     public $difficulty= "Fácil";
     public $nameToEdit;
     public $diffToEdit;
     public $listToRemove;
     public $wordToRemove;
     public $groups;
+    public $listActive;
     public $test = [];
     public $test2 = [];
     public $testGroup = "";
@@ -57,7 +65,7 @@ class ReadingActivityManagement extends Component
     public $activityType;
     public $studentID = 7;
     public $active = true;
-    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Grupo", "Eliminar");
+    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Asignada a", "Activa", "Eliminar");
     public $headersStudents = array("Párrafo", "Eliminar");
     //public $lists;
     public function mount()
@@ -88,7 +96,7 @@ class ReadingActivityManagement extends Component
         }
         $this->activityType = Activity::where('slug', '=', 'Lectura')->first();
         return view('livewire.reading-activity-management', ['lists' => ListExercise::where('user_id', '=', auth()->user()->id)
-            ->where('active', '=', 1)->where('activity_id', '=', $this->activityType->id)->paginate(3)]);
+            ->where('deleted', '=', 0)->where('activity_id', '=', $this->activityType->id)->paginate(3)]);
     }
     public function updated($propertyName)
     {
@@ -107,7 +115,7 @@ class ReadingActivityManagement extends Component
         $this->incorrectOption1 = "";
         $this->incorrectOption2 = "";
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
-            ->where('activity_id', '=', 2)->get();
+            ->where('deleted', '=', 0)->where('activity_id', '=', 2)->get();
         if($this->tableActive)
         {
             $this->selectedGroup = ListExercise::find($this->selectedGroup->id);
@@ -139,11 +147,16 @@ class ReadingActivityManagement extends Component
             $this->selectedGroup = ListExercise::find($groupNumber);
             $this->groups = Group::where('owner_id', '=', auth()->user()->id)->get()
                 ->where('active', '=', 1);
+            $this->listActive = $this->selectedGroup->active;
             $tempResult = Group::with('members')->where('owner_id', '=', auth()->user()->id)
-                ->where('active', '=', 1)->get()->pluck('members')->all();
+                ->where('deleted', '=', 0)->get()->pluck('members')->all();
             $this->students = new Collection();
-            for($j=0; $j < count($tempResult); $j++){
-                $tempResult[0] = $tempResult[0]->merge($tempResult[$j]);
+            if($tempResult)
+            {
+                for($j=0; $j < count($tempResult); $j++){
+                    $tempResult[0] = $tempResult[0]->merge($tempResult[$j]);
+                }
+                $this->students = $tempResult[0];
             }
             $this->students = $tempResult[0];
             $this->tableActive = 1;
@@ -165,6 +178,7 @@ class ReadingActivityManagement extends Component
         }
         $list->difficulty_id = Difficulty::where('name', '=', $this->difficulty)->first()->id;
         $list->active = 1;
+        $list->deleted = 0;
         $list->save();
         $list->owner()->associate(auth()->user()->id);
         $list->difficulty()->associate(Difficulty::where('name', '=', $this->difficulty)->first()->id);
@@ -178,17 +192,20 @@ class ReadingActivityManagement extends Component
             [
                 'nameToEdit.required' => 'Favor proveer un nombre.',
                 'nameToEdit.max' => 'El nombre de la lista no puede exceder 128 caracteres.',
+                'diffToEdit.required' => 'Favor proveer la dificultad.',
             ],
             ['nameToEdit' => 'Nombre', 'diffToEdit' => 'Dificultad']);
         $this->selectedGroup->name = $this->nameToEdit;
-        $this->selectedGroup->save();
-        $this->selectedGroup->difficulty()->dissociate();
+        $this->selectedGroup->active = $this->listActive;
         if(Difficulty::where('name', '=', $this->diffToEdit)->first() === null)
         {
             $difficulty = new Difficulty();
-            $difficulty->name = $this->difficulty;
+            $difficulty->name = $this->diffToEdit;
             $difficulty->save();
         }
+        $this->selectedGroup->difficulty_id = Difficulty::where('name', '=', $this->diffToEdit)->first()->id;
+        $this->selectedGroup->save();
+        $this->selectedGroup->difficulty()->dissociate();
         $this->selectedGroup->difficulty()->associate($this->diffToEdit);
         $this->dispatchBrowserEvent('group-edited');
         $this->resetOnClose();
@@ -206,7 +223,7 @@ class ReadingActivityManagement extends Component
         if($this->tableActive && ($this->listToRemove->id === $this->selectedGroup->id)){
             $this->tableActive = 0;
         }
-        $this->listToRemove->active = 0;
+        $this->listToRemove->deleted = 1;
         $this->listToRemove->save();
         $this->resetOnClose();
         $this->dispatchBrowserEvent('list-removed');
@@ -256,6 +273,47 @@ class ReadingActivityManagement extends Component
         $questionToAdd->options()->saveMany([$correctOptionToAdd, $incorrectOption1ToAdd, $incorrectOption2ToAdd]);
         $this->dispatchBrowserEvent('student-added');
         $this->resetOnClose();
+    }
+    public function editWordModal($selectedWord){
+        $this->selectedQuestion = Question::find($selectedWord);
+        $this->paragraphToEdit = $this->selectedQuestion->paragraph()->first()->text;
+        $this->questionToEdit = $this->selectedQuestion->question;
+        $this->correctOptionToEdit = $this->selectedQuestion->options()->where('is_correct', '=', 1)->first()->option;
+        $this->incorrectOption1ToEdit = $this->selectedQuestion->options()->where('is_correct', '=', 0)->first()->option;
+        $this->incorrectOption2ToEdit = $this->selectedQuestion->options()->where('is_correct', '=', 0)->skip(1)->first()->option;
+        $this->dispatchBrowserEvent('editWordModal');
+    }
+    public function editWord(){
+        $this->validate(['paragraphToEdit' => 'required', 'questionToEdit' => 'required|max:128', 'correctOptionToEdit' => 'required|max:128',
+            'incorrectOption1ToEdit' => 'required|max:128', 'incorrectOption2ToEdit' => 'required|max:128',],
+            [
+                'paragraphToEdit.required' => 'Favor proveer un párrafo.',
+                'questionToEdit.required' => 'Favor proveer una pregunta.',
+                'questionToEdit.max' => 'La pregunta no debe exceder 128 caracteres.',
+                'correctOptionToEdit.required' => 'Favor proveer la opción correcta.',
+                'correctOptionToEdit.max' => 'El texto de la opción no debe exceder 128 caracteres.',
+                'incorrectOption1ToEdit.required' => 'Favor proveer la opción incorrecta.',
+                'incorrectOption1ToEdit.max' => 'El texto de la opción no debe exceder 128 caracteres.',
+                'incorrectOption2ToEdit.required' => 'Favor proveer la opción incorrecta.',
+                'incorrectOption2ToEdit.max' => 'El texto de la opción no debe exceder 128 caracteres.',
+            ],
+            ['paragraphToEdit' => 'Párrafo', 'questionToEdit' => 'Pregunta', 'correctOptionToEdit' => 'Opción Correcta',
+                'incorrectOption1ToEdit' => 'Opción Incorrecta 1', 'incorrectOption2ToEdit' => 'Opción Incorrecta 2']);
+        $paragraph = Paragraph::where('id', '=', $this->selectedQuestion->paragraph()->first()->id)->first();
+        $paragraph->text = $this->paragraphToEdit;
+        $paragraph->save();
+        $this->selectedQuestion->question = $this->questionToEdit;
+        $this->selectedQuestion->save();
+        $correctOption = QuestionOption::where('question_id', '=', $this->selectedQuestion->id)->where('is_correct', '=', 1)->first();
+        $correctOption->option = $this->correctOptionToEdit;
+        $correctOption->save();
+        $incorrectOption1 = QuestionOption::where('question_id', '=', $this->selectedQuestion->id)->where('is_correct', '=', 0)->first();
+        $incorrectOption1->option = $this->incorrectOption1ToEdit;
+        $incorrectOption1->save();
+        $incorrectOption2 = QuestionOption::where('question_id', '=', $this->selectedQuestion->id)->where('is_correct', '=', 0)->skip(1)->first();
+        $incorrectOption2->option = $this->incorrectOption2ToEdit;
+        $incorrectOption2->save();
+        $this->dispatchBrowserEvent('word-edited');
     }
     public function assignList(){
 

@@ -67,8 +67,8 @@
                             </div>
                         </div>
                         <div class="mt-0">
-                            <x-jet-label for="description" value="{{ __('Activo:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                            <input id="groupActive" type="checkbox" style="display: inline-block; width:80%; height: 5rem" name="groupActive" wire:model="groupActive">
+                            <x-jet-label for="description" value="{{ __('Activo:') }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; color: #050404;" />
+                            <input id="groupActive" type="checkbox" style="display: inline-block;" name="groupActive" wire:model="groupActive">
                             <div>
                                 @error('descToEdit') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
