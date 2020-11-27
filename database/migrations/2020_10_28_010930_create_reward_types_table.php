@@ -22,6 +22,7 @@ class CreateRewardTypesTable extends Migration
             $table->integer('pet_level');
             $table->string('icon_url');
             $table->timestamps();
+            $table->text('image_url');
         });
     }
 

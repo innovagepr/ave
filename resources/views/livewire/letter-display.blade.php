@@ -1,6 +1,25 @@
+
 <div style="text-align: center">
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
+    <div style="margin-right: 90%">
+    @foreach($tempSplitWords as $tempSplitWord)
+        @foreach($tempSplitWord as $culote)
+            {{$culote}}
+        @endforeach
+        <br>
+    @endforeach
+    @foreach($tempPosition as $tempPositions)
+        {{$tempPositions}}
 
+        <br>
+    @endforeach
+    @foreach($tempAnswers as $tempAnswer)
+        @foreach($tempAnswer as $culote)
+            {{$culote}}
+        @endforeach
+        <br>
+    @endforeach
+    </div>
     <div class="main-block-ses">
         <ul class="progressbar">
             <li id="0" class="{{$step == 0 ? 'active':''}}" wire:click="goTo({{0}})"></li>
@@ -15,6 +34,7 @@
             <li id="9" class="{{$step == 9 ? 'active':''}}" wire:click="goTo({{9}})"></li>
         </ul>
     </div>
+
 
     <div>
         <div class="audio">
@@ -52,7 +72,7 @@
             <table class="table2">
                 <tr>
                     @for ($j = 0; $j < count($splitWord); $j++)
-                        <td wire:click="placeLetter('{{$j}}','{{ $splitWord[$j] }}')" class="{{$splitWord[$j] == ' ' ? 'letterNoPointer': 'letterBox'}}">
+                        <td wire:click.debounce.170ms="placeLetter('{{$j}}','{{ $splitWord[$j] }}')" class="{{$splitWord[$j] == ' ' ? 'letterNoPointer': 'letterBox'}}">
                             <a >{{$splitWord[$j]}}</a>
                         </td>
                     @endfor
@@ -78,6 +98,7 @@
         </div>
 
     </div>
+
 
     <div wire:ignore>
         <div class="modal fade" id="immediate-result-modal-Bad" tabindex="-1" role="dialog" aria-hidden="true">

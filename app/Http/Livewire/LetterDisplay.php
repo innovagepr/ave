@@ -27,6 +27,7 @@ class LetterDisplay extends Component
     public $tempSplitWords = [];
     public $tempPosition = [];
     public $words2 = [];
+    public $tempPositionsArray = [];
 
 
     public function render(){
@@ -43,6 +44,7 @@ class LetterDisplay extends Component
             $this->tempSplitWords[$this->step] = $this->splitWord;
             $this->tempAnswers[$this->step] = $this->answer;
             $this->tempPosition[$this->step] = $this->position2;
+            $this->tempPositionsArray[$this->step] = $this->positions;
         }
     }
 
@@ -69,14 +71,6 @@ class LetterDisplay extends Component
         return $word;
     }
 
-
-//    public function splitshuffle($word){
-//        $word = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
-//        $word = $this->shuffleWord2($word);
-//        return $word;
-//    }
-
-
     public function mount(){
 
         $counter = 0;
@@ -85,10 +79,11 @@ class LetterDisplay extends Component
             $this->tempAnswers[$counter] = array_fill(0,strlen($palabra->word),'');
             $this->tempSplitWords[$counter] = $this->splitshuffle($palabra->word);
             $this->tempPosition[$counter] = 0;
+            $this->tempPositionsArray[$counter] = array_fill(0,strlen($palabra->word),0);
             $counter++;
         }
 
-//        dd($this->tempAnswers,$this->tempSplitWords, $this->tempPosition, $this->words2);
+//        dd($this->tempAnswers,$this->tempSplitWords, $this->tempPosition, $this->words2,$this->tempPositionsArray);
         $this->word = $this->words[$this->step]->word;
         $this->splitWord =  $this->tempSplitWords[$this->step];
         $this->answer =  $this->tempAnswers[$this->step];
@@ -127,6 +122,7 @@ class LetterDisplay extends Component
             $this->word = $this->words[$this->step]->word;
             $this->splitWord =  $this->tempSplitWords[$this->step];
             $this->answer =  $this->tempAnswers[$this->step];
+            $this->positions = $this->tempPositionsArray[$this->step];
 
         }
     }
@@ -164,11 +160,8 @@ class LetterDisplay extends Component
             $this->joinedAnswer = null;
 
             $this->position2 =  $this->tempPosition[$this->step];
-
-
             $this->answer = $this->tempAnswers[$this->step];
-
-
+            $this->positions = $this->tempPositionsArray[$this->step];
         }
     }
     public function quitWarning(){

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\RewardController;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\RegisterProvisional;
@@ -95,5 +96,6 @@ Route::get('/editarPerfil', function (){
     return view('livewire.edit-profile');
 });
 
-//Text-to-Speech
-Route::get('/guz', [ApiController::class,'tts']);
+Route::get('/tienda',[RewardController::class, 'index']);
+
+Route::get('/seleccionar-mascota',[PetController::class, 'select']);

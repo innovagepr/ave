@@ -15,27 +15,32 @@
                         <th style="font-weight: lighter; text-align: center; color: #2576AC">Respuesta Correcta</th>
                     </tr>
                     <tr>
+{{--                        @for($i=0;$i<count($badWords);$i++)--}}
+                            @foreach($badAnswers as $incorrect)
+
+
                         <td>
                             7
                         </td>
                         <td>
-                            fanua
+                            {{$incorrect}}
                         </td>
                         <td style="color: #19D519">
                             fauna
                         </td>
+                        @endforeach
                     </tr>
-                    <tr>
-                        <td>
-                            9
-                        </td>
-                        <td>
-                            sapo
-                        </td>
-                        <td style="color: #19D519">
-                            sopa
-                        </td>
-                    </tr>
+{{--                    <tr>--}}
+{{--                        <td>--}}
+{{--                            9--}}
+{{--                        </td>--}}
+{{--                        <td>--}}
+{{--                            sapo--}}
+{{--                        </td>--}}
+{{--                        <td style="color: #19D519">--}}
+{{--                            sopa--}}
+{{--                        </td>--}}
+{{--                    </tr>--}}
                 </table>
             </div>
             <div class="modal-footer" style="margin:auto;">
