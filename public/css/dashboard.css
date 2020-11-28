@@ -189,6 +189,10 @@
     background-color: #ACF9A4;
     border: 2px solid #2576ac;
 }
+.article-box2:hover{
+    background-color: red;
+    border: 2px solid #2576ac;
+}
 /*-----------------------------------------*/
 /*--------Rewards Shop---------------------*/
 .main-block-shop{

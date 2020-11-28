@@ -24,8 +24,9 @@
         </div>
         <form autocomplete="off">
             <div class="modal-footer" style="margin:auto; text-align: center">
-                <a type="submit" class="button3" style="font-size: 20px; margin: auto; text-decoration: none" wire:click="confirmPet({{$petId}})">¡Listo!</a>
+                <a type="submit" class="button3" style="font-size: 20px; margin: auto; text-decoration: none" wire:click="confirmPet({{$data['petType']->where('id', $petId)}})">¡Listo!</a>
                 <button type="button" class="button4" style="font-size: 20px; margin: auto"  data-dismiss="modal">Cancelar</button>
+{{--                <a type="submit" class="button3" style="font-size: 20px; margin: auto; text-decoration: none" wire:click="confirmPet({{$petId}}, {{$data['petType']->where('id', $petId)}})">¡Listo!</a>--}}
 
             </div>
         </form>
