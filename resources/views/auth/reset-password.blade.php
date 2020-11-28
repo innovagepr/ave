@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
 <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
 
-<div class="container-fluid mt-4" style="background-color:#FFFFFF; margin-top: 10%; margin-left: 30%; width: 40%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+<div class="container-fluid mt-4" style="background-color:#FFFFFF; margin-top: 10%; margin-left: 30%; width: 40%; font-size: 1.25rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
 

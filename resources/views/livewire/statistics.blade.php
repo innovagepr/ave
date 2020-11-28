@@ -24,23 +24,29 @@
     <div class="container">
 
         <div class="mt-0">
-            <x-jet-label for="difficulty" value="{{ __('Seleccione') }} {{ $option }}{{ __(':') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-            <select id="group" name="filter" wire:model="filter">
+            <x-jet-label for="filter" value="{{ __('Seleccione') }} {{ $option }}{{ __(':') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+
                 @if($option === 'Grupo')
+                <select id="group" name="filterGroup" wire:model="groupFilter">
                 @foreach($groups as $l)
                     <option value="{{ $l->id }}">{{ $l->name }}</option>
                 @endforeach
+                </select>
                     @elseif($option === 'Estudiante')
+                        <select id="group" name="filterStudent" wire:model="studentFilter">
                     @foreach($students as $l)
                         <option value="{{ $l->id }}">{{ $l->fullname }}</option>
                     @endforeach
+                        </select>
                 @else
+                            <select id="group" name="filterActivity" wire:model="activityFilter">
                     @foreach($activities as $l)
                         <option value="{{ $l->id }}">{{ $l->name }}</option>
                     @endforeach
+                            </select>
                     @endif
 
-            </select>
+
             <div>{{ __('DEBUG') }} {{ $filter }}</div>
         </div>
         @if($option === 'Grupo')
@@ -51,45 +57,60 @@
             @endif
     </div>
 
-    <div class="container" style="float: inside; text-align: right;">
-        {{ __('Desempeño por Actividad:') }}
-        <div>
-            <x-jet-label for="difficulty" value="{{ __('Nivel de Dificultad:') }}" />
-            <select id="difficulty" name="difficulty" wire:model="difficulty">
-                <option value="Fácil">{{ __('Fácil') }}</option>
-                <option value="Medio">{{ __('Medio') }}</option>
-                <option value="Difícil">{{ __('Difícil') }}</option>
-            </select>
-        </div>
-        <div>
-            <x-jet-label for="difficulty" value="{{ __('Mes:') }}" />
-            <select id="month" name="month" wire:model="month">
-                @foreach($months as $m)
-                    <option value="{{$m}}"> {{ __($m) }} </option>
-                @endforeach
-            </select>
-        </div>
 
-    </div>
-
+@if($option === 'Estudiante')
+        <div class="container" style="float: inside; text-align: right;">
+            {{ __('Desempeño por Actividad:') }}
+        </div>
     <div class="container" style="float: inside; text-align: right;">
         <div>
             <i class="fas fa-book-reader"></i>
-            <x-jet-label for="statsReading" value="{{ __('Lectura') }}"/>
+            <x-jet-label for="statsReading" class="inline-block" value="{{ __('Lectura') }}"/>
+            @if($readingMax)
+                <div>
+                    <span>{{ __('Puntuación Máxima: ') }} {{ __($readingMax) }}{{ __('/10') }}</span>
+                </div>
+                <div>
+                    <span>{{ __('Puntuación Mínima: ') }} {{ __($readingMin) }}{{ __('/10') }}</span>
+                </div>
+                <div>
+                    <span>{{ __('Puntuación Promedio: ') }} {{ __($readingAvg) }}{{ __('/10') }}</span>
+                </div>
+
+            @else
             <div>
                 <span> {{ __('No hay récords disponibles al momento.') }} </span>
             </div>
+            @endif
         </div>
         <div>
             <i class="fas fa-pencil-ruler"></i>
-            <x-jet-label for="statsWords" value="{{ __('Palabras') }}"/>
-            <div>
-                <span> {{ __('No hay récords disponibles al momento.') }} </span>
-            </div>
+            <x-jet-label for="statsWords" class="inline-block" value="{{ __('Palabras') }}"/>
+            @if($wordMax)
+                <div>
+                    <span>{{ __('Puntuación Máxima: ') }} {{ __($wordMax) }}{{ __('/10') }}</span>
+                </div>
+                <div>
+                    <span>{{ __('Puntuación Mínima: ') }} {{ __($wordMin) }}{{ __('/10') }}</span>
+                </div>
+                <div>
+                    <span>{{ __('Puntuación Promedio: ') }} {{ __($wordAvg) }}{{ __('/10') }}</span>
+                </div>
+
+            @else
+                <div>
+                    <span> {{ __('No hay récords disponibles al momento.') }} </span>
+                </div>
+            @endif
         </div>
 
     </div>
+@elseif($option === 'Grupo' && $groupFilter)
+        <div class="container" style="float: inside; text-align: right;">
+            @livewire('group-statistics', ['selectedGroup' => $groupFilter])
+        </div>
 
+    @endif
 
 
 

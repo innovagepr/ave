@@ -34,6 +34,7 @@ class RegisterProvisional extends Component
         $this->provisionalAcc->email = $this->email;
         $this->provisionalAcc->password = Hash::make($this->password);
         $this->provisionalAcc->save();
+        return redirect()->to('/dashboard');
     }
 
 }

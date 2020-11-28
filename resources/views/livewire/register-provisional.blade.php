@@ -5,7 +5,7 @@
     <link rel="icon" href="{{asset('images/avelogo.ico')}}">
     <!-- Page Title -->
     <head>
-        <title>AVE - Registrar</title>
+        <title>AVE - Activar Cuenta</title>
         <style>
             html{
                 overflow-x: hidden;
@@ -19,16 +19,14 @@
     <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
     <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
     <!-- Link to homepage -->
-    <form method="GET" action="{{ route('register') }}" wire:ignore>
-        <i type="button" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
-            <span class="fa fa-home fa-5x"></span>
-        </i>
-    </form>
+    <i type="button" onclick="location.href='/homepage'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
+        <span class="fa fa-home fa-5x"></span>
+    </i>
 
 @if($topActive)
     <div class="container mt-4" style="background-color:#FFFFFF; width: 40%; font-size: 1.5rem; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
         <div class="mt-2">
-            <a style="color: #2576AC; font-size: 2rem;">{{ __('Complete su información') }}</a>
+            <a style="color: #2576AC; font-size: 2rem;">{{ __('Provea la información provisional de su cuenta') }}</a>
         </div>
 
         <div class="mt-0">

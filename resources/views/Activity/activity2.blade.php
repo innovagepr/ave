@@ -4,7 +4,7 @@
 @section('content')
     <!-- Call for Livewire component to render the view -->
     <body>
-        @livewire('activity2')
+        @livewire('activity2', ['activity' => 4])
         @livewireScripts
     </body>
 @endsection
