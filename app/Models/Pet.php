@@ -18,4 +18,9 @@ class Pet extends Model
     public function petType(){
         return $this->belongsTo(PetType::class);
     }
+
+    public function pet_rewards()
+    {
+        return $this->belongsToMany(RewardType::class,'pet_avatars');
+    }
 }

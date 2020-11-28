@@ -4,28 +4,21 @@ body{
 }
 
 .backArrow{
-    position: absolute;
-    bottom: 10px;
+    position: relative;
+    /*bottom: 50%;*/
+    margin-top: 10%;
     left: 10px;
 }
 
 .verify {
-    /*position: absolute;*/
-    /*bottom: 20px;*/
-    /*right: 20px;*/
     font-size: 25px;
     font-weight: lighter;
     color: #2576AC;
     cursor: pointer;
     font-family: "Berlin Sans FB";
-    /*display: inline-block;*/
-    /*margin-top: 30%;*/
-    /*margin-left: 45%;*/
-    /*position: relative;*/
-
-    /*margin: 0;*/
     position: absolute;
-    top: 185px;
+    /*top: 185px;*/
+    margin-top: 40px;
     left: 48%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
@@ -43,24 +36,11 @@ body{
 .icons1:hover{
     color: #073c63;
 }
-/*.audio1{*/
-/*    text-align: center;*/
-/*    cursor: pointer;*/
-/*    !*margin: 50px;*!*/
-/*    color: #2576ac;*/
-/*    font-size: 20px;*/
-/*    font-family: "Berlin Sans FB";*/
-/*}*/
-/*.audio1:hover{*/
-/*    color: #073c63;*/
-/*}*/
 
 /*---Letter Boxes Styles---------------*/
 .answerBox {
     display: inline-block;
     position: relative;
-    margin: -.25%;
-    /*float: left;*/
     width: 100px;
     height: 100px;
     background-color: white;
@@ -69,14 +49,11 @@ body{
     font-family: "Berlin Sans FB";
     font-size: 65px;
     text-align: center;
-    /*vertical-align: middle;*/
 }
 
 .green {
     display: inline-block;
     position: relative;
-    margin: -.25%;
-    /*float: left;*/
     width: 100px;
     height: 100px;
     background-color: lightgreen;
@@ -85,14 +62,11 @@ body{
     font-family: "Berlin Sans FB";
     font-size: 65px;
     text-align: center;
-    /*vertical-align: middle;*/
 }
 
 .letterBox {
     display: inline-block;
     position: relative;
-    /*margin: 1%;*/
-    /*float: right;*/
     width: 80px;
     height: 80px;
     background-color: white;
@@ -102,16 +76,13 @@ body{
     font-size: 55px;
     vertical-align: middle;
     cursor: pointer;
-    margin-top: 50px;
-    /*margin-left: 1%;*/
+    margin-top: 120px;
     margin-inline-end: 8px;
     margin-inline-start: 8px;
 }
 .letterNoPointer {
     display: inline-block;
     position: relative;
-    /*margin: 1%;*/
-    /*float: right;*/
     width: 80px;
     height: 80px;
     background-color: white;
@@ -121,8 +92,7 @@ body{
     font-size: 55px;
     vertical-align: middle;
     cursor: auto;
-    margin-top: 50px;
-    /*margin-left: 1%;*/
+    margin-top: 120px;
     margin-inline-end: 8px;
     margin-inline-start: 8px;
 }
@@ -146,10 +116,9 @@ body{
     margin: 0;
     position: absolute;
     top: 40%;
-    left: 50%;
+    left: 53%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    border: 3px solid purple;
 }
 .table2 {
     margin: 0;
@@ -188,18 +157,10 @@ body{
 /*---Progress Bar--------------------------------*/
 .container1 {
     width: 100%;
-    /*margin: 20px auto;*/
 }
 
 .main-block-ses{
-    /*height: 900px;*/
-    /*border: black 1px dashed;*/
     width: 40%;
-    /*height: 100%;*/
-    /*margin-left: auto;*/
-    /*margin-left: 45%;*/
-    /*margin-right: 10px;*/
-    /*margin-top: 1%;*/
     position: absolute;
     top:65px;
     right: 10px;
@@ -208,6 +169,7 @@ body{
 .progressbar {
     counter-reset: step;
 }
+
 .progressbar li {
     list-style-type: none;
     float: left;
@@ -217,9 +179,8 @@ body{
     font-family: "Berlin Sans FB";
     text-align: center;
     color: #7d7d7d;
-    /*z-index: 0;*/
-
 }
+
 .progressbar li:before {
     width: 45px;
     height: 45px;
@@ -233,8 +194,8 @@ body{
     border-radius: 50%;
     background-color: #B4D5D4;
     cursor: pointer;
-    /*z-index: 0;*/
 }
+
 .progressbar li:after {
     width: 100%;
     height: 10px;
