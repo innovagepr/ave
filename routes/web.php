@@ -53,7 +53,7 @@ Route::get('/information', function(){
 
 Route::get('/grupos', function(){
     return view('group/groups');
-});
+})->name('grupos');;
 
 Route::get('/grupos/1', function(){
     return view('group/group-edit');
@@ -81,9 +81,9 @@ Route::get('/manejoActividades/lectura', function(){
 
 Route::get('/estadisticas', function(){
     return view('profile/statistics');
-});
+})->name('estadisticas');;
 
-Route::get('/mascota',[PetController::class, 'index']);
+Route::get('/mascota',[PetController::class, 'index'])->name('mascota');;
 
 Route::get('/actividades', function () {
     return view('act');
@@ -93,9 +93,9 @@ Route::get('/actividades', function () {
 Route::get('/lista/{list}', [ActivityController::class, 'show']);
 
 Route::get('/editarPerfil', function (){
-    return view('livewire.edit-profile');
+    return view('profile-settings');
 });
 
-Route::get('/tienda',[RewardController::class, 'index']);
+Route::get('/tienda',[RewardController::class, 'index'])->name('tienda');;
 
 Route::get('/seleccionar-mascota',[PetController::class, 'select']);
