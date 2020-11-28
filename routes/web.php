@@ -4,7 +4,6 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\RegisterProvisional;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,37 +49,31 @@ Route::get('/information', function(){
     return view('information');
 });
 
-Route::get('/grupos', function(){
+Route::middleware(['auth:sanctum', 'verified'])->get('/grupos', function(){
     return view('group/groups');
-});
+})->name('grupos');
 
-Route::get('/grupos/1', function(){
-    return view('group/group-edit');
-});
 
 Route::get('/lectura', function(){
     return view('Activity/activity2');
-});
-Route::get('/emtest', function(){
-    return view('emtest');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/manejoActividades', function () {
     return view('Activity/activities');
 })->name('actividades');
 
-Route::get('/manejoActividades/palabras', function(){
+Route::middleware(['auth:sanctum', 'verified'])->get('/manejoActividades/palabras', function(){
     return view('Activity/word-activity-edit');
-});
+})->name('manejoPalabras');
 
 
-Route::get('/manejoActividades/lectura', function(){
+Route::middleware(['auth:sanctum', 'verified'])->get('/manejoActividades/lectura', function(){
     return view('Activity/reading-activity-edit');
-});
+})->name('manejoLectura');
 
-Route::get('/estadisticas', function(){
+Route::middleware(['auth:sanctum', 'verified'])->get('/estadisticas', function(){
     return view('profile/statistics');
-});
+})->name('estadisticas');
 
 Route::get('/mascota',[PetController::class, 'index']);
 

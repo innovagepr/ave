@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Activity;
+use App\Models\CompletedActivity;
 use App\Models\ListExercise;
 use App\Models\Question;
 use App\Models\QuestionOption;
@@ -14,6 +16,7 @@ use Livewire\Component;
  */
 class Activity2 extends Component
 {
+    public $activity = null;
     protected $rules = [
         'option' => 'required',
     ];
@@ -61,6 +64,37 @@ class Activity2 extends Component
     public function nextExercise(){
             $this->validate();
             $this->option = QuestionOption::find($this->option);
+        if($this->step === 9){
+            if(array_search(0, array_reverse($this->answeredFlag)) != null)
+            {
+                $this->goTo(array_search(0, $this->answeredFlag));
+            }
+            else{
+                $this->dispatchBrowserEvent('results');
+                if(auth()->user()->id){
+                    $completedActivity = new CompletedActivity();
+                    $completedActivity->activity_id = Activity::where('slug', '=', 'lectura')->first()->id;
+                    $completedActivity->user_id = auth()->user()->id;
+                    $completedActivity->difficulty_id = ListExercise::find($this->activity)->difficulty_id;
+                    $completedActivity->final_score = $this->score;
+                    $completedActivity->save();
+                }
+            }
+        }
+        else if ($this->answeredFlag[$this->step + 1] && $this->step + 1 < 9) {
+            $this->goTo(array_search(0, $this->answeredFlag));
+        } else if (array_search(0, $this->answeredFlag) === null && array_search(0, $this->answeredFlag) === null) {
+            $this->dispatchBrowserEvent('results');
+            if(auth()->user()->id){
+                $completedActivity = new CompletedActivity();
+                $completedActivity->activity_id = $this->activity;
+                $completedActivity->user_id = auth()->user()->id;
+                $completedActivity->difficulty_id = ListExercise::find($this->activity)->difficulty_id;
+                $completedActivity->final_score = $this->score;
+            }
+        } else {
+            $this->step++;
+        }
             if($this->option->is_correct){
                 $this->score++;
                 $this->dispatchBrowserEvent('correctAnswer');
@@ -71,22 +105,7 @@ class Activity2 extends Component
                 $this->dispatchBrowserEvent('incorrectAnswer');
             }
                 $this->answeredFlag[$this->step] = 1;
-            if($this->step === 9){
-                if(array_search(0, $this->answeredFlag) != FALSE)
-                {
-                    $this->goTo(array_search(0, $this->answeredFlag));
-                }
-                else{
-                    $this->dispatchBrowserEvent('results' );
-                }
-            }
-                else if ($this->answeredFlag[$this->step + 1] && $this->step + 1 < 9) {
-                    $this->goTo(array_search(0, $this->answeredFlag));
-                } else if ($this->answeredFlag[$this->step + 1] && $this->step + 1 == 9) {
-                    $this->dispatchBrowserEvent('results');
-                } else {
-                    $this->step++;
-                }
+
 
                 $this->resetOnAdvance();
     }
@@ -102,7 +121,7 @@ class Activity2 extends Component
     }
 
     public function mount(){
-    $this->exercises = ListExercise::find(3)->questions()->get();
+    $this->exercises = ListExercise::find($this->activity)->questions()->get();
     $this->exercises = $this->exercises->shuffle();
     $this->currentExercise = $this->exercises[0];
 

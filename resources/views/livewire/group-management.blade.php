@@ -34,8 +34,6 @@
                         <span class="fa fa-arrow-alt-circle-left fa-2x"></span>
                     </i>
                 </div>
-
-
             </div>
         </div>
     </div>

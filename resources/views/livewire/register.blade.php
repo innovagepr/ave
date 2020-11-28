@@ -19,11 +19,9 @@
     <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
     <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
     <!-- Link to homepage -->
-    <form method="GET" action="{{ route('register') }}" wire:ignore>
-    <i type="button" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
+    <i type="button" onclick="location.href='/homepage'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
         <span class="fa fa-home fa-5x"></span>
     </i>
-    </form>
 
     <!-- Registration form -->
     <form method="POST" action="{{ route('register') }}">
