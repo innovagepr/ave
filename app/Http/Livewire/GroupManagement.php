@@ -17,6 +17,11 @@ use Carbon\Carbon;
  */
 class GroupManagement extends Component
 {
+    protected $listeners = [
+        'groupUpdate',
+    ];
+
+
     use WithPagination;
     protected $rules = [
         'name' => 'required|max:128',
@@ -64,7 +69,9 @@ class GroupManagement extends Component
                                                                             ->where('deleted', '=', 0)
                                                                             ->paginate(3, ['*'], 'groups')]);
     }
-
+    public function groupUpdate(){
+    $this->tableActive = 1;
+}
     public function mount(){
         $this->tempDate = today();
     }
@@ -140,7 +147,8 @@ class GroupManagement extends Component
         else
         {
             $this->selectedGroup = Group::find($groupNumber);
-            $this->tableActive = 1;
+            $this->tableActive = 0;
+            $this->emit('groupUpdate');
         }
     }
 

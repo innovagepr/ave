@@ -29,25 +29,17 @@ class ReadingActivityManagement extends Component
         'name.required' => 'Favor proveer un nombre.',
         'name.max' => 'El nombre de la lista no puede exceder 128 caracteres.',
     ];
+    protected $listeners = [
+        'listUpdate',
+    ];
     public $tempDate;
     public $name;
     public $tableActive;
-    public $paragraph;
-    public $question;
-    public $selectedQuestion;
-    public $correctOption;
-    public $incorrectOption1;
-    public $incorrectOption2;
-    public $paragraphToEdit;
-    public $questionToEdit;
-    public $correctOptionToEdit;
-    public $incorrectOption1ToEdit;
-    public $incorrectOption2ToEdit;
     public $difficulty= "Fácil";
     public $nameToEdit;
     public $diffToEdit;
     public $listToRemove;
-    public $wordToRemove;
+
     public $groups;
     public $listActive;
     public $test = [];
@@ -66,8 +58,7 @@ class ReadingActivityManagement extends Component
     public $studentID = 7;
     public $active = true;
     public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Asignada a", "Activa", "Eliminar");
-    public $headersStudents = array("Párrafo", "Eliminar");
-    //public $lists;
+
     public function mount()
     {
         if(Activity::where('slug', '=', 'Lectura')->first() === null)
@@ -102,6 +93,10 @@ class ReadingActivityManagement extends Component
     {
         $this->validateOnly($propertyName);
     }
+
+    public function listUpdate(){
+        $this->tableActive = 1;
+    }
     public function resetOnClose()
     {
         $this->name="";
@@ -109,11 +104,6 @@ class ReadingActivityManagement extends Component
         $this->description="";
         $this->nameToEdit="";
         $this->diffToEdit="Fácil";
-        $this->paragraph = "";
-        $this->question = "";
-        $this->correctOption = "";
-        $this->incorrectOption1 = "";
-        $this->incorrectOption2 = "";
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
             ->where('deleted', '=', 0)->where('activity_id', '=', 2)->get();
         if($this->tableActive)
@@ -129,12 +119,7 @@ class ReadingActivityManagement extends Component
         $this->diffToEdit = $this->selectedGroup->difficulty;
         $this->dispatchBrowserEvent('editModal');
     }
-    public function newStudentModal(){
-        $this->dispatchBrowserEvent('newStudentModal');
-    }
-    public function assignListModal(){
-        $this->dispatchBrowserEvent('assignListModal');
-    }
+
     public function clickGroup($groupNumber)
     {
         if($this->tableActive === 1 && $this->selectedGroup->id === $groupNumber)
@@ -158,8 +143,9 @@ class ReadingActivityManagement extends Component
                 }
                 $this->students = $tempResult[0];
             }
-            $this->students = $tempResult[0];
-            $this->tableActive = 1;
+
+            $this->tableActive = 0;
+            $this->emit('listUpdate');
 
         }
     }
@@ -228,92 +214,13 @@ class ReadingActivityManagement extends Component
         $this->resetOnClose();
         $this->dispatchBrowserEvent('list-removed');
     }
-    public function addStudent(){
-        $this->validate(['paragraph' => 'required', 'question' => 'required|max:128', 'correctOption' => 'required|max:128',
-            'incorrectOption1' => 'required|max:128', 'incorrectOption2' => 'required|max:128',],
-            [
-                'paragraph.required' => 'Favor proveer un párrafo.',
-                'question.required' => 'Favor proveer una pregunta.',
-                'question.max' => 'La pregunta no debe exceder 128 caracteres.',
-                'correctOption.required' => 'Favor proveer la opción correcta.',
-                'correctOption.max' => 'El texto de la opción no debe exceder 128 caracteres.',
-                'incorrectOption1.required' => 'Favor proveer la opción incorrecta.',
-                'incorrectOption1.max' => 'El texto de la opción no debe exceder 128 caracteres.',
-                'incorrectOption2.required' => 'Favor proveer la opción incorrecta.',
-                'incorrectOption2.max' => 'El texto de la opción no debe exceder 128 caracteres.',
-            ],
-            ['paragraph' => 'Párrafo', 'question' => 'Pregunta', 'correctOption' => 'Opción Correcta',
-                'incorrectOption1' => 'Opción Incorrecta 1', 'incorrectOption2' => 'Opción Incorrecta 2']);
-        $paragraphToAdd = new Paragraph();
-        $paragraphToAdd->text = $this->paragraph;
-        $paragraphToAdd->save();
-        $questionToAdd = new Question();
-        $questionToAdd->paragraph_id = $paragraphToAdd->id;
-        $questionToAdd->list_id = $this->selectedGroup->id;
-        $questionToAdd->difficulty_id = $this->selectedGroup->difficulty_id;
-        $questionToAdd->question = $this->question;
-        $questionToAdd->save();
-        $this->selectedGroup->questions()->attach($questionToAdd);
-        $questionToAdd->paragraph()->associate($paragraphToAdd);
-        $correctOptionToAdd = new QuestionOption();
-        $correctOptionToAdd->question_id = $questionToAdd->id;
-        $correctOptionToAdd->option = $this->correctOption;
-        $correctOptionToAdd->is_correct = 1;
-        $correctOptionToAdd->save();
-        $incorrectOption1ToAdd = new QuestionOption();
-        $incorrectOption1ToAdd->question_id = $questionToAdd->id;
-        $incorrectOption1ToAdd->option = $this->incorrectOption1;
-        $incorrectOption1ToAdd->is_correct = 0;
-        $incorrectOption1ToAdd->save();
-        $incorrectOption2ToAdd = new QuestionOption();
-        $incorrectOption2ToAdd->question_id = $questionToAdd->id;
-        $incorrectOption2ToAdd->option = $this->incorrectOption2;
-        $incorrectOption2ToAdd->is_correct = 0;
-        $incorrectOption2ToAdd->save();
-        $questionToAdd->options()->saveMany([$correctOptionToAdd, $incorrectOption1ToAdd, $incorrectOption2ToAdd]);
-        $this->dispatchBrowserEvent('student-added');
-        $this->resetOnClose();
+
+    public function assignListModal(){
+        $this->dispatchBrowserEvent('assignListModal');
     }
-    public function editWordModal($selectedWord){
-        $this->selectedQuestion = Question::find($selectedWord);
-        $this->paragraphToEdit = $this->selectedQuestion->paragraph()->first()->text;
-        $this->questionToEdit = $this->selectedQuestion->question;
-        $this->correctOptionToEdit = $this->selectedQuestion->options()->where('is_correct', '=', 1)->first()->option;
-        $this->incorrectOption1ToEdit = $this->selectedQuestion->options()->where('is_correct', '=', 0)->first()->option;
-        $this->incorrectOption2ToEdit = $this->selectedQuestion->options()->where('is_correct', '=', 0)->skip(1)->first()->option;
-        $this->dispatchBrowserEvent('editWordModal');
-    }
-    public function editWord(){
-        $this->validate(['paragraphToEdit' => 'required', 'questionToEdit' => 'required|max:128', 'correctOptionToEdit' => 'required|max:128',
-            'incorrectOption1ToEdit' => 'required|max:128', 'incorrectOption2ToEdit' => 'required|max:128',],
-            [
-                'paragraphToEdit.required' => 'Favor proveer un párrafo.',
-                'questionToEdit.required' => 'Favor proveer una pregunta.',
-                'questionToEdit.max' => 'La pregunta no debe exceder 128 caracteres.',
-                'correctOptionToEdit.required' => 'Favor proveer la opción correcta.',
-                'correctOptionToEdit.max' => 'El texto de la opción no debe exceder 128 caracteres.',
-                'incorrectOption1ToEdit.required' => 'Favor proveer la opción incorrecta.',
-                'incorrectOption1ToEdit.max' => 'El texto de la opción no debe exceder 128 caracteres.',
-                'incorrectOption2ToEdit.required' => 'Favor proveer la opción incorrecta.',
-                'incorrectOption2ToEdit.max' => 'El texto de la opción no debe exceder 128 caracteres.',
-            ],
-            ['paragraphToEdit' => 'Párrafo', 'questionToEdit' => 'Pregunta', 'correctOptionToEdit' => 'Opción Correcta',
-                'incorrectOption1ToEdit' => 'Opción Incorrecta 1', 'incorrectOption2ToEdit' => 'Opción Incorrecta 2']);
-        $paragraph = Paragraph::where('id', '=', $this->selectedQuestion->paragraph()->first()->id)->first();
-        $paragraph->text = $this->paragraphToEdit;
-        $paragraph->save();
-        $this->selectedQuestion->question = $this->questionToEdit;
-        $this->selectedQuestion->save();
-        $correctOption = QuestionOption::where('question_id', '=', $this->selectedQuestion->id)->where('is_correct', '=', 1)->first();
-        $correctOption->option = $this->correctOptionToEdit;
-        $correctOption->save();
-        $incorrectOption1 = QuestionOption::where('question_id', '=', $this->selectedQuestion->id)->where('is_correct', '=', 0)->first();
-        $incorrectOption1->option = $this->incorrectOption1ToEdit;
-        $incorrectOption1->save();
-        $incorrectOption2 = QuestionOption::where('question_id', '=', $this->selectedQuestion->id)->where('is_correct', '=', 0)->skip(1)->first();
-        $incorrectOption2->option = $this->incorrectOption2ToEdit;
-        $incorrectOption2->save();
-        $this->dispatchBrowserEvent('word-edited');
+    public function showAssignedModal($selectedGroup){
+        $this->selectedGroup = ListExercise::find($selectedGroup);
+        $this->dispatchBrowserEvent('showAssignedModal');
     }
     public function assignList(){
 
@@ -329,19 +236,7 @@ class ReadingActivityManagement extends Component
         }
         $this->dispatchBrowserEvent('list-assigned');
     }
-    public function removeWordModal($selectedWord){
-        $this->wordToRemove = Word::find($selectedWord);
-        $this->dispatchBrowserEvent('removeWordModal');
-    }
-    /**
-     * Removes a student depending on which area of the view it has been called.
-     * @param $selectedStudent the student delete button that was selected.
-     */
-    public function removeWord(){
-        $this->selectedGroup->questions()->detach($this->wordToRemove);
-        $this->resetOnClose();
-        $this->dispatchBrowserEvent('word-removed');
-    }
+
 
 
 }

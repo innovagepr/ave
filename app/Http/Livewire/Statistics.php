@@ -84,7 +84,7 @@ class Statistics extends Component
          }
         $this->groupFilter = $this->groups->first()->id;
         $this->studentFilter = $this->students[0]->id;
-        $this->activityFilter = $this->activities->first()->id;
+        $this->activityFilter = $this->activities->first()->slug;
         $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
         $this->activeMembers = Group::find($this->groupFilter)->members()->get();
         $studentScores = CompletedActivity::where('user_id', '=', 3)->get();

@@ -8,8 +8,10 @@
         <form autocomplete="off">
 
                 <div class="modal-body" style="text-align: center;">
+                    @if(auth()->user())
                     <p style="font-family: 'Berlin Sans FB'; font-size: 25px; vertical-align: middle; color: #19D519; margin: 10px;"><img style="width:35px; height:35px; float: inherit; vertical-align: middle; display: inline;" src="{{asset('images/satisfaction.png')}}"> +2 puntos</p>
                     <p style="font-family: 'Berlin Sans FB'; font-size: 25px; vertical-align: middle; color: #19D519; margin: 10px;"><img style="width:35px; height:35px; float: inherit; vertical-align: middle; display: inline;" src="{{asset('images/savings.png')}}"> +5 monedas</p>
+                        @endif
                 </div>
 
             <div class="modal-footer" style="margin:auto;">

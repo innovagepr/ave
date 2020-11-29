@@ -1,6 +1,9 @@
     {{-- Nothing in the world is as soft and yielding as water. --}}
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+            <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
+                <span class="text-center">{{ __($student->fullname) }}</span>
+            </div>
             <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8" style="margin-top: 10%;">
                 <x-table>
                     <x-slot name="head">
@@ -22,6 +25,11 @@
                     </x-slot>
                 </x-table>
                 {{ $accesses->links() }}
+            </div>
+            <div class="mt-4">
+                <button type="submit" data-dismiss="modal" class="button button1">
+                    {{ __('Aceptar') }}
+                </button>
             </div>
         </div>
     </div>

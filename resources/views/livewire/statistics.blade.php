@@ -11,9 +11,6 @@
                 <div>
                     <input name = "option" type="radio" value="Estudiante" wire:model="option">{{ __('Estudiante') }}
                 </div>
-                <div>
-                    <input name = "option" type="radio" value="Actividad" wire:model="option">{{ __('Actividad') }}
-                </div>
 
             </div>
             <div>
@@ -38,12 +35,6 @@
                         <option value="{{ $l->id }}">{{ $l->fullname }}</option>
                     @endforeach
                         </select>
-                @else
-                            <select id="group" name="filterActivity" wire:model="activityFilter">
-                    @foreach($activities as $l)
-                        <option value="{{ $l->id }}">{{ $l->name }}</option>
-                    @endforeach
-                            </select>
                     @endif
 
 
@@ -61,8 +52,15 @@
 @if($option === 'Estudiante')
         <div class="container" style="float: inside; text-align: right;">
             {{ __('Desempeño por Actividad:') }}
+            <select id="group" name="filterActivity" wire:model="activityFilter">
+                @foreach($activities as $l)
+                    <option value="{{ $l->name }}">{{ $l->name }}</option>
+                @endforeach
+            </select>
         </div>
+
     <div class="container" style="float: inside; text-align: right;">
+        @if($activityFilter === 'Lectura' && $option === 'Estudiante')
         <div>
             <i class="fas fa-book-reader"></i>
             <x-jet-label for="statsReading" class="inline-block" value="{{ __('Lectura') }}"/>
@@ -83,6 +81,7 @@
             </div>
             @endif
         </div>
+        @elseif($activityFilter === 'Palabras' && $option === 'Estudiante')
         <div>
             <i class="fas fa-pencil-ruler"></i>
             <x-jet-label for="statsWords" class="inline-block" value="{{ __('Palabras') }}"/>
@@ -103,6 +102,7 @@
                 </div>
             @endif
         </div>
+            @endif
 
     </div>
 @elseif($option === 'Grupo' && $groupFilter)

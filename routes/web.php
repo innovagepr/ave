@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ReadingController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
@@ -55,9 +56,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/grupos', function(){
 })->name('grupos');
 
 
-Route::get('/lectura', function(){
-    return view('Activity/activity2');
-});
+Route::get('/lectura/{list}', [ReadingController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/manejoActividades', function () {
     return view('Activity/activities');

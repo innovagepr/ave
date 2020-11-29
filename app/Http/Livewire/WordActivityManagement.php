@@ -25,6 +25,9 @@ class WordActivityManagement extends Component
         'name.required' => 'Favor proveer un nombre.',
         'name.max' => 'El nombre de la lista no puede exceder 128 caracteres.',
     ];
+    protected $listeners = [
+        'listUpdate',
+    ];
     public $tempDate;
     public $name;
     public $tableActive;
@@ -52,7 +55,7 @@ class WordActivityManagement extends Component
     public $activityType;
     public $studentID = 7;
     public $active = true;
-    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Asignado a", "Activa", "Eliminar");
+    public $headersGroups = array("Nombre", "Dificultad", "Cantidad", "Asignada a", "Activa", "Eliminar");
     public $headersStudents = array("Palabra", "Eliminar");
     public function mount()
     {
@@ -68,6 +71,9 @@ class WordActivityManagement extends Component
         $this->activityType = Activity::where('slug', '=', 'Palabras')->first();
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
                                     ->where('activity_id', '=', $this->activityType->id)->get();
+    }
+    public function listUpdate(){
+        $this->tableActive = 1;
     }
     public function render()
     {
@@ -97,7 +103,6 @@ class WordActivityManagement extends Component
         $this->description="";
         $this->nameToEdit="";
         $this->diffToEdit="Fácil";
-        $this->word="";
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)->get();
         if($this->tableActive)
         {
@@ -109,19 +114,16 @@ class WordActivityManagement extends Component
     }
     public function editModal(){
         $this->nameToEdit = $this->selectedGroup->name;
-        $this->diffToEdit = $this->selectedGroup->difficulty;
+        $this->diffToEdit = $this->selectedGroup->difficulty->name;
         $this->dispatchBrowserEvent('editModal');
     }
-    public function newStudentModal(){
-        $this->dispatchBrowserEvent('newStudentModal');
-    }
-    public function editWordModal($selectedWord){
-        $this->wordToEdit = Word::find($selectedWord);
-        $this->word = $this->wordToEdit->word;
-        $this->dispatchBrowserEvent('editWordModal');
-    }
+
     public function assignListModal(){
         $this->dispatchBrowserEvent('assignListModal');
+    }
+    public function showAssignedModal($selectedGroup){
+        $this->selectedGroup = ListExercise::find($selectedGroup);
+        $this->dispatchBrowserEvent('showAssignedModal');
     }
     public function clickGroup($groupNumber)
     {
@@ -147,7 +149,8 @@ class WordActivityManagement extends Component
                 $this->students = $tempResult[0];
             }
 
-            $this->tableActive = 1;
+            $this->tableActive = 0;
+            $this->emit('listUpdate');
 
         }
     }
@@ -213,32 +216,13 @@ class WordActivityManagement extends Component
         if($this->tableActive && ($this->listToRemove->id === $this->selectedGroup->id)){
             $this->tableActive = 0;
         }
-        $this->listToRemove->active = 0;
+        $this->listToRemove->deleted = 1;
         $this->listToRemove->save();
         $this->resetOnClose();
         $this->dispatchBrowserEvent('list-removed');
     }
-    public function addStudent(){
-        $this->validate(['word' => 'required|max:32'],
-            [
-                'word.required' => 'Favor proveer una palabra.',
-                'word.max' => 'La palabra no puede exceder 32 caracteres.',
-            ],
-            ['word' => 'Palabra']);
-        $wordToAdd = new Word();
-        $wordToAdd->difficulty_id = $this->selectedGroup->difficulty_id;
-        $wordToAdd->word = $this->word;
-        $wordToAdd->save();
-        $group = ListExercise::find($this->selectedGroup->id);
-        $group->words()->attach($wordToAdd);
-        $this->dispatchBrowserEvent('student-added');
-        $this->resetOnClose();
-    }
-    public function editWord(){
-        $this->wordToEdit->word = $this->word;
-        $this->wordToEdit->save();
-        $this->dispatchBrowserEvent('word-edited');
-    }
+
+
     public function assignList(){
 
         foreach($this->test as $g) {
@@ -253,17 +237,5 @@ class WordActivityManagement extends Component
         }
         $this->dispatchBrowserEvent('list-assigned');
     }
-    public function removeWordModal($selectedWord){
-        $this->wordToRemove = Word::find($selectedWord);
-        $this->dispatchBrowserEvent('removeWordModal');
-    }
-    /**
-     * Removes a student depending on which area of the view it has been called.
-     * @param $selectedStudent the student delete button that was selected.
-     */
-    public function removeWord(){
-        $this->selectedGroup->words()->detach($this->wordToRemove);
-        $this->resetOnClose();
-        $this->dispatchBrowserEvent('word-removed');
-    }
+
 }
