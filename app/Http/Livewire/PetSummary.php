@@ -9,11 +9,14 @@ use Livewire\Component;
 
 class PetSummary extends Component
 {
-
     public $pet;
     private $avatar;
 
-
+    /**
+     * Render
+     * Renders the view of the pet Dashboard with the data in the parameters
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function render()
     {
         $data['pet'] = Auth::user()->pet;
@@ -21,23 +24,23 @@ class PetSummary extends Component
         return view('livewire.pet-summary', compact('data'));
     }
 
-//    public function mount(){
-//        $this->avatar = new PetAvatar;
-//        $this->avatar->set_background("#000000");
-////        $this->avatar->set_background("images/cat1.png");
-//        $this->avatar->add_layer("images/pet_layers/catBase.png");
-//        $this->avatar->add_layer("images/pet_layers/cap.png");
-
-//        $this->avatar->build();
-//
-//    }
-
+    /**
+     * ChangeColor
+     * Function to change the background color of the pet Avatar
+     * @param $color
+     */
     public function changeColor($color){
         $this->pet->background_Color = $color;
         $this->pet->save();
         $this->pet = $this->pet->fresh();
     }
 
+    /**
+     * Build Avatar
+     * This function generates the avatar image with the selected reward items of the user.
+     * @param RewardType $item
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function buildAvatar(RewardType $item){
 
         $this->avatar = new PetAvatar;
@@ -77,9 +80,14 @@ class PetSummary extends Component
         return redirect('/mascota');
     }
 
+    /**
+     * Detach Item
+     * This functions generates the avatar image removing the selected reward item.
+     * @param RewardType $item
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function detachItem(RewardType $item){
         $this->avatar = new PetAvatar;
-
 
         if($this->pet->petType->slug == "perro"){
             $this->avatar->add_layer("images/pet_layers/dogBase.png");
@@ -96,6 +104,4 @@ class PetSummary extends Component
         $this->pet->save();
         return redirect('/mascota');
     }
-
-
 }

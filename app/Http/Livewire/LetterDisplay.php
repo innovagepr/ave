@@ -9,7 +9,7 @@ use function GuzzleHttp\Psr7\str;
 
 class LetterDisplay extends Component
 {
-    protected $listeners = ['lastExercise'];
+    protected $listeners = ['submitExercise'];
 
     public $word;
     public $shuffledWord;
@@ -22,7 +22,6 @@ class LetterDisplay extends Component
     public $step = 0;
     public $correctAnswers = [];
     public $badAnswers = [];
-
     public $tempAnswers = [];
     public $tempSplitWords = [];
     public $tempPosition = [];
@@ -30,11 +29,21 @@ class LetterDisplay extends Component
     public $tempPositionsArray = [];
     public $answeredFlag = [0,0,0,0,0,0,0,0,0,0];
 
-
+    /**
+     * Render
+     * Renders the view of the Activity 1 screen (letter-display)
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function render(){
         return view('livewire.letter-display');
     }
 
+    /**
+     * Place Letter
+     * Function to place a selected letter of a shuffled word in the answer boxes
+     * @param $position
+     * @param $letter
+     */
     public function placeLetter($position, $letter){
         if($letter != ' ') {
             array_push($this->positions, $position);
@@ -49,6 +58,10 @@ class LetterDisplay extends Component
         }
     }
 
+    /**
+     * Remove Letter
+     * Removes the last letter of the answers boxes and put it back in the original position in the shuffled letters boxes
+     */
     public function removeLetter(){
         if($this->position2 >= 1) {
             $this->position2--;
@@ -57,10 +70,15 @@ class LetterDisplay extends Component
             $this->tempSplitWords[$this->step] = $this->splitWord;
             $this->tempAnswers[$this->step] = $this->answer;
             $this->tempPosition[$this->step] = $this->position2;
-
         }
     }
 
+    /**
+     * Split Shuffle
+     * Gets a word, shuffles it and divides it into characters. If the shuffled word is equal to the original, shuffles it again.
+     * @param $word
+     * @return array|false|string[]
+     */
     public function splitshuffle($word){
         $temp = $word;
         $word = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
@@ -72,8 +90,11 @@ class LetterDisplay extends Component
         return $word;
     }
 
+    /**
+     * Mount
+     * This functions allows to intercept parameters 
+     */
     public function mount(){
-
         $counter = 0;
         foreach ($this->words as $palabra){
             $this->words2[$counter] = $palabra->word;
@@ -83,8 +104,6 @@ class LetterDisplay extends Component
             $this->tempPositionsArray[$counter] = array_fill(0,strlen($palabra->word),0);
             $counter++;
         }
-
-//        dd($this->tempAnswers,$this->tempSplitWords, $this->tempPosition, $this->words2,$this->tempPositionsArray);
         $this->word = $this->words[$this->step]->word;
         $this->splitWord =  $this->tempSplitWords[$this->step];
         $this->answer =  $this->tempAnswers[$this->step];
@@ -105,8 +124,8 @@ class LetterDisplay extends Component
 
             $this->dispatchBrowserEvent('toggleResultModal', $this->joinedAnswer);
             $this->emit('refreshChildren', $this->joinedAnswer, $this->word);
-            array_push($this->badAnswers, $joinedWord);
             $this->answeredFlag[$this->step] = 1;
+            array_push($this->badAnswers,[$this->step + 1,$joinedWord,$this->word]);
         }
         if ($this->step < 9) {
 
@@ -125,7 +144,6 @@ class LetterDisplay extends Component
             $this->splitWord = $this->tempSplitWords[$this->step];
             $this->answer = $this->tempAnswers[$this->step];
             $this->positions = $this->tempPositionsArray[$this->step];
-
         }
     }
 
@@ -133,10 +151,12 @@ class LetterDisplay extends Component
         $this->joinedAnswer = implode($this->answer);
     }
 
-    public function lastExercise(){
-        if($this->step == 9){
-            $this->dispatchBrowserEvent('finalResult', $this->joinedAnswer, $this->correctAnswers, $this->badAnswers);
-        }
+    public function submitExercise(){
+        $sum = count($this->badAnswers) + count($this->correctAnswers);
+
+        $this->dispatchBrowserEvent('finalResult', $this->badAnswers, $sum);
+        $this->emit('refreshFinal', $this->badAnswers, $sum);
+        $this->emit('refreshAudio', null);
     }
 
     public function clearAll(){
@@ -148,13 +168,13 @@ class LetterDisplay extends Component
     public function goTo($step1){
 
         $this->tempAnswers[$this->step] = $this->answer;
-
+        $this->emit('refreshAudio', $this->word);
 
         if($this->step != $step1 && !$this->answeredFlag[$step1]) {
 
             $this->step = $step1;
             $this->word = $this->words[$this->step]->word;
-            $this->emit('refreshAudio', $this->word);
+//            $this->emit('refreshAudio', $this->word);
 
 // Reset variables
             $this->shuffledWord = $this->tempSplitWords[$this->step];
@@ -167,6 +187,13 @@ class LetterDisplay extends Component
         }
     }
     public function quitWarning(){
-        $this->dispatchBrowserEvent('quitWarning');
+        $sum = count($this->badAnswers) + count($this->correctAnswers);
+
+        if($sum< 10){
+            $this->dispatchBrowserEvent('quitWarning', $sum);
+            $this->emit('refreshWarning', $sum);
+        }else {
+            $this->submitExercise();
+        }
     }
 }

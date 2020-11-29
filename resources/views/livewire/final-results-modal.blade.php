@@ -1,46 +1,42 @@
-
-<div class="modal-dialog" style="margin-top: 20%; ">
+{{--View for the modal showing the summary of the activity. Shows a list of the wrong answers (if any).--}}
+<div class="modal-dialog modal-lg" style="margin-top: 13%">
     <div class="modal-content" style="border: 3px solid #2576AC; border-radius: 40px">
         <div>
             <h1 style ="font-family: Berlin Sans FB; font-size: 40px; color: #2576AC; text-align: center; margin: 10px;">¡Bien Hecho!</h1>
-            <h2 style ="font-family: Berlin Sans FB; font-size: 40px; color: #2576AC; text-align: center; margin: 10px;">Lograste acertar 8/10 preguntas.</h2>
+            <h2 style ="font-family: Berlin Sans FB; font-size: 40px; color: #2576AC; text-align: center; margin: 10px;">Lograste acertar <span style="color: #19D519">{{$sum-count($badAnswers)}}/10</span> preguntas.</h2>
         </div>
         <form autocomplete="off">
             <div class="modal-body" style="text-align: center">
-                <h3>Solo te equivocaste en 2 ejericios:</h3>
+                <h2 style ="font-family: Berlin Sans FB; font-size: 25px; color: #2576AC; text-align: center; margin: 5px;">Solo te equivocaste en <span style="color: red">{{10 -( $sum - count($badAnswers))}}</span> ejericios:</h2>
                 <table style="text-align: center; font-family: 'Berlin Sans FB'; font-size: 25px; width:100%; border: 2px solid red">
-                    <tr >
+                    <tr>
                         <th style="font-weight: lighter; text-align: center; color: #2576AC">Ejercicio</th>
                         <th style="font-weight: lighter; text-align: center; color: #2576AC">Tu Respuesta</th>
                         <th style="font-weight: lighter; text-align: center; color: #2576AC">Respuesta Correcta</th>
+                        <th style="font-weight: lighter; text-align: center; color: #2576AC">Escuchar</th>
                     </tr>
-                    <tr>
-{{--                        @for($i=0;$i<count($badWords);$i++)--}}
-                            @foreach($badAnswers as $incorrect)
+                    @foreach($badAnswers as $incorrect)
+                        <tr>
+                            <td>
+                                {{$incorrect[0]}}
+                            </td>
+                            <td style="color: red">
+                                {{$incorrect[1]}}
+                            </td>
+                            <td style="color: #19D519">
+                                {{$incorrect[2]}}
+                            </td>
+                            <td>
+                                <span class="audioFeedback" onclick="togglePlayFeedback2()"><i class="fas fa-volume-up fa-lg"></i></span>
+                                <audio controls id = "feedbackAudio1" controlsList="nodownload" hidden="true">
+                                    <source src="/{{$incorrect[2]}}.wav" type="audio/ogg">
+                                    <source src="/{{$incorrect[2]}}.wav" type="audio/mpeg">
+                                    Su navegador no es compatible con la etiqueta de audio.
+                                </audio>
+                            </td>
 
-
-                        <td>
-                            7
-                        </td>
-                        <td>
-                            {{$incorrect}}
-                        </td>
-                        <td style="color: #19D519">
-                            fauna
-                        </td>
-                        @endforeach
-                    </tr>
-{{--                    <tr>--}}
-{{--                        <td>--}}
-{{--                            9--}}
-{{--                        </td>--}}
-{{--                        <td>--}}
-{{--                            sapo--}}
-{{--                        </td>--}}
-{{--                        <td style="color: #19D519">--}}
-{{--                            sopa--}}
-{{--                        </td>--}}
-{{--                    </tr>--}}
+                        </tr>
+                    @endforeach
                 </table>
             </div>
             <div class="modal-footer" style="margin:auto;">
@@ -49,3 +45,13 @@
         </form>
     </div>
 </div>
+
+{{--Function to refresh the word for the aduio functionality in the modal--}}
+<script>
+    window.addEventListener('refreshAudio', event => {
+        document.getElementById("feedbackAudio1").load();
+    })
+    function togglePlayFeedback2() {
+        feedbackAudio1.play();
+    }
+</script>

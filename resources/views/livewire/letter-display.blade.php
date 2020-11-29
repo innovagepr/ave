@@ -1,25 +1,34 @@
+{{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
 
 <div style="text-align: center">
-    {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-    <div style="margin-right: 90%">
-    @foreach($tempSplitWords as $tempSplitWord)
-        @foreach($tempSplitWord as $culote)
-            {{$culote}}
-        @endforeach
-        <br>
-    @endforeach
-    @foreach($tempPosition as $tempPositions)
-        {{$tempPositions}}
+    {{-- View of the Activity 1 (Letters/Words) --}}
 
-        <br>
-    @endforeach
-    @foreach($tempAnswers as $tempAnswer)
-        @foreach($tempAnswer as $culote)
-            {{$culote}}
-        @endforeach
-        <br>
-    @endforeach
+    <div style="margin-right: 90%">
+        {{--        @foreach($tempSplitWords as $tempSplitWord)--}}
+        {{--            @foreach($tempSplitWord as $palabras)--}}
+        {{--                {{$palabras}}--}}
+        {{--            @endforeach--}}
+        {{--            <br>--}}
+        {{--        @endforeach--}}
+        {{--        @foreach($tempPosition as $tempPositions)--}}
+        {{--            {{$tempPositions}}--}}
+
+        {{--            <br>--}}
+        {{--        @endforeach--}}
+        {{--        @foreach($tempAnswers as $tempAnswer)--}}
+        {{--            @foreach($tempAnswer as $palabras)--}}
+        {{--                {{$palabras}}--}}
+        {{--            @endforeach--}}
+        {{--            <br>--}}
+        {{--        @endforeach--}}
+        {{--        @foreach($badAnswers as $nose)--}}
+        {{--            @foreach($nose as $eye)--}}
+        {{--                {{$eye}}--}}
+        {{--            @endforeach--}}
+        {{--        @endforeach--}}
+
     </div>
+    {{--Displays the steps bar that shows the current excercise in the screeen--}}
     <div class="main-block-ses">
         <ul class="progressbar">
             <li id="0" class="{{$step == 0 ? 'active':''}}" wire:click="goTo({{0}})"></li>
@@ -35,33 +44,28 @@
         </ul>
     </div>
 
-
     <div>
+        {{--Displays the audio functionality in the screen--}}
         <div class="audio">
-            {{$word}}
-            {{--            @foreach($tempAnswers as $tempAnswer)--}}
-            {{--            {{$tempAnswer}}--}}
-            {{--            @endforeach--}}
             <livewire:audio-api :word="$word"/>
         </div>
-
+        {{--Show the grid boxes containing the sluffled letters and the selected letters for answer and form the word--}}
         <div style="display: flex">
-
-                <table class="table1" >
-                    <tr>
-                        @for ($j = 0; $j < count ($splitWord); $j++)
-                            <td class="{{$j == $position2 ? 'green' : 'answerBox'}}">
-                                {{$answer[$j]}}
-                            </td>
-                        @endfor
-                            <td>
-                                <a wire:click="removeLetter()"><i style="font-size: 40px; color: #ff0000; cursor: pointer; padding: 10px" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-backspace"></i></a>
-                            </td>
-                            <td>
-                                <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>
-                            </td>
-                    </tr>
-                </table>
+            <table class="table1" >
+                <tr>
+                    @for ($j = 0; $j < count ($splitWord); $j++)
+                        <td class="{{$j == $position2 ? 'green' : 'answerBox'}}">
+                            {{$answer[$j]}}
+                        </td>
+                    @endfor
+                    <td>
+                        <a wire:click="removeLetter()"><i style="font-size: 40px; color: #ff0000; cursor: pointer; padding: 10px" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-backspace"></i></a>
+                    </td>
+                    <td>
+                        <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            </table>
 
             <table class="table2">
                 <tr>
@@ -79,26 +83,14 @@
                     @endif
 
                 </tr>
-{{--                <tr style="border: 3px solid cyan">--}}
-{{--                    <td>--}}
-{{--                        <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>--}}
-{{--                    </td>--}}
-{{--                </tr>--}}
             </table>
-
+            <div class ="bottomRight">
+                <a type="button" wire:click ="quitWarning()" class="button5" style="text-decoration: none">Finalizar Actividad<span class="tooltiptext">Haz click aquí para someter la actividad.</span></a>
+            </div>
         </div>
-
-        <div style="display: flex">
-            @if($step != 0)
-                <button class = "backArrow" wire:click="goTo({{$step-1}})" type="button"><i class=" icons1 fas fa-arrow-left"></i></button>
-            @else
-                <button class = "backArrow" wire:click="quitWarning()" type="button"><i class=" icons1 fas fa-arrow-left"></i></button>
-            @endif
-        </div>
-
     </div>
 
-
+    {{--Displays the immediate modals, depending on the answers provided by the child--}}
     <div wire:ignore>
         <div class="modal fade" id="immediate-result-modal-Bad" tabindex="-1" role="dialog" aria-hidden="true">
             <livewire:immediate-modal :word="$word" :joinedAnswer="$joinedAnswer"/>
@@ -124,6 +116,7 @@
 
 </div>
 
+{{--Scripts to excesute the modals--}}
 <script>
     window.addEventListener('toggleResultModal', event => {
         $("#immediate-result-modal-Bad").modal('toggle');

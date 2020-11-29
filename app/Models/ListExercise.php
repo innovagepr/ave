@@ -9,10 +9,16 @@ class ListExercise extends Model
 {
     use HasFactory;
 
+    /**
+     * Get the lists records that belongs to the user.
+     */
     public function users(){
         return $this->belongsToMany(User::class, 'list_user', 'list_id');
     }
 
+    /**
+     * Get the rewards records associated with the user.
+     */
     public function owner(){
         return $this->belongsTo(User::class);
     }

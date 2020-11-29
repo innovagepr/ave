@@ -11,6 +11,11 @@ class RewardType extends Model
 {
     use HasFactory;
 
+    /**
+     * OWNED
+     * Function that returns true if an reward article in the Rewards Store is already owned by the user
+     * @return bool
+     */
     public function owned(){
         $rewards = Auth::user()->rewards;
         foreach ($rewards as $reward){
@@ -20,6 +25,11 @@ class RewardType extends Model
         }
     }
 
+    /**
+     * SELECTED
+     * Function that returns true if an reward article is selected in the Pet Dashboard screen
+     * @return bool
+     */
     public function selected(){
         $rewards = Auth::user()->pet->pet_rewards;
         foreach ($rewards as $reward){
