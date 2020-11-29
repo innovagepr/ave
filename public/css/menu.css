@@ -6,6 +6,25 @@ body {
     background-color:#e5fcfb;
 }
 
+.edit-form {
+    border: black 1px dashed;
+    height: 70%;
+}
+
+.icon-edit {
+    height: 40%;
+    width: 40%;
+}
+
+.icon-edit-option {
+    height: 100%;
+    width: 100%;
+}
+
+.edit-icon-area{
+    width: 45%;
+}
+
 /*.menu-item-active{*/
 /*    display: inline-flex;*/
 /*    place-items: center;*/

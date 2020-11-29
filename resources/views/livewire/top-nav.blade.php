@@ -39,8 +39,11 @@
                 <div class="menu-item  space-x-0 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('login') }}">
                         <span class="pr-1 fas fa-sign-in-alt "></span>
-                        {{__('Incia Sesión')}}
+                        {{__('Iniciar Sesión')}}
                     </x-jet-nav-link>
+                </div>
+                <div>
+                    <p> | </p>
                 </div>
                 <div class="menu-item  space-x-0 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('register') }}">

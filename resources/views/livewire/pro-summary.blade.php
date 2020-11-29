@@ -14,7 +14,11 @@
                     <x-slot name="body">
                         @foreach($groups as $group)
                             <x-table.row>
-                                <x-table.cell>{{$group->name}}</x-table.cell>
+                                {{--                                <x-table.cell>{{$group->name}}</x-table.cell>--}}
+                                <x-table.cell>
+                                    <a href="/#" wire:click.prevent="clickGroup({{ $group->id }})" style="text-decoration: none;">{{__($group->name)}}</a>
+                                </x-table.cell>
+
                                 @if($group->active === 0)
                                     <x-table.cell>No</x-table.cell>
                                 @else
@@ -29,10 +33,11 @@
     </div>
 
 
+
     <div class="flex flex-col">
         <div class="m-auto mt-7 overflow-x-auto ">
             <div class="py-2 simple-table align-middle inline-block max-w-3xl sm:px-6 lg:px-8">
-                <x-jet-label class="m-auto">{{__('Estudiantes Registrados')}}</x-jet-label>
+                <x-jet-label class="m-auto">{{__('Miembros registrados en el grupo: '.$selectedGroupName)}}</x-jet-label>
                 <x-table>
                     <x-slot name="head">
                         @foreach($headersStudents as $head)
@@ -40,15 +45,25 @@
                         @endforeach
                     </x-slot>
                     <x-slot name="body">
-                        @foreach($groups as $group)
-                            @foreach($group->members as $user)
+                        @if($selectedGroup)
+                            @foreach($selectedGroup->members as $user)
                                 <x-table.row>
                                     <x-table.cell>{{$user->first_name}}</x-table.cell>
                                     <x-table.cell>{{$group->name}}</x-table.cell>
                                     <x-table.cell>Sí</x-table.cell>
                                 </x-table.row>
                             @endforeach
-                        @endforeach
+                        @else
+                            @foreach($groups as $group)
+                                @foreach($group->members as $user)
+                                    <x-table.row>
+                                        <x-table.cell>{{$user->first_name}}</x-table.cell>
+                                        <x-table.cell>{{$group->name}}</x-table.cell>
+                                        <x-table.cell>Sí</x-table.cell>
+                                    </x-table.row>
+                                @endforeach
+                            @endforeach
+                        @endif
                     </x-slot>
                 </x-table>
             </div>
@@ -56,7 +71,7 @@
     </div>
 
     <div>
-        <x-jet-label class="mt-5">{{__('Promedio por actividad')}}</x-jet-label>
+        <x-jet-label class="mt-5">{{__('Promedios por actividad')}}</x-jet-label>
         <div class="dashboard-card lg-block max-w-3xl m-auto">
             <table class="m-auto mt-2 w-4/5">
                 <thead>
