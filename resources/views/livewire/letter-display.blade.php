@@ -45,9 +45,6 @@
             <livewire:audio-api :word="$word"/>
         </div>
 
-
-
-
         <div style="display: flex">
 
                 <table class="table1" >
@@ -57,17 +54,14 @@
                                 {{$answer[$j]}}
                             </td>
                         @endfor
+                            <td>
+                                <a wire:click="removeLetter()"><i style="font-size: 40px; color: #ff0000; cursor: pointer; padding: 10px" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-backspace"></i></a>
+                            </td>
+                            <td>
+                                <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>
+                            </td>
                     </tr>
                 </table>
-
-            <div style="border: 4px solid blue">
-                <td>
-                    <a wire:click="removeLetter()"><i style="font-size: 40px; color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-backspace"></i></a>
-                </td>
-                <td>
-                    <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>
-                </td>
-            </div>
 
             <table class="table2">
                 <tr>
@@ -83,7 +77,13 @@
                             <a  class = "verify" wire:click="immediateResult()"><i class=" icons1 fas fa-search"></i>verificar</a>
                         </td>
                     @endif
+
                 </tr>
+{{--                <tr style="border: 3px solid cyan">--}}
+{{--                    <td>--}}
+{{--                        <a wire:click = "clearAll()"><i style="font-size: 40px; margin-left: 10px;color: #ff0000; cursor: pointer;" onmouseover="this.style.color='#B70000'" onmouseout="this.style.color='red'"class="fas fa-trash-alt"></i></a>--}}
+{{--                    </td>--}}
+{{--                </tr>--}}
             </table>
 
         </div>
@@ -93,7 +93,6 @@
                 <button class = "backArrow" wire:click="goTo({{$step-1}})" type="button"><i class=" icons1 fas fa-arrow-left"></i></button>
             @else
                 <button class = "backArrow" wire:click="quitWarning()" type="button"><i class=" icons1 fas fa-arrow-left"></i></button>
-{{--                <a  href="/homepage" class = "backArrow"><i class=" icons1 fas fa-arrow-left"></i></a>--}}
             @endif
         </div>
 

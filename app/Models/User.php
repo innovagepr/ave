@@ -97,6 +97,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Group::class, 'owner_id');
     }
 
+    public function completedActivities(){
+        return $this->hasMany(CompletedActivity::class, 'user_id');
+    }
+
     public function getFullNameAttribute(){
         return "{$this->first_name} {$this->last_name}";
     }

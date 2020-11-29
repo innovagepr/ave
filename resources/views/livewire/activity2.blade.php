@@ -1,6 +1,10 @@
 {{-- The Master doesn't talk, he acts. --}}
 <div>
-
+{{--@if(auth()->user()->role->slug === 'professional')--}}
+{{--        <script>--}}
+{{--                location.replace("/manejoActividades/lectura")--}}
+{{--        </script>--}}
+{{--@else--}}
     <!-- Modal that shows if child answers question correctly -->
     <div class="modal fade" id="modalCorrect" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -96,16 +100,15 @@
     </div>
 
     <!-- Paragraph and possible options -->
-    <div class="container mt-10" style="background-color:#FFFFFF; width: 40%; margin-top: 10%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <div class="container mt-10" style="background-color:#FFFFFF; margin-top: 10%; margin-bottom: 2%; width: 30%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
 
-        <pre>
+        <p style=" word-wrap: break-word; margin-top: 5%; margin-bottom: 5%; text-align: center;">
             {{ $currentExercise->paragraph->text }}
-        </pre>
+        </p>
     </div>
-    <form style="margin-left: 42%; margin-top: 2%">
+    <form style="text-align: center; word-break: break-word;">
         <fieldset>
-            <span>{{ __('DEBUG:') }} {{ __($option) }}</span>
-            <legend> {{ __($currentExercise->question) }}</legend>
+            <legend style="font-weight: bolder;"> {{ __($currentExercise->question) }}</legend>
             @foreach($currentExercise->options()->get()->shuffle() as $answer)
                 <div>
                     <input name = "option" type="radio" value="{{ $answer->id }}" style="margin-right: 1%;" wire:model="option">{{ $answer->option }}
@@ -139,5 +142,6 @@
             $("#modalResults").modal('show');
         })
     </script>
+{{--    @endif--}}
 </div>
 

@@ -15,6 +15,8 @@ use Livewire\WithPagination;
 class StudentList extends Component
 {
     use WithPagination;
+    public $name;
+    public $description;
     public $selectedGroup;
     public $studentToRemove;
     public $studentToToggle;

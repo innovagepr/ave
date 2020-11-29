@@ -11,32 +11,31 @@
             padding: 0px;
         }
     </style>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
 </head>
 
 <!-- Stylesheets and relevant script sources -->
-<script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{{asset('css/styles.css')}}" />
+
 <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
 
 <!-- Link to homepage -->
 <i type="button" onclick="location.href='/homepage'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
-    <span class="fa fa-home fa-5x"></span>
+    <span class="fa fa-home fa-2x"></span>
 </i>
 
-    @if (session('status'))
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ session('status') }}
-        </div>
-    @endif
+
 
 <!-- Login form -->
-    <div class="container-fluid mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <div class="container-fluid mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 1.25rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+        @if (session('status'))
+            <div class="mb-4 font-medium text-sm text-green-600" style="color:green; font-size: 1.4rem;">
+                {{ session('status') }}
+            </div>
+    @endif
         <!-- Allows for validation of user account information -->
-        <x-jet-validation-errors class="mb-4" />
+        <x-jet-validation-errors class="mb-4 text-danger error" />
 
         <form method="POST" action="{{ route('login') }}">
         @csrf

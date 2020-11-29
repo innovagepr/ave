@@ -12,6 +12,7 @@ class SelectPetModal extends Component
     public $petId;
 
     public $name;
+    private $avatar;
 
     protected $rules = [
         'name' => 'required|max:128',
@@ -30,15 +31,27 @@ class SelectPetModal extends Component
         return view('livewire.select-pet-modal', compact('data'));
     }
 
-    public function confirmPet($petId){
+    public function confirmPet(PetType $petType){
         $this->validate();
         $user = auth()->user();
 
         $user->pet()->create([
-            'pet_type_id' => $petId,
+            'pet_type_id' => $petType->id,
             'name'=>$this->name
         ]);
         $user->save();
+
+//Generate Avatar base Image------
+
+        $this->avatar = new PetAvatar;
+        if($petType->slug == "perro"){
+            $this->avatar->add_layer("images/pet_layers/dogBase.png");
+        } else{
+            $this->avatar->add_layer("images/pet_layers/catBase.png");
+        }
+        $this->avatar->set_filename('avatar_'.Auth::user()->id.'.png');
+        $this->avatar->build();
+//--------------------------------------
         return redirect('/dashboard');
     }
 }
