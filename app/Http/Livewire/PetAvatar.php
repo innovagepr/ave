@@ -16,8 +16,8 @@ class PetAvatar
 
 
     var $filename; 				//the filename of the image
-    var $width 	= 100; 			//the final width of your icon
-    var $height = 100;			//the final height of the icon
+    var $width 	= 400; 			//the final width of your icon
+    var $height = 400;			//the final height of the icon
     var $parts  = array(); 		//the different images that will be superimposed on top of each other
     /**
      * 	SET WIDTH
@@ -51,10 +51,10 @@ class PetAvatar
      *
      * @param String $background
      */
-    function set_background($background)
-    {
-        $this->background_source = $background;
-    }
+//    function set_background($background)
+//    {
+//        $this->background_source = $background;
+//    }
 
     /**
      * 	ADD LAYER
@@ -74,56 +74,72 @@ class PetAvatar
      * 	BUILD BACKGROUND
      *  This function takes our background information and compiles it
      */
-    function build_background()
+//    function build_background()
+//    {
+//        //----------------------------------------
+//        // Getting the height
+//        //----------------------------------------
+//        //grabbing the first image in the array
+//        $first_image = $this->parts[0];
+//
+//        //getting the width and height of that image
+//        list($width, $height) = getimagesize($first_image);
+//
+//        //finding the height of the final image (from a simple proportion equation)
+//        $this->height = ($this->width/$width)*$height;
+//
+//
+//        //----------------------------------------
+//        // Compiling the background
+//        //----------------------------------------
+//        //the background canvas, it will be the same width and height
+//        $this->background = imagecreatetruecolor($this->width, $this->height);
+//        //----------------------------------------
+//        // Adding a background color
+//        // I'm going to be sending hex color values (#FFFFFF),
+//        //----------------------------------------
+//        //checking to make sure it's a color
+//        if(substr_count($this->background_source, "#")>0)
+//        {
+//            //converting the 16 digit hex value to the standard 10 digit value
+//            $int = hexdec(str_replace("#", "", $this->background_source));
+//
+//            //getting rgb color
+//            $background_color = imagecolorallocate ($this->background, 0xFF & ($int >> 0x10), 0xFF & ($int >> 0x8), 0xFF & $int);
+//
+//            //filling the background image with that color
+//            imagefill($this->background, 0,0,$background_color);
+//
+//            //----------------------------------------
+//            // Adding a background image
+//            // If $background is not a color, assume that it's an image
+//            //----------------------------------------
+//        }else{
+//            //getting the width and height of the image
+//            list($bg_w, $bg_h) = getimagesize($this->background_source);
+//
+//            // Make sure that the background image is a png as well.
+//            $img = imagecreatefrompng($this->background_source);
+//
+//            //This function copies and resizes the  image onto the background canvas
+//            imagecopyresampled($this->background, $img, 0,0,0,0,$this->width, $this->height, $bg_w, $bg_h);
+//        }
+//    }
+
+    function setTransparency($new_image,$image_source)
     {
-        //----------------------------------------
-        // Getting the height
-        //----------------------------------------
-        //grabbing the first image in the array
-        $first_image = $this->parts[0];
 
-        //getting the width and height of that image
-        list($width, $height) = getimagesize($first_image);
+        $transparencyIndex = imagecolortransparent($image_source);
+        $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
 
-        //finding the height of the final image (from a simple proportion equation)
-        $this->height = ($this->width/$width)*$height;
-
-
-        //----------------------------------------
-        // Compiling the background
-        //----------------------------------------
-        //the background canvas, it will be the same width and height
-        $this->background = imagecreatetruecolor($this->width, $this->height);
-        //----------------------------------------
-        // Adding a background color
-        // I'm going to be sending hex color values (#FFFFFF),
-        //----------------------------------------
-        //checking to make sure it's a color
-        if(substr_count($this->background_source, "#")>0)
-        {
-            //converting the 16 digit hex value to the standard 10 digit value
-            $int = hexdec(str_replace("#", "", $this->background_source));
-
-            //getting rgb color
-            $background_color = imagecolorallocate ($this->background, 0xFF & ($int >> 0x10), 0xFF & ($int >> 0x8), 0xFF & $int);
-
-            //filling the background image with that color
-            imagefill($this->background, 0,0,$background_color);
-
-            //----------------------------------------
-            // Adding a background image
-            // If $background is not a color, assume that it's an image
-            //----------------------------------------
-        }else{
-            //getting the width and height of the image
-            list($bg_w, $bg_h) = getimagesize($this->background_source);
-
-            // Make sure that the background image is a png as well.
-            $img = imagecreatefrompng($this->background_source);
-
-            //This function copies and resizes the  image onto the background canvas
-            imagecopyresampled($this->background, $img, 0,0,0,0,$this->width, $this->height, $bg_w, $bg_h);
+        if ($transparencyIndex >= 0) {
+            $transparencyColor    = imagecolorsforindex($image_source, $transparencyIndex);
         }
+
+        $transparencyIndex    = imagecolorallocate($new_image, $transparencyColor['red'], $transparencyColor['green'], $transparencyColor['blue']);
+        imagefill($new_image, 0, 0, $transparencyIndex);
+        imagecolortransparent($new_image, $transparencyIndex);
+
     }
     /**
      * Build Composition
@@ -137,14 +153,31 @@ class PetAvatar
         //----------------------------------------
         $this->canvas = imagecreatetruecolor($this->width, $this->height);
 
+//        $new = imagecreatetruecolor($this->width, $this->height);
+//
+//        // preserve transparency
+//
+//            imagecolortransparent($new, imagecolorallocatealpha($new, 0, 0, 0, 127));
+//            imagealphablending($new, false);
+//            imagesavealpha($new, true);
+
+
+//        imagecopyresampled($new, $img, 0, 0, $x, 0, $width, $height, $w, $h);
+
+//        $this->canvas = $new;
+//        $this->canvas = imagecreatefrompng("images/pet_layers/transparent.png");
+//        $this->setTransparency($this->canvas,$image_source);
+
+
+
         //----------------------------------------
         // Adding the background
         // If the background is set, use it gosh darnit
         //----------------------------------------
-        if($this->background)
-        {
-            imagecopyresampled($this->canvas, $this->background, 0,0,0,0,$this->width, $this->height, $this->width, $this->height);
-        }
+//        if($this->background)
+//        {
+//            imagecopyresampled($this->canvas, $this->background, 0,0,0,0,$this->width, $this->height, $this->width, $this->height);
+//        }
 
         //----------------------------------------
         // Adding the body parts
@@ -200,7 +233,7 @@ class PetAvatar
     function build()
     {
         //Builds the background
-        $this->build_background();
+//        $this->build_background();
 
         //builds the image
         $this->build_composition();

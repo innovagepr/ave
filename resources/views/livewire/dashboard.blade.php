@@ -8,8 +8,11 @@
 
     @section('content')
         <div id="main-content">
-
-            @if(auth()->user()->role->slug == 'professional')
+            @if(auth()->user()->pet()->first() === null && auth()->user()->role->slug === 'child')
+                <script>
+                    location.replace("/seleccionar-mascota")
+                </script>
+            @elseif(auth()->user()->role->slug == 'professional')
                 @livewire('pro-summary')
             @else
                 @livewire('child-summary')

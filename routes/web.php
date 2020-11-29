@@ -76,7 +76,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/estadisticas', function()
     return view('profile/statistics');
 })->name('estadisticas');
 
-Route::get('/mascota',[PetController::class, 'index']);
+Route::get('/mascota',[PetController::class, 'index'])->name('mascota');;
 
 Route::get('/actividades', function () {
     return view('act');
@@ -86,9 +86,9 @@ Route::get('/actividades', function () {
 Route::get('/lista/{list}', [ActivityController::class, 'show']);
 
 Route::get('/editarPerfil', function (){
-    return view('livewire.edit-profile');
+    return view('profile-settings');
 });
 
-Route::get('/tienda',[RewardController::class, 'index']);
+Route::get('/tienda',[RewardController::class, 'index'])->name('tienda');;
 
 Route::get('/seleccionar-mascota',[PetController::class, 'select']);

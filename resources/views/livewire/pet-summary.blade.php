@@ -1,6 +1,7 @@
 <div>
     {{-- The whole world belongs to you --}}
 
+    {{$pet->pet_rewards}}
     <div class="main-block-pet">
 
         <div class="header-row">
@@ -19,7 +20,8 @@
         <div class="pet-row">
             <div class="columnPet1">
                 <div class="dashboard-petCard" style="background-color: {{$pet->background_color}}">
-                    <img style="width: 250px; height: 250px; margin: auto; display: block; margin-top: 20%" src="{{$pet->petType->icon_url}}">
+                    {{--                    <img style="width: 250px; height: 250px; margin: auto; display: block; margin-top: 20%" src="{{$pet->petType->icon_url}}">--}}
+                    <img style="width: 350px; height: 350px; margin: auto; display: block;" src="/avatar_2.png">
                     {{--                    <img style="width: 250px; height: 250px; margin: auto; display: block; margin-top: 20%" src="{{asset('images/dog.png')}}" usemap="#petmap">--}}
 
                     {{--                    <map name="petmap">--}}
@@ -52,13 +54,19 @@
                 <div class="article-text">
                     <p >Artículos de mi mascota:</p>
                 </div>
-
                 <div class="pet-articles-card">
                     @foreach($data['rewards'] as $item)
+
                         @if($item->owned())
-                            <div class="article-box" wire:click="buildAvatar()">
+                            @if($item->selected())
+                                <div class="article-box article-box2" wire:click="detachItem({{$item}})">
+                                    <img class ="img-grid-pet" src="{{$item->image_url}}">
+                                </div>
+                            @else
+                            <div class="article-box" wire:click="buildAvatar({{$item}})">
                                 <img class ="img-grid-pet" src="{{$item->image_url}}">
                             </div>
+                            @endif
                         @endif
                     @endforeach
                 </div>
@@ -91,6 +99,9 @@
                         {{--                        Aquí--}}
                     </div>
                     <div class="colorBox" style="background-color: coral" wire:click="changeColor('coral')">
+                        {{--                        Aquí--}}
+                    </div>
+                    <div class="colorBox" style="background-color: transparent" wire:click="changeColor('transparent')">
                         {{--                        Aquí--}}
                     </div>
                 </div>

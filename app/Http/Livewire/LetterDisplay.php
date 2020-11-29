@@ -28,6 +28,7 @@ class LetterDisplay extends Component
     public $tempPosition = [];
     public $words2 = [];
     public $tempPositionsArray = [];
+    public $answeredFlag = [0,0,0,0,0,0,0,0,0,0];
 
 
     public function render(){
@@ -99,12 +100,13 @@ class LetterDisplay extends Component
 
             $this->dispatchBrowserEvent('immediateResultGood');
             array_push($this->correctAnswers, $joinedWord);
-
+            $this->answeredFlag[$this->step] = 1;
         } else {
 
             $this->dispatchBrowserEvent('toggleResultModal', $this->joinedAnswer);
             $this->emit('refreshChildren', $this->joinedAnswer, $this->word);
             array_push($this->badAnswers, $joinedWord);
+            $this->answeredFlag[$this->step] = 1;
         }
         if ($this->step < 9) {
 
@@ -120,8 +122,8 @@ class LetterDisplay extends Component
 
             $this->position2 = $this->tempPosition[$this->step];
             $this->word = $this->words[$this->step]->word;
-            $this->splitWord =  $this->tempSplitWords[$this->step];
-            $this->answer =  $this->tempAnswers[$this->step];
+            $this->splitWord = $this->tempSplitWords[$this->step];
+            $this->answer = $this->tempAnswers[$this->step];
             $this->positions = $this->tempPositionsArray[$this->step];
 
         }
@@ -148,7 +150,7 @@ class LetterDisplay extends Component
         $this->tempAnswers[$this->step] = $this->answer;
 
 
-        if($this->step != $step1) {
+        if($this->step != $step1 && !$this->answeredFlag[$step1]) {
 
             $this->step = $step1;
             $this->word = $this->words[$this->step]->word;
