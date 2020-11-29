@@ -18,6 +18,7 @@ class CreatePetTypesTable extends Migration
             $table->string('name', 128);
             $table->string('slug', 128);
             $table->string('icon_url', 128);
+            $table->text('description');
             $table->timestamps();
         });
     }
