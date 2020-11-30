@@ -116,7 +116,7 @@ class ReadingActivityManagement extends Component
     }
     public function editModal(){
         $this->nameToEdit = $this->selectedGroup->name;
-        $this->diffToEdit = $this->selectedGroup->difficulty;
+        $this->diffToEdit = $this->selectedGroup->difficulty->name;
         $this->dispatchBrowserEvent('editModal');
     }
 
