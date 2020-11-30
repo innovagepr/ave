@@ -1,6 +1,5 @@
 {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
 
-{{dd($user, $lists)}}
 
 <div>
     <x-jet-label class="mt-5">{{__('Ejercicios Asignados')}}</x-jet-label>
@@ -11,39 +10,37 @@
             <th>Actividad</th>
             <th>Asignado por</th>
             <th>Dificultad</th>
-            <th>Ejercicios</th>
+            <th>Cantidad de Ejercicios</th>
             <th>Completado</th>
 
             </thead>
             <tbody>
-            <tr>
-                <td class="card-text">
-                    {{__('Orden de Palabras')}}
-                </td>
-                <td class="card-text">
-                    {{__('8/10')}}
-                </td>
-                <td class="card-text">
-                    {{__('9/10')}}
-                </td>
-                <td class="card-text">
-                    {{__('6/10')}}
-                </td>
-            </tr>
-            <tr>
-                <td class="card-text">
-                    {{__('Lectura')}}
-                </td>
-                <td class="card-text">
-                    {{__('8/10')}}
-                </td>
-                <td class="card-text">
-                    {{__('9/10')}}
-                </td>
-                <td class="card-text">
-                    {{__('6/10')}}
-                </td>
-            </tr>
+            @foreach($lists as $l)
+                <tr>
+                    <td class="m-auto" wire:click="activityList({{$l->id}}, {{$l->activity()->first()->id}})">
+                        {{$l->name}}
+                    </td>
+                    <td class="m-auto">
+                        {{$l->activity()->first()->name}}
+                    </td>
+                    <td class="m-auto">
+                        {{$l->owner()->first()->fullName}}
+                    </td>
+                    <td class="m-auto">
+                        {{$l->difficulty()->first()->name}}
+                    </td>
+                    <td class="m-auto">
+                        {{__('10')}}
+                    </td>
+                    <td class="m-auto">
+                        @if(\App\Models\CompletedActivity::find($l->id))
+                            {{__('Sí')}}
+                        @else
+                            {{__('No')}}
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

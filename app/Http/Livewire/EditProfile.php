@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use App\Actions\Fortify\PasswordValidationRules;
 
 class EditProfile extends Component
 {
+    use PasswordValidationRules;
     public $user;
     public $first = 'nombre puñeta';
     public $last;
@@ -23,6 +26,9 @@ class EditProfile extends Component
         "5"=>'images/profileIcons/icon-blue.png',
         "6"=>'images/profileIcons/icon-purple.png',
         "7"=>'images/profileIcons/icon-pink.png');
+    public $password;
+    public $password_confirmation;
+
 
     public function mount(){
         $this->user = auth()->user();
@@ -36,7 +42,6 @@ class EditProfile extends Component
 
     public function updateUser()
     {
-
         $this->user->first_name = $this->first;
         $this->user->last_name = $this->last;
         $this->user->email = $this->email;
@@ -47,6 +52,20 @@ class EditProfile extends Component
         $this->email = $this->user->email;
         $this->dob = $this->user->dob;
         $this->dispatchBrowserEvent('finish-edit');
+    }
+
+    public function editPassword(){
+        $this->dispatchBrowserEvent('edit-password');
+
+    }
+
+    public function savePassword(){
+        $this->validate([ 'password' =>$this->passwordRules(), 'password_confirmation' => 'required']
+            );
+        $this->user->password = Hash::make($this->password);
+        $this->user->save();
+        $this->dispatchBrowserEvent('finish-edit-password');
+
     }
 
     public function iconEdit(){
@@ -62,7 +81,7 @@ class EditProfile extends Component
     }
 
     public function closeConfirm(){
-        $this->dispatchBrowserEvent('finish-edit-closr');
+        $this->dispatchBrowserEvent('finish-edit-close');
     }
 
     public function changeIcon($i){

@@ -69,7 +69,7 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <div class="flex items-center">
-                <button class="menu-item" wire:click="">
+                <button class="menu-item" wire:click="logout()">
                     <span class="pr-2 menu-burger fas fa-sign-out-alt"></span>
                     {{ __('Cerrar Sesión') }}
                 </button>

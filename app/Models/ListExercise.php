@@ -21,7 +21,7 @@ class ListExercise extends Model
      * Get the rewards records associated with the user.
      */
     public function owner(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function groups(){
