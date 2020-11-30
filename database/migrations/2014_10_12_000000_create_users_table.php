@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->date('dob');
             $table->integer('points')->default(0);
             $table->integer('coins')->default(0);
-            $table-> integer('level')->default(0);
+            $table-> integer('level')->default(1);
             $table->boolean('deleted')->default('0');
             $table->string('icon')->default('images/profileIcons/icon-black.png');
             $table->rememberToken();

@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Activity;
 use App\Models\AnsweredWord;
 use App\Models\ListExercise;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 use App\Models\CompletedActivity;
+use App\Models\Pet;
 class LetterDisplay extends Component
 {
     public $activity = null;
@@ -32,6 +34,7 @@ class LetterDisplay extends Component
     public $words2 = [];
     public $tempPositionsArray = [];
     public $answeredFlag = [0,0,0,0,0,0,0,0,0,0];
+    public $sumas = 1;
 
     /**
      * Render
@@ -120,6 +123,8 @@ class LetterDisplay extends Component
      */
     public function immediateResult()
     {
+        $this->sumas++;
+
         $joinedWord = implode($this->answer);
 
         if ($joinedWord == $this->word) {
@@ -147,18 +152,19 @@ class LetterDisplay extends Component
             $this->answer = $this->tempAnswers[$this->step];
             $this->positions = $this->tempPositionsArray[$this->step];
         }
-
+        $sum = count($this->badAnswers) + count($this->correctAnswers);
+        if ($sum === 10) {
+            sleep(3);
+            $this->submitExercise();
+        }
         if($this->step === 9){
-           if(array_search( 0, array_reverse($this->answeredFlag)) != 0)
+            if(array_search( 0, array_reverse($this->answeredFlag)) != 0)
             {
                 $this->goTo(array_search(0, $this->answeredFlag));
             }
         }
         else if (array_search(0, $this->answeredFlag)) {
             $this->goTo(array_search(0, $this->answeredFlag));
-        }
-        else if (array_count_values($this->answeredFlag)[0] === 0) {
-            $this->submitExercise();
         }
     }
 
@@ -170,28 +176,42 @@ class LetterDisplay extends Component
         $sum = count($this->badAnswers) + count($this->correctAnswers);
         $this->dispatchBrowserEvent('finalResult', $this->badAnswers, $sum, $this->correctAnswers);
         $this->emit('refreshFinal', $this->badAnswers, $sum, $this->correctAnswers);
-//        $this->emit('refreshAudio', null);
-
 
         if($this->user->id){
             $completedActivity = new CompletedActivity();
             $completedActivity->create([
-                'activity_id'=> Activity::where('slug', 'Palabras')->first()->id,
+                'activity_id'=> Activity::where('slug', 'letterOrdering')->first()->id,
                 'user_id' => $this->user->id,
                 'difficulty_id'=> $this->list->difficulty->id,
                 'final_score'=> (count($this->correctAnswers) *2)
             ]);
-            $this->user->coins = $this->user->coins + (count($this->correctAnswers)*5);
-            $this->user->points = $this->user->points + (count($this->correctAnswers)*2);
-//            if($this->user->points == )
+
+            $coins =  $this->user->coins + (count($this->correctAnswers)*5);
+            $points = $this->user->points + (count($this->correctAnswers)*2);
+
+            $pet = Auth::user()->pet;
+            $petPoints = $points/2;
+            $level = $this->user->level;
+            $petLevel = $pet->level;
+            $remainingLevel = ((20*$level)-$points);
+            $petRemaining = ((20*$petLevel)-$petPoints);
+            $this->user->coins = $coins;
+            $this->user->points = $points;
+            $pet->points = $petPoints;
+
+
+            if($remainingLevel <= 0){
+                $level++;
+                $this->user->level = $level;
+            }
+            if($petRemaining <= 0){
+                $petLevel++;
+                $pet->level = $petLevel;
+            }
+            $pet->save();
             $this->user->save();
 
-
-//            $pet = Pet::find($this->user->pet()->id);
-//            $pet->points += $this->score;
-//            $pet->save();
         }
-
     }
 
     public function clearAll(){
@@ -203,10 +223,8 @@ class LetterDisplay extends Component
     public function goTo($step1){
 
         $this->tempAnswers[$this->step] = $this->answer;
-//        $this->emit('refreshAudio', $this->word);
 
         if($this->step != $step1 && !$this->answeredFlag[$step1]) {
-//            $this->tempAnswers[$this->step] = $this->answer;
 
             $this->step = $step1;
             $this->word = $this->words[$this->step]->word;

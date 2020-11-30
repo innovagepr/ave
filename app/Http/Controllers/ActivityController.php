@@ -21,7 +21,6 @@ class ActivityController extends Controller
     public function show(ListExercise $list){
         $words = $list->words;
         $user = Auth::user();
-//        dd($user->completedActivities);
         return view('Activity.activity1')->with('words',$words)->with('user',$user)->with('list',$list);
     }
 }

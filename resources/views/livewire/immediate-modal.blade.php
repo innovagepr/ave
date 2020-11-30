@@ -20,7 +20,7 @@
                         <td style="color: #19D519">
                             {{$word}}
                         </td>
-                        <td wire:poll>
+                        <td>
                             <span class="audioFeedback" onclick="togglePlayFeedback()"><i class="fas fa-volume-up fa-lg"></i></span>
                             <audio controls id = "feedbackAudio" controlsList="nodownload" hidden="true">
                                 <source src="/{{$word}}.wav" type="audio/ogg">
