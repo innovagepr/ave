@@ -79,6 +79,9 @@
     <div>
         <x-jet-label class="mt-5">{{__('Promedios por actividad')}}</x-jet-label>
         <div class="dashboard-card lg-block max-w-3xl m-auto">
+            <x-jet-label class="mt-8">{{__('No hay actividades.')}}</x-jet-label>
+
+            @if(false)
             <table class="m-auto mt-2 w-4/5">
                 <thead>
                 <th>Actividad</th>
@@ -117,6 +120,7 @@
                 </tr>
                 </tbody>
             </table>
+                @endif
         </div>
     </div>
 </div>

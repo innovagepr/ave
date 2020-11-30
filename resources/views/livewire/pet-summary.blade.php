@@ -3,9 +3,6 @@
 
     {{--View for the user's pet dashboard--}}
 
-    {{$pet->pet_rewards}}
-    {{--    TODO: Quitar esto--}}
-
     <div class="main-block-pet">
         <div class="header-row">
             <p class="pet-name">{{$pet->name}}</p>
