@@ -4,8 +4,9 @@
 @section('content')
     <!-- Call for Livewire component to render the view -->
     <body>
-        @livewire('activity2')
-        @livewireScripts
+    <div>
+        <livewire:activity2 :activity="$questions"/>
+    </div>
     </body>
 @endsection
 </x-app-layout>

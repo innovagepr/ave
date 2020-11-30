@@ -14,6 +14,9 @@ class ChildSummary extends Component
     public $petLevel;
     public $nextPoints;
     public $nextPetPoints;
+    public $lastActivity = null;
+    public $maxLevel;
+    public $maxPetLevel;
 
     public function mount(){
         $this->points = auth()->user()->points;
@@ -22,8 +25,11 @@ class ChildSummary extends Component
         $this->petLevel = auth()->user()->pet->level;
         $this->petPoints = $this->points/2;
 
-        $this->nextPoints = 20-$this->points;
-        $this->nextPetPoints = $this->nextPoints/2;
+        $this->nextPoints = (20*$this->level)-$this->points;
+        $this->nextPetPoints = (20*$this->petLevel)-$this->petPoints;
+
+        $this->maxLevel = $this->level*20;
+        $this->maxPetLevel = $this->petLevel*20;
 
     }
 

@@ -46,7 +46,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                            <span class="text-center">{{ __('Editar Estado de Estudiante') }}</span>
+                            <span class="text-center">{{ __('Estado de Estudiante') }}</span>
                         </div>
 
                         <div class="modal-body" style="text-align: center;">
@@ -188,15 +188,17 @@
 
                             @foreach($students as $g)
                                     <x-table.row>
-                                        <x-table.cell>
-                                            <a href="/#" wire:click.prevent="toggleStudentModal({{ $g->id }})" style="text-decoration: none;">{{__($g->fullname)}}</a>
-                                        </x-table.cell>
+                                        <x-table.cell> {{__($g->fullname)}} </x-table.cell>
                                         <x-table.cell>{{__($this->calc_age($g->dob))}} {{ __('años') }}</x-table.cell>
                                         <x-table.cell>{{__($g->level)}}</x-table.cell>
                                         @if($g->active === 0)
-                                            <x-table.cell>No</x-table.cell>
+                                            <x-table.cell>
+                                                <a href="/#" wire:click.prevent="toggleStudentModal({{ $g->id }})" style="text-decoration: none;">No</a>
+                                            </x-table.cell>
                                         @else
-                                            <x-table.cell>Sí</x-table.cell>
+                                            <x-table.cell>
+                                                <a href="/#" wire:click.prevent="toggleStudentModal({{ $g->id }})" style="text-decoration: none;">Sí</a>
+                                            </x-table.cell>
                                         @endif
                                         @if($g->loginRecords()->where('type','=', 'login')->latest()->first())
                                             <x-table.cell>{{$g->loginRecords()->where('type','=', 'login')->latest()->first()->date}}</x-table.cell>

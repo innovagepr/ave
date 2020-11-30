@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'dob',
         'role_id',
+        'icon'
     ];
 
     /**
@@ -94,6 +95,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function ownedGroups(){
         return $this->hasMany(Group::class, 'owner_id');
+    }
+
+    public function completedActivities(){
+        return $this->hasMany(CompletedActivity::class, 'user_id');
+    }
+
+    public function assignedLists(){
+        return $this->belongsToMany(ListExercise::class, 'list_user', 'user_id', 'list_id');
     }
 
     public function getFullNameAttribute(){

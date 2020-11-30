@@ -8,13 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class ListExercise extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
+    /**
+     * Get the lists records that belongs to the user.
+     */
     public function users(){
         return $this->belongsToMany(User::class, 'list_user', 'list_id');
     }
 
+    /**
+     * Get the rewards records associated with the user.
+     */
     public function owner(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function groups(){

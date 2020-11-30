@@ -37,6 +37,6 @@ class AgeProfessional implements Rule
      */
     public function message()
     {
-        return 'Professional must be 18 or older to register.';
+        return 'Profesional debe ser mayor de 18 años para poder registrarse.';
     }
 }

@@ -11,24 +11,27 @@
             padding: 0px;
         }
     </style>
+    <!-- Stylesheets and relevant script sources -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
 </head>
-<!-- Stylesheets and relevant script sources -->
-<script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{{asset('css/styles.css')}}" />
+
 <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
 <!-- Link to homepage -->
 <i type="button" onclick="location.href='/'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
     <span class="fa fa-home fa-5x"></span>
 </i>
-<!-- Allows for validation of user account information -->
-<x-jet-validation-errors class="mb-4" />
-<!-- Forgot Password form -->
-@if (session('status'))
-    <div class="mb-4 font-medium text-sm text-green-600">
-        {{ session('status') }}
-    </div>
-@endif
-<div class="container mt-4" style="background-color:#FFFFFF; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+
+
+<div class="container pt-8" style="background-color:#FFFFFF; width: 60%; font-size: 1.25rem; margin-top: 10%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <!-- Forgot Password form -->
+    @if (session('status'))
+        <div class="mb-4 font-large text-lg text-green-600" style="color:green; font-size: 1.4rem;">
+            {{ session('status') }}
+        </div>
+@endif<!-- Allows for validation of user account information -->
+    <x-jet-validation-errors class="mb-4 text-danger error" />
     <div class="mb-4 text-sm text-gray-600">
         {{ __('¿Olvidó su contraseña? No hay problema. Provea el correo electrónico y le enviaremos un enlace para restablecer su contraseña.') }}
     </div>

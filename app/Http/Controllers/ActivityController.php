@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
+    /**
+     * SHOW
+     * Function that renders and shows the Activity 1 view
+     * @param ListExercise $list
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show(ListExercise $list){
         $words = $list->words;
-
-        //Crea el audio file
-        //TODO::Moverlo a cuando se crea el word
-//        foreach($words as $word){
-//            ApiController::tts($word->word);
-//        }
         $user = Auth::user();
-        return view('Activity.activity1', compact('words'));
+        return view('Activity.activity1')->with('words',$words)->with('user',$user)->with('list',$list);
     }
 }

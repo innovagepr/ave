@@ -37,6 +37,6 @@ class AgeChild implements Rule
      */
     public function message()
     {
-        return 'Child must be between ages 8 and 10 to register.';
+        return 'Niño debe tener entre 8 y 10 años para poder registrar.';
     }
 }

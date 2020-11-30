@@ -11,22 +11,20 @@ use Livewire\Component;
  */
 class FinalResultsModal extends Component
 {
-    public $joinedAnswer;
-    public $word;
 
-    public $correctAnswers=[];
-    public $badAnswers=[];
-
+    public $badAnswers = [];
+    public $sum;
+    public $correctAnswers = [];
     protected $listeners = ['refreshFinal'=>'refreshMe'];
 
     /**
-     *
-     * @param $someVariable
-     * @param $othervar
+     *Refresh Me
+     * Refresh variables to be used in the modal view
      */
-    public function refreshMe($someVariable,$othervar){
-        $this->correctAnswers = $someVariable;
-        $this->badAnswers = $othervar;
+    public function refreshMe($badAnswers, $sum, $correctAnswers){
+        $this->badAnswers = $badAnswers;
+        $this->sum = $sum;
+        $this->correctAnswers = $correctAnswers;
     }
 
     /**

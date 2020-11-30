@@ -1,10 +1,11 @@
-
+{{--View of the Pet Selection screen--}}
 <div>
     <div class="main-block-pet-select">
         <div class="header-select">
             <p>¡Selecciona tu mascota!</p>
         </div>
         <div class="pet-select-row">
+            {{--For each pet type shows the icon and description--}}
             @foreach($pet as $peti)
                 <div class="columnPetSelect1">
                     <div class="select-title">{{$peti->name}}</div>
@@ -19,6 +20,7 @@
         </div>
     </div>
 
+    {{--Event to display the Select Pet Modal--}}
     <div wire:ignore>
         <div class="modal fade" id="pet-select" tabindex="-1" role="dialog" aria-hidden="true">
             <livewire:select-pet-modal/>
@@ -27,6 +29,7 @@
 
 </div>
 
+{{--Script to excecute the modal--}}
 <script>
     window.addEventListener('selectPet', event => {
         $("#pet-select").modal('toggle');

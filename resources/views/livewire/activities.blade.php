@@ -1,5 +1,6 @@
 {{-- Stop trying to control. --}}
 
+<div>
 <div class="activities-info mt-6 flex">
     {{--    <div class="flex m-auto">--}}
     <div class="button-area">
@@ -16,10 +17,10 @@
         <div class="half-square float-left">
             @auth
                 <div class="ml-5">
-                    <button class="center list-button py-1 my-2">
+                    <button class="center list-button py-1 my-2" wire:click="showAssigned">
                         <span class="pr-1 fas fa-list "></span>
                         {{__('Ejercicios Asignados')}}
-                        <span class="badge">3</span>
+                        <span class="badge">{{$count}}</span>
                     </button>
                 </div>
             @endauth
@@ -43,8 +44,7 @@
         <div class="half-square float-right">
             <div class="flex flex-col center">
                 @foreach($levels as $level)
-                    <button class="center level-button py-2 my-4">{{$level->name}}</button>
-
+                    <button class="center level-button py-2 my-4" wire:click="activity({{$level->id}}, {{$activity->id}})" >{{$level->name}}</button>
                 @endforeach
             </div>
 

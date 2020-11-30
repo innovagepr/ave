@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\LoginRecord;
 use Livewire\Component;
 
 class AsideNav extends Component
@@ -10,18 +11,20 @@ class AsideNav extends Component
     public $pet;
     public $optionsChild = array (
         "1" => array("Inicio", "dashboard", "home"),
-        "2" => array("Actividades", "dashboard", "book"),
-        "3" => array("Mi Mascota", "dashboard", "paw"),
-        "4" => array("Tienda", "dashboard", "store-alt"),
-        "5" => array("Mi Progreso", "dashboard", "chart-bar"),
+        "2" => array("Actividades", "activities", "book"),
+        "3" => array("Mi Mascota", "mascota", "paw"),
+        "4" => array("Tienda", "tienda", "store-alt"),
+        "5" => array("Mi Progreso", "progreso", "chart-bar"),
     );
 
     public $optionsAdult = array (
         "1" => array("Inicio", "dashboard", "home"),
-        "2" => array("Registro", "dashboard", "users"),
+        "2" => array("Registro", "grupos", "users"),
         "3" => array("Actividades", "actividades", "book"),
-        "4" => array("Estadísticas", "dashboard", "chart-bar"),
+        "4" => array("Estadísticas", "estadisticas", "chart-bar"),
     );
+
+
 
     public function mount(){
         $this->user = auth()->user();
@@ -33,6 +36,14 @@ class AsideNav extends Component
         return redirect()->to('/editarPerfil');
     }
 
+    public function logout(){
+        $instance = new LoginRecord;
+        $instance->user_id = auth()->user()->id;
+        $instance->type = 'logout';
+        $instance->date = now();
+        $instance->save();
+
+    }
     public function render()
     {
         return view('livewire.aside-nav');

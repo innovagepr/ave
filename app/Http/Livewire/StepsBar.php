@@ -10,8 +10,4 @@ class StepsBar extends Component
     {
         return view('livewire.steps-bar');
     }
-
-    public function goTo(){
-        dd("Hello!");
-    }
 }
