@@ -1,4 +1,4 @@
-
+{{--View for displaying the Audio tag/icon in the activity 1 screen--}}
 <div>
     <span  class="btn btn1" onclick="togglePlay()"><i class="fas fa-volume-up fa-lg"></i> Escuchar Palabra </span>
     <audio controls id="audio" controlsList="nodownload" hidden="true">

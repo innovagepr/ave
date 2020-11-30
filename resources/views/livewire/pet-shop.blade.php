@@ -1,5 +1,7 @@
+{{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
 <div>
-    {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
+    {{--View of the Rewards Store screen--}}
+
     <div class="main-block-shop">
         <div class="pet-row">
             <div class="columnShop1">
@@ -24,16 +26,15 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
             <div class="columnShop2">
 
                 <div class="articleShop-text">
                     <p >Artículos en venta:</p>
                 </div>
-
-                <div class="container">
+                {{--Grid containing the articles that the user can buy in the Rewards Store--}}
+                <div class="container" wire:poll>
                     <div class="grid-card">
                         <div class="image-grid-container">
                             @foreach($data['rewards'] as $item)
@@ -65,7 +66,7 @@
             </div>
         </div>
     </div>
-
+    {{--Modal to confirm the reward purchase--}}
     <div wire:ignore>
         <div class="modal fade" id="buy-article" tabindex="-1" role="dialog" aria-hidden="true">
             <livewire:buy-article-modal :rewards="$rewards" :userRewards="$userRewards"/>
@@ -74,9 +75,10 @@
 
 </div>
 
+{{--Script to excecute the modal to confirm the reward purchase--}}
 <script>
     window.addEventListener('buyArticle', event => {
-        $("#buy-article").modal('toggle');
+        $("#buy-article").modal({backdrop: 'static', keyboard: false},'toggle');
     })
 </script>
 
