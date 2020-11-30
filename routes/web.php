@@ -92,3 +92,7 @@ Route::get('/editarPerfil', function (){
 Route::get('/tienda',[RewardController::class, 'index'])->name('tienda');;
 
 Route::get('/seleccionar-mascota',[PetController::class, 'select']);
+
+Route::get('/ejerciciosAsignados',function (){
+    return view('exercises');
+});
