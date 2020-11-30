@@ -19,7 +19,6 @@ class Statistics extends Component
     public $wordMax;
     public $wordMin;
     public $wordAvg;
-    public $scoresPerGroup;
     public $scoresPerStudent;
     public $activeMembers;
     public $totalParticipants;
@@ -30,9 +29,14 @@ class Statistics extends Component
     public $activities;
     public $filter = 0;
     public $groupFilter;
+    public $tempGroupFilter;
     public $studentFilter;
     public $activityFilter;
     public $months;
+
+    protected $listeners = [
+        'updateGroup'
+    ];
     public function render()
     {
         return view('livewire.statistics');
@@ -42,9 +46,10 @@ class Statistics extends Component
         $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
         $this->activeMembers = Group::find($this->groupFilter)->members()->get();
         if($this->option === 'Grupo'){
-            $temp = $this->groupFilter;
+            $this->tempGroupFilter = $this->groupFilter;
             $this->groupFilter = null;
-            $this->groupFilter = $temp;
+            $this->emit('updateGroup');
+
         }
         if($this->option === 'Estudiante'){
          $student = User::find($this->studentFilter);
@@ -64,6 +69,9 @@ class Statistics extends Component
         }
 
 
+    }
+    public function updateGroup(){
+        $this->groupFilter = $this->tempGroupFilter;
     }
     public function mount()
     {
@@ -87,8 +95,6 @@ class Statistics extends Component
         $this->activityFilter = $this->activities->first()->slug;
         $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
         $this->activeMembers = Group::find($this->groupFilter)->members()->get();
-        $studentScores = CompletedActivity::where('user_id', '=', 3)->get();
-        $this->readingScores = $studentScores->max('final_score');
 
     }
 
