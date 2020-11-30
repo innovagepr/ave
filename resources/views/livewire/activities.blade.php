@@ -20,7 +20,7 @@
                     <button class="center list-button py-1 my-2" wire:click="showAssigned">
                         <span class="pr-1 fas fa-list "></span>
                         {{__('Ejercicios Asignados')}}
-                        <span class="badge">{{auth()->user()->assignedLists->count()}}</span>
+                        <span class="badge">{{$count}}</span>
                     </button>
                 </div>
             @endauth
@@ -44,8 +44,7 @@
         <div class="half-square float-right">
             <div class="flex flex-col center">
                 @foreach($levels as $level)
-                    <button class="center level-button py-2 my-4">{{$level->name}}</button>
-
+                    <button class="center level-button py-2 my-4" wire:click="activity({{$level->id}}, {{$activity->id}})" >{{$level->name}}</button>
                 @endforeach
             </div>
 

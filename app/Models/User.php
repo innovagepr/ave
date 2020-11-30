@@ -102,7 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function assignedLists(){
-        return $this->hasMany(ListExercise::class, 'user_id');
+        return $this->belongsToMany(ListExercise::class, 'list_user', 'user_id', 'list_id');
     }
 
     public function getFullNameAttribute(){

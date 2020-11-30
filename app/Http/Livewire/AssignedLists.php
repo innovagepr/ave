@@ -15,6 +15,17 @@ class AssignedLists extends Component
         $this->lists = $this->user->assignedLists;
     }
 
+    public function activityList($list, $act){
+
+        if($act === 1){
+            return redirect()->to('/lista/'.$list);
+        }
+        else {
+            return redirect()->to('/lectura/'.$list);
+        }
+
+    }
+
     public function render()
     {
         return view('livewire.assigned-lists');
