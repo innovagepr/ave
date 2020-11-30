@@ -20,7 +20,7 @@ class CreateCompletedActivitiesTable extends Migration
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('difficulty_id');
-            $table->foreign('difficulty_id')->references('difficulty_id')->on('list_exercises');
+            $table->foreign('difficulty_id')->references('id')->on('difficulties');
             $table->integer('final_score');
             $table->timestamps();
         });

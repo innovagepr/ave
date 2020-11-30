@@ -121,52 +121,52 @@
     <div class="main-block-ses">
         <ul class="progressbar">
             @if($answeredFlag[0] === 1)
-                <li id="0" class="active"></li>
+                <li id="0" class="answered"></li>
             @else
                 <li id="0" class="{{$step == 0 ? 'active':''}}" wire:click="goTo({{0}})"></li>
             @endif
             @if($answeredFlag[1] === 1)
-                <li id="1" class="active"></li>
+                <li id="1" class="answered"></li>
             @else
                 <li id="1" class="{{$step == 1 ? 'active':''}}" wire:click="goTo({{1}})"></li>
             @endif
             @if($answeredFlag[2] === 1)
-                <li id="2" class="active"></li>
+                <li id="2" class="answered"></li>
             @else
                 <li id="2" class="{{$step == 2 ? 'active':''}}" wire:click="goTo({{2}})"></li>
             @endif
             @if($answeredFlag[3] === 1)
-                <li id="3" class="active"></li>
+                <li id="3" class="answered"></li>
             @else
                 <li id="3" class="{{$step == 3 ? 'active':''}}" wire:click="goTo({{3}})"></li>
             @endif
             @if($answeredFlag[4] === 1)
-                <li id="4" class="active"></li>
+                <li id="4" class="answered"></li>
             @else
                 <li id="4" class="{{$step == 4 ? 'active':''}}" wire:click="goTo({{4}})"></li>
             @endif
             @if($answeredFlag[5] === 1)
-                <li id="5" class="active"></li>
+                <li id="5" class="answered"></li>
             @else
                 <li id="5" class="{{$step == 5 ? 'active':''}}" wire:click="goTo({{5}})"></li>
             @endif
             @if($answeredFlag[6] === 1)
-                <li id="6" class="active"></li>
+                <li id="6" class="answered"></li>
             @else
                 <li id="6" class="{{$step == 6 ? 'active':''}}" wire:click="goTo({{6}})"></li>
             @endif
             @if($answeredFlag[7] === 1)
-                <li id="7" class="active"></li>
+                <li id="7" class="answered"></li>
             @else
                 <li id="7" class="{{$step == 7 ? 'active':''}}" wire:click="goTo({{7}})"></li>
             @endif
             @if($answeredFlag[8] === 1)
-                <li id="8" class="active"></li>
+                <li id="8" class="answered"></li>
             @else
                 <li id="8" class="{{$step == 8 ? 'active':''}}" wire:click="goTo({{8}})"></li>
             @endif
             @if($answeredFlag[9] === 1)
-                <li id="9" class="active"></li>
+                <li id="9" class="answered"></li>
             @else
                 <li id="9" class="{{$step == 9 ? 'active':''}}" wire:click="goTo({{9}})"></li>
             @endif
@@ -182,10 +182,6 @@
     </div>
     <form style="text-align: center; word-break: break-word;">
         <fieldset>
-            <span> DEBUG: {{ array_count_values($answeredFlag)[0] }}
-            @foreach($tempAnswers as $answer)
-                    {{ $answer }}
-            @endforeach</span>
             <legend style="font-weight: bolder;"> {{ __($currentExercise->question) }}</legend>
             @foreach($currentExercise->options()->get()->shuffle() as $answer)
                 <div>

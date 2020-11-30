@@ -2,12 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Activity;
 use App\Models\CompletedActivity;
-use App\Models\ListExercise;
 use App\Models\QuestionOption;
 use Livewire\Component;
-use function Symfony\Component\String\s;
 
 /**
  * Livewire Component for the Reading Comprehension Activity
@@ -125,7 +122,7 @@ class Activity2 extends Component
                 $check = QuestionOption::find($answer);
                 if ($check->is_correct) {
                     $this->score++;
-                    $this->earnedCoins += 2;
+                    $this->earnedCoins += 5;
                     $this->earnedPoints += 2;
                 }
                 else{
@@ -141,6 +138,7 @@ class Activity2 extends Component
             $completedActivity->user_id = auth()->user()->id;
             $completedActivity->difficulty_id = $this->activity->difficulty_id;
             $completedActivity->final_score = $this->score;
+            $completedActivity->list_id = $this->activity->id;
             $completedActivity->save();
             $coins = auth()->user()->coins+$this->earnedCoins;
             $points = auth()->user()->points+$this->earnedPoints;

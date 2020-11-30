@@ -76,9 +76,6 @@
             <a style="text-align: left;">
                 {{ __('¿No tiene cuenta aún?') }}
             </a>
-            <a>
-                {{ __('¿Tiene credenciales provisionales?') }}
-            </a>
         </div>
     </form>
     <form method="GET" action="{{ route('register') }}">
@@ -87,6 +84,11 @@
                 {{ __('Crear Cuenta') }}
             </button>
     </form>
+            <div class="mt-4" style="color: #2576AC;">
+                <a style="text-align: left;">
+                    {{ __('¿Tiene credenciales provisionales?') }}
+                </a>
+            </div>
         <form method="GET" action="{{ route('register-provisional') }}">
             @csrf
         <button class="button button1 inline-flex">

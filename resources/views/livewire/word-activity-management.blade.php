@@ -1,4 +1,4 @@
-<div wire:poll.700ms>
+<div>
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
 
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
@@ -105,7 +105,8 @@
                         </div>
                         <hr>
                         @foreach($selectedGroup->groups()->get() as $gs)
-                            <div class="mb-2">{{ __($gs->name) }}</div>
+
+                                <div class="mb-2">{{ __($gs->name) }}</div>
                         @endforeach
                         @endif
                         @if($selectedGroup->users()->first())
@@ -144,8 +145,10 @@
                             </div>
                             <div class="mt-2">
                                 @foreach($groups as $g)
+                                    @if(!$selectedGroup->groups()->where('id', '=', $g->id))
                                     <x-jet-label for="{{$g->id}}" value="{{ __($g->name) }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
                                     <input type="checkbox" wire:model="test.{{ $g }}" value="{{$g->id}}">
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="mt-2">

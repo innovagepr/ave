@@ -18,7 +18,7 @@ class CreateListExercisesTable extends Migration
             $table->string('name', 128);
             $table->foreignId('activity_id');
             $table->foreign('activity_id')->references('id')->on('activities');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('difficulty_id');
             $table->foreign('difficulty_id')->references('id')->on('difficulties');
