@@ -27,12 +27,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::get('/class', [ClassGroupController::class, 'index']);
 
-//Test-Albert:
-Route::get('/test', function(){
-    $name = request('name');
-    return $name;
-});
-
 Route::get('/register/provisional', function(){
     return view('auth.register-provisional');
 })->name('register-provisional');
@@ -41,10 +35,10 @@ Route::get('/homepage', function(){
     return view('homepage');
 });
 
-//Not a direct route, modal in homepage
-Route::get('/contact', function(){
-    return view('contact');
-});
+////Not a direct route, modal in homepage
+//Route::get('/contact', function(){
+//    return view('contact');
+//});
 
 Route::get('/information', function(){
     return view('information');

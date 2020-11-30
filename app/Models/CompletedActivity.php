@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CompletedActivity extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
 }
