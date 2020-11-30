@@ -29,7 +29,9 @@ class Activities extends Component
         $this->total = $this->activities->count();
         $this->activity = $this->activities->get($this->index);
         $this->levels = Difficulty::all();
-        $this->lists = $this->user->assignedLists()->get();
+        if($this->user) {
+            $this->lists = $this->user->assignedLists()->get();
+        }
         foreach ($this->lists as $l){
             if(!CompletedActivity::find($l->id)){
                 $this->count++;
