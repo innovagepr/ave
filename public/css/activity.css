@@ -155,6 +155,9 @@ body{
     color: #073c63;
 }
 /*---Progress Bar--------------------------------*/
+.answered{
+}
+
 .container1 {
     width: 100%;
 }
@@ -223,3 +226,9 @@ body{
     background-color: #ACF9A4;
     cursor: default;
 }
+.progressbar li.answered:before{
+    background-color: #ACF9A4;
+    color:#2576AC;
+    cursor: default;
+}
+

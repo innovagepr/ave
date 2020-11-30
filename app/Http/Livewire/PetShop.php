@@ -15,6 +15,11 @@ class PetShop extends Component
     public $rewards;
     public $userRewards;
 
+    /**
+     * Render
+     * Renders the view of the pet rewards screen
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function render()
     {
         $data['pet'] = Auth::user()->pet;
@@ -22,6 +27,13 @@ class PetShop extends Component
         return view('livewire.pet-shop', compact('data'));
     }
 
+    /**
+     * Buy Article Modal
+     * Dispatch event to execute a confirmation modal at the moment that the user decides to purchase a reward in the Rewards Store
+     * The modal shows the price of the item.
+     * @param $itemid
+     * @param $itemprice
+     */
     public function buyArticleModal($itemid, $itemprice){
         $this->emit('refreshShop', $itemid, $itemprice);
         $this->dispatchBrowserEvent('buyArticle');

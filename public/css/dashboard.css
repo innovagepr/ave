@@ -119,9 +119,10 @@
     background-color: white;
     border: #2576ac 3px solid;
     border-radius: 20px;
-    margin: 10px;
-    height: 5rem;
+    /*margin: 10px;*/
+    height: 6.5rem;
     width: 85%;
+    text-align: center;
 }
 .pet-articles-card {
     background-color: white;

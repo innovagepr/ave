@@ -99,6 +99,54 @@
 .button4:hover{
     background-color: #ACF9A4;
 }
+
+.button5{
+    background-color: #52C5AB;
+    color: #073C63;
+    border-radius: 40px;
+    border: 3px solid #2576AC;
+    display: inline-block;
+    font-size: 20px;
+    font-family: "Berlin Sans FB";
+    margin: 10px 10px;
+    cursor: pointer;
+    /*padding: 10px 10px;*/
+    transition-duration: 0.4s;
+    width: 150px;
+    height: 70px;
+}
+.button5:hover{
+    background-color: #ACF9A4;
+}
+
+.bottomRight{
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}
+
+.button5 .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: white;
+    border: 2px solid #2576ac;
+    color: #2576ac;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    font-size: 15px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.button5:hover .tooltiptext {
+    visibility: visible;
+}
 /*-----------------------------------------*/
 
 #page-container {

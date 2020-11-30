@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class EditProfile extends Component
@@ -13,22 +14,23 @@ class EditProfile extends Component
     public $dob;
     public $debug = 'todavia';
     public $editIcon = 0;
-    public $icon = 'images/profileIcons/icon-black.png';
-    public $icons = array('images/profileIcons/icon-black.png',
-        'images/profileIcons/icon-red.png',
-        'images/profileIcons/icon-orange.png',
-        'images/profileIcons/icon-yellow.png',
-        'images/profileIcons/icon-green.png',
-        'images/profileIcons/icon-blue.png',
-        'images/profileIcons/icon-purple.png',
-        'images/profileIcons/icon-pink.png');
+    public $icon;
+    public $icons = array(
+        "0"=>"images/profileIcons/icon-black.png",
+        "1"=>'images/profileIcons/icon-red.png',
+        "2"=>'images/profileIcons/icon-orange.png',
+        "4"=>'images/profileIcons/icon-green.png',
+        "5"=>'images/profileIcons/icon-blue.png',
+        "6"=>'images/profileIcons/icon-purple.png',
+        "7"=>'images/profileIcons/icon-pink.png');
 
     public function mount(){
         $this->user = auth()->user();
-        $this->first = auth()->user()->first_name;
-        $this->last = auth()->user()->last_name;
-        $this->email = auth()->user()->email;
-        $this->dob = auth()->user()->dob;
+        $this->first = $this->user->first_name;
+        $this->last = $this->user->last_name;
+        $this->email = $this->user->email;
+        $this->dob = $this->user->dob;
+        $this->icon = $this->user->icon;
 
     }
 
@@ -39,8 +41,12 @@ class EditProfile extends Component
         $this->user->last_name = $this->last;
         $this->user->email = $this->email;
         $this->user->dob = $this->dob;
-
         $this->user->save();
+        $this->first = $this->user->first_name;
+        $this->last = $this->user->last_name;
+        $this->email = $this->user->email;
+        $this->dob = $this->user->dob;
+        $this->dispatchBrowserEvent('finish-edit');
     }
 
     public function iconEdit(){
@@ -55,9 +61,15 @@ class EditProfile extends Component
 
     }
 
-    public function changeIcon($i){
-        $this->icon = $i;
+    public function closeConfirm(){
+        $this->dispatchBrowserEvent('finish-edit-closr');
+    }
 
+    public function changeIcon($i){
+        $this->user->icon = $this->icons[$i];
+        $this->icon = $this->icons[$i];
+        $this->user->save();
+        $this->user = $this->user->fresh();
     }
 
     public function render()

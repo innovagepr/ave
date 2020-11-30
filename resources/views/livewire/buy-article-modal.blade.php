@@ -1,4 +1,4 @@
-{{--<div class="modal" id="myModal" role="dialog">--}}
+{{--View of the Buy Item confrimation Modal excecuted in the Rewards Store --}}
 <div id="modal1" class="modal-dialog" style="margin-top: 20%; ">
     <div class="modal-content" style="border: 3px solid #2576AC; border-radius: 40px; text-align: center">
         @if($open == false)
