@@ -14,6 +14,7 @@ use Livewire\WithPagination;
 
 class StudentList extends Component
 {
+
     use WithPagination;
     public $name;
     public $description;
@@ -28,6 +29,9 @@ class StudentList extends Component
     public $firstName;
     public $lastName;
     public $dob;
+    protected $listeners = [
+        'group:update' => '$refresh',
+    ];
     public $headersStudents = array("Nombre", "Edad", "Nivel", "Activo", "último acceso", "Eliminar");
     public function render()
     {

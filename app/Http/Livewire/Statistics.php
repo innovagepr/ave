@@ -12,14 +12,12 @@ use App\Models\User;
 class Statistics extends Component
 {
     public $option = "Grupo";
-    public $month = "Enero";
     public $readingMax;
     public $readingMin;
     public $readingAvg;
     public $wordMax;
     public $wordMin;
     public $wordAvg;
-    public $scoresPerGroup;
     public $scoresPerStudent;
     public $activeMembers;
     public $totalParticipants;
@@ -30,9 +28,14 @@ class Statistics extends Component
     public $activities;
     public $filter = 0;
     public $groupFilter;
+    public $tempGroupFilter;
     public $studentFilter;
     public $activityFilter;
     public $months;
+
+    protected $listeners = [
+        'updateGroup'
+    ];
     public function render()
     {
         return view('livewire.statistics');
@@ -42,9 +45,10 @@ class Statistics extends Component
         $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
         $this->activeMembers = Group::find($this->groupFilter)->members()->get();
         if($this->option === 'Grupo'){
-            $temp = $this->groupFilter;
+            $this->tempGroupFilter = $this->groupFilter;
             $this->groupFilter = null;
-            $this->groupFilter = $temp;
+            $this->emit('updateGroup');
+
         }
         if($this->option === 'Estudiante'){
          $student = User::find($this->studentFilter);
@@ -65,15 +69,15 @@ class Statistics extends Component
 
 
     }
+    public function updateGroup(){
+        $this->groupFilter = $this->tempGroupFilter;
+    }
     public function mount()
     {
-        $this->months = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
-            'Noviembre', 'Diciembre');
         $this->activities = Activity::get();
-        $this->readingId = Activity::where('slug', '=', 'lectura')->first()->id;
-        $this->wordId = Activity::where('slug', '=', 'palabras')->first()->id;
-        $this->groups = Group::where('owner_id', '=', auth()->user()->id)->where('deleted', '=', 0)->get()
-            ->where('active', '=', 1);
+        $this->readingId = Activity::where('slug', '=', 'reading')->first()->id;
+        $this->wordId = Activity::where('slug', '=', 'letterOrdering')->first()->id;
+        $this->groups = Group::where('owner_id', '=', auth()->user()->id)->where('deleted', '=', 0)->where('active', '=', 1)->get();
         $tempResult1 = Group::with('members')->where('owner_id', '=', auth()->user()->id)
             ->get()->pluck('members')->all();
         if($tempResult1){
@@ -82,13 +86,19 @@ class Statistics extends Component
             }
             $this->students = $tempResult1[0];
          }
-        $this->groupFilter = $this->groups->first()->id;
-        $this->studentFilter = $this->students[0]->id;
-        $this->activityFilter = $this->activities->first()->id;
-        $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
-        $this->activeMembers = Group::find($this->groupFilter)->members()->get();
-        $studentScores = CompletedActivity::where('user_id', '=', 3)->get();
-        $this->readingScores = $studentScores->max('final_score');
+        if($this->groups->first()){
+            $this->groupFilter = $this->groups->first()->id;
+        }
+        if($this->students){
+            $this->studentFilter = $this->students[0]->id;
+        }
+        $this->activityFilter = $this->activities->first()->name;
+        if($this->groupFilter){
+            $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
+            $this->activeMembers = Group::find($this->groupFilter)->members()->where('active', '=', 1)->get();
+        }
+
+
 
     }
 

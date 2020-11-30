@@ -15,4 +15,8 @@ trait PasswordValidationRules
     {
         return ['required', 'string', (new Password)->requireNumeric()->requireSpecialCharacter()->requireUppercase(), 'confirmed'];
     }
+
+    public function message(){
+        return 'Holis';
+    }
 }

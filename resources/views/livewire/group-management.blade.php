@@ -1,4 +1,4 @@
-<div>
+<div wire:poll.700ms>
     <!-- Modal for adding a new group -->
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -172,6 +172,7 @@
     <!-- Table for students in a group. Shows when a group is selected. -->
     @if($tableActive)
         @livewire('student-list', ['selectedGroup' => $selectedGroup])
+
     @endif
 <!-- Event listeners for opening modals. -->
     <script>

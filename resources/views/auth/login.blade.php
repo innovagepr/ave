@@ -93,10 +93,9 @@
             {{ __('Activar cuenta') }}
         </button>
         </form>
-        </form>
 
     </div>
-    </div>
+
 
 
 

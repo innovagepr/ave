@@ -13,18 +13,22 @@
                 padding: 0px;
             }
         </style>
+        <!-- Stylesheets and relevant script sources -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
     </head>
-    <!-- Stylesheets and relevant script sources -->
-    <script src="https://kit.fontawesome.com/ace1e6a674.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{asset('css/styles.css')}}" />
-    <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
     <!-- Link to homepage -->
     <i type="button" onclick="location.href='/homepage'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
-        <span class="fa fa-home fa-5x"></span>
+        <span class="fa fa-home fa-2x"></span>
     </i>
+    <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
+
 
 @if($topActive)
-    <div class="container mt-4" style="background-color:#FFFFFF; width: 40%; font-size: 1.5rem; display:block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <div class="container mt-8" style="background-color:#FFFFFF; width: 40%; font-size: 1.25rem; display:block; margin-top: 10%; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+        <!-- Allows for validation of user account information -->
+        <x-jet-validation-errors class="mb-4 text-danger error" />
         <div class="mt-2">
             <a style="color: #2576AC; font-size: 2rem;">{{ __('Provea la información provisional de su cuenta') }}</a>
         </div>
@@ -68,41 +72,32 @@
             <div class="mt-0">
                 <div class="mt-0">
                     @if(strlen($password) < 8)
-                        <span style="color: red"> {{ __('No') }}</span>
+                        <span style="color: red"> {{ 'Debe contener 8 caracteres' }}</span>
                     @else
-                        <span style="color: green"> {{ __('Sí') }}</span>
+                        <span style="color: green"> {{ 'Contiene 8 caracteres' }}</span>
                     @endif
-                    {{ 'contiene 8 caracteres' }}
                 </div>
 
                 <div class="mt-0">
                     @if(preg_match('/\\d/', $password) != 1)
-                        <span style="color: red"> {{ __('No') }}</span>
+                        <span style="color: red"> {{ 'Debe contener un número' }}</span>
                     @else
-                        <span style="color: green"> {{ __('Sí') }}</span>
+                        <span style="color: green"> {{ 'Contiene un número' }}</span>
                     @endif
-                    {{ __('contiene un número') }}
                 </div>
                 <div class="mt-0">
                     @if(preg_match('/[^a-zA-Z\d]/', $password) != 1)
-                        <span style="color: red"> {{ __('No') }}</span>
+                        <span style="color: red"> {{ 'Debe contener un caracter especial' }}</span>
                     @else
-                        <span style="color: green"> {{ __('Sí') }}</span>
+                        <span style="color: green"> {{ 'Contiene un caracter especial' }}</span>
                     @endif
-                    {{ __('contiene un caracter especial') }}
                 </div>
             </div>
             <div class="mt-0">
                 <x-jet-label for="password_confirmation" value="{{ __('Confirme Contraseña nueva:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="password_confirmation"  type="password"  style="display: inline-block; width:80%;" placeholder="**********" name="password_confirmation" required/>
+                <x-jet-input id="password_confirmation"  type="password"  style="display: inline-block; width:80%;" placeholder="**********" wire:model="password_confirmation" name="password_confirmation" required/>
             </div>
 
-            <div class="mt-4">
-                <label for="accepted_terms" style="display: block; text-align: left; padding-left: 10%;">
-                    <input id="accepted_terms" type="checkbox" class="form-checkbox" name="accepted_terms" required>
-                    <span>{{ __('Acepto los términos y condiciones.') }}</span>
-                </label>
-            </div>
 
             <div class="mt-4">
                 <button class="button button1" wire:click.prevent="registerProvisional()">

@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-
+    @if($lastActivity)
     <div>
         <x-jet-label class="mt-3">{{__('Última Actividad')}}</x-jet-label>
         <div class="dashboard-card lg-block">
@@ -77,23 +77,25 @@
                 <th>Resultado</th>
                 </thead>
                 <tbody>
+
                 <tr>
                     <td class="card-text">
-                        {{__('Letras')}}
+                        {{__($lastActivity)}}
+                    </td>
+                    {{--<td class="card-text">
+                        {{__($lastActivity->created_at)}}
                     </td>
                     <td class="card-text">
-                        {{__('10/septiembre/2020')}}
+                        {{__($lastActivityDifficulty)}}
                     </td>
                     <td class="card-text">
-                        {{__('Fácil')}}
-                    </td>
-                    <td class="card-text">
-                        {{__('2/10')}}
-                    </td>
+                        {{__($lastActivity->final_score)}}{{__('/10')}}
+                    </td>--}}
                 </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
-
+@endif
 </div>
