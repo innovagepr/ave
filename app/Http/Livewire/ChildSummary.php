@@ -14,6 +14,7 @@ class ChildSummary extends Component
     public $petLevel;
     public $nextPoints;
     public $nextPetPoints;
+    public $lastActivity = null;
 
     public function mount(){
         $this->points = auth()->user()->points;

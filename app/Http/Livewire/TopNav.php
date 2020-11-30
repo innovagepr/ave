@@ -13,7 +13,7 @@ class TopNav extends Component
         "2" => array("Actividades", "activities", "book"),
         "3" => array("Mi Mascota", "mascota", "paw"),
         "4" => array("Tienda", "tienda", "store-alt"),
-        "5" => array("Mi Progreso", "dashboard", "chart-bar"),
+        "5" => array("Mi Progreso", "progreso", "chart-bar"),
     );
 
     public $optionsAdult = array (
