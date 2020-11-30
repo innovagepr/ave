@@ -2,15 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Activity;
 use App\Models\AnsweredWord;
+use App\Models\ListExercise;
 use Illuminate\View\View;
 use Livewire\Component;
-use function GuzzleHttp\Psr7\str;
-
+use App\Models\CompletedActivity;
 class LetterDisplay extends Component
 {
+    public $activity = null;
     protected $listeners = ['submitExercise'];
 
+    public $user;
+    public $list;
     public $word;
     public $shuffledWord;
     public $splitWord;
@@ -83,7 +87,7 @@ class LetterDisplay extends Component
         $temp = $word;
         $word = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
         shuffle($word );
-//Evita que salga igual a la palabra original
+        //Evita que salga igual a la palabra original
         if($temp == $word){
             $this->splitshuffle();
         }
@@ -92,7 +96,7 @@ class LetterDisplay extends Component
 
     /**
      * Mount
-     * This functions allows to intercept parameters 
+     * This functions works as a constructor and set up the initial state and variables
      */
     public function mount(){
         $counter = 0;
@@ -107,43 +111,54 @@ class LetterDisplay extends Component
         $this->word = $this->words[$this->step]->word;
         $this->splitWord =  $this->tempSplitWords[$this->step];
         $this->answer =  $this->tempAnswers[$this->step];
-
     }
 
-//Immediate Result ------------------------------------------------------------------------------------------
+    /**
+     * Immediate Result
+     * This function allows to verify the answer provided by the user.
+     * Depending on the answer it will executes an event to displays a modal.
+     */
     public function immediateResult()
     {
         $joinedWord = implode($this->answer);
 
         if ($joinedWord == $this->word) {
-
             $this->dispatchBrowserEvent('immediateResultGood');
             array_push($this->correctAnswers, $joinedWord);
             $this->answeredFlag[$this->step] = 1;
         } else {
-
             $this->dispatchBrowserEvent('toggleResultModal', $this->joinedAnswer);
             $this->emit('refreshChildren', $this->joinedAnswer, $this->word);
             $this->answeredFlag[$this->step] = 1;
             array_push($this->badAnswers,[$this->step + 1,$joinedWord,$this->word]);
         }
         if ($this->step < 9) {
-
             $this->step++;
             $this->word = $this->words[$this->step]->word;
             $this->emit('refreshAudio', $this->word);
 
-// Reset variables
+            //Reset variables
             $this->shuffledWord = null;
             $this->splitWord = null;
             $this->joinedAnswer = null;
-
-
             $this->position2 = $this->tempPosition[$this->step];
             $this->word = $this->words[$this->step]->word;
             $this->splitWord = $this->tempSplitWords[$this->step];
             $this->answer = $this->tempAnswers[$this->step];
             $this->positions = $this->tempPositionsArray[$this->step];
+        }
+
+        if($this->step === 9){
+           if(array_search( 0, array_reverse($this->answeredFlag)) != 0)
+            {
+                $this->goTo(array_search(0, $this->answeredFlag));
+            }
+        }
+        else if (array_search(0, $this->answeredFlag)) {
+            $this->goTo(array_search(0, $this->answeredFlag));
+        }
+        else if (array_count_values($this->answeredFlag)[0] === 0) {
+            $this->submitExercise();
         }
     }
 
@@ -153,10 +168,30 @@ class LetterDisplay extends Component
 
     public function submitExercise(){
         $sum = count($this->badAnswers) + count($this->correctAnswers);
+        $this->dispatchBrowserEvent('finalResult', $this->badAnswers, $sum, $this->correctAnswers);
+        $this->emit('refreshFinal', $this->badAnswers, $sum, $this->correctAnswers);
+//        $this->emit('refreshAudio', null);
 
-        $this->dispatchBrowserEvent('finalResult', $this->badAnswers, $sum);
-        $this->emit('refreshFinal', $this->badAnswers, $sum);
-        $this->emit('refreshAudio', null);
+
+        if($this->user->id){
+            $completedActivity = new CompletedActivity();
+            $completedActivity->create([
+                'activity_id'=> Activity::where('slug', 'Palabras')->first()->id,
+                'user_id' => $this->user->id,
+                'difficulty_id'=> $this->list->difficulty->id,
+                'final_score'=> (count($this->correctAnswers) *2)
+            ]);
+            $this->user->coins = $this->user->coins + (count($this->correctAnswers)*5);
+            $this->user->points = $this->user->points + (count($this->correctAnswers)*2);
+//            if($this->user->points == )
+            $this->user->save();
+
+
+//            $pet = Pet::find($this->user->pet()->id);
+//            $pet->points += $this->score;
+//            $pet->save();
+        }
+
     }
 
     public function clearAll(){
@@ -168,15 +203,16 @@ class LetterDisplay extends Component
     public function goTo($step1){
 
         $this->tempAnswers[$this->step] = $this->answer;
-        $this->emit('refreshAudio', $this->word);
+//        $this->emit('refreshAudio', $this->word);
 
         if($this->step != $step1 && !$this->answeredFlag[$step1]) {
+//            $this->tempAnswers[$this->step] = $this->answer;
 
             $this->step = $step1;
             $this->word = $this->words[$this->step]->word;
-//            $this->emit('refreshAudio', $this->word);
+            $this->emit('refreshAudio', $this->word);
 
-// Reset variables
+            // Reset variables
             $this->shuffledWord = $this->tempSplitWords[$this->step];
             $this->splitWord = $this->tempSplitWords[$this->step];
             $this->joinedAnswer = null;

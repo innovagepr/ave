@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ListExercise extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     /**
      * Get the lists records that belongs to the user.

@@ -5,7 +5,7 @@
 @section('content')
 
     <div>
-        <livewire:letter-display :words="$words"/>
+        <livewire:letter-display :words="$words" :user="$user" :list="$list"/>
     </div>
 
 @endsection

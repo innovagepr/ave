@@ -21,8 +21,8 @@
         </div>
         <div class="pet-row">
             <div class="columnPet1">
-                <div class="dashboard-petCard" style="background-color: {{$pet->background_color}}">
-                    <img style="width: 350px; height: 350px; margin: auto; display: block;" src="/avatar_{{Auth::id()}}.png">
+                <div class="dashboard-petCard" style="background-color: {{$pet->background_color}}" wire:poll>
+                    <img style="width: 350px; height: 350px; margin: auto; display: block; margin-top: 3%; border-radius: 15px" src="/avatar_{{Auth::id()}}.png">
                 </div>
             </div>
             {{--Shows the progress bar and level of the user's pet--}}

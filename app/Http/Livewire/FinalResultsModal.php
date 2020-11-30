@@ -14,17 +14,17 @@ class FinalResultsModal extends Component
 
     public $badAnswers = [];
     public $sum;
-
+    public $correctAnswers = [];
     protected $listeners = ['refreshFinal'=>'refreshMe'];
 
     /**
-     *
-     * @param $someVariable
-     * @param $othervar
+     *Refresh Me
+     * Refresh variables to be used in the modal view
      */
-    public function refreshMe($badAnswers, $sum){
+    public function refreshMe($badAnswers, $sum, $correctAnswers){
         $this->badAnswers = $badAnswers;
         $this->sum = $sum;
+        $this->correctAnswers = $correctAnswers;
     }
 
     /**

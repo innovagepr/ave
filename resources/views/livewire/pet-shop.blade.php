@@ -34,7 +34,7 @@
                     <p >Artículos en venta:</p>
                 </div>
                 {{--Grid containing the articles that the user can buy in the Rewards Store--}}
-                <div class="container">
+                <div class="container" wire:poll>
                     <div class="grid-card">
                         <div class="image-grid-container">
                             @foreach($data['rewards'] as $item)
@@ -78,7 +78,7 @@
 {{--Script to excecute the modal to confirm the reward purchase--}}
 <script>
     window.addEventListener('buyArticle', event => {
-        $("#buy-article").modal('toggle');
+        $("#buy-article").modal({backdrop: 'static', keyboard: false},'toggle');
     })
 </script>
 

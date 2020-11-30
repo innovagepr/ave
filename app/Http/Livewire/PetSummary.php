@@ -42,7 +42,6 @@ class PetSummary extends Component
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function buildAvatar(RewardType $item){
-
         $this->avatar = new PetAvatar;
 //        $this->avatar->set_background('#000000');
 //        $this->avatar->set_background("images/savings.png");
@@ -59,10 +58,6 @@ class PetSummary extends Component
             $this->avatar->add_layer($reward->icon_url);
         }
 
-
-//
-
-//
 //        if($articleType == "hat"){
 //            $this->avatar->add_layer("images/pet_layers/topHat.png");
 //        } elseif($articleType == "tie"){
@@ -73,9 +68,14 @@ class PetSummary extends Component
 //            $this->avatar->add_layer("images/pet_layers/ball.png");
 //        }
 
+//        $this->avatar->add_layer($item->icon_url);
+
+//        $this->pet->pet_rewards = $this->pet->pet_rewards->fresh();
+
         $this->avatar->set_filename('avatar_'.Auth::user()->id.'.png');
         $this->avatar->build();
         $this->pet->pet_rewards()->attach($item);
+//        $this->pet->pet_rewards = $this->pet->pet_rewards->fresh();
         $this->pet->save();
         return redirect('/mascota');
     }
@@ -87,6 +87,10 @@ class PetSummary extends Component
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function detachItem(RewardType $item){
+        $this->pet->pet_rewards()->detach($item);
+
+//        $this->pet->pet_rewards = $this->pet->pet_rewards->fresh();
+//        dd($this->pet->pet_rewards);
         $this->avatar = new PetAvatar;
 
         if($this->pet->petType->slug == "perro"){
@@ -94,13 +98,11 @@ class PetSummary extends Component
         } else{
             $this->avatar->add_layer("images/pet_layers/catBase.png");
         }
-
-        foreach($this->pet->pet_rewards as $reward  ) {
+        foreach($this->pet->pet_rewards as $reward) {
             $this->avatar->add_layer($reward->icon_url);
         }
         $this->avatar->set_filename('avatar_'.Auth::user()->id.'.png');
         $this->avatar->build();
-        $this->pet->pet_rewards()->detach($item);
         $this->pet->save();
         return redirect('/mascota');
     }
