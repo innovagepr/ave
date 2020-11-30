@@ -59,12 +59,13 @@ class Activities extends Component
 
     public function activity($difficulty, $activity){
             $list = ListExercise::where('name','=', 'Palabras')->where('difficulty_id', '=', $difficulty)->first()->id;
+            $list2 = ListExercise::where('name','=', 'Lectura')->where('difficulty_id', '=', $difficulty)->first()->id;
 
             if($activity === 1){
                 return redirect()->to('/lista/'.$list);
             }
             else {
-                return redirect()->to('/lectura/' . $list);
+                return redirect()->to('/lectura/' . $list2);
             }
 
     }
