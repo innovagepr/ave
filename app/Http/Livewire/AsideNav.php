@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\LoginRecord;
 use Livewire\Component;
 
 class AsideNav extends Component
@@ -23,6 +24,8 @@ class AsideNav extends Component
         "4" => array("Estadísticas", "estadisticas", "chart-bar"),
     );
 
+
+
     public function mount(){
         $this->user = auth()->user();
         $this->pet = auth()->user()->pet;
@@ -33,6 +36,14 @@ class AsideNav extends Component
         return redirect()->to('/editarPerfil');
     }
 
+    public function logout(){
+        $instance = new LoginRecord;
+        $instance->user_id = auth()->user()->id;
+        $instance->type = 'logout';
+        $instance->date = now();
+        $instance->save();
+
+    }
     public function render()
     {
         return view('livewire.aside-nav');

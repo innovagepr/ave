@@ -45,24 +45,30 @@
                         @endforeach
                     </x-slot>
                     <x-slot name="body">
-                        @if($selectedGroup)
-                            @foreach($selectedGroup->members as $user)
-                                <x-table.row>
-                                    <x-table.cell>{{$user->first_name}}</x-table.cell>
-                                    <x-table.cell>{{$group->name}}</x-table.cell>
-                                    <x-table.cell>Sí</x-table.cell>
-                                </x-table.row>
-                            @endforeach
+                        @if(count($groups) === 0)
+                            <x-table.row>
+                                <x-table.cell>{{__('No existe ningún grupo.')}}</x-table.cell>
+                            </x-table.row>
                         @else
-                            @foreach($groups as $group)
-                                @foreach($group->members as $user)
+                            @if($selectedGroup)
+                                @foreach($selectedGroup->members as $user)
                                     <x-table.row>
                                         <x-table.cell>{{$user->first_name}}</x-table.cell>
                                         <x-table.cell>{{$group->name}}</x-table.cell>
                                         <x-table.cell>Sí</x-table.cell>
                                     </x-table.row>
                                 @endforeach
-                            @endforeach
+                            @else
+                                @foreach($groups as $group)
+                                    @foreach($group->members as $user)
+                                        <x-table.row>
+                                            <x-table.cell>{{$user->first_name}}</x-table.cell>
+                                            <x-table.cell>{{$group->name}}</x-table.cell>
+                                            <x-table.cell>Sí</x-table.cell>
+                                        </x-table.row>
+                                    @endforeach
+                                @endforeach
+                            @endif
                         @endif
                     </x-slot>
                 </x-table>
