@@ -61,31 +61,31 @@ class ReadingActivityManagement extends Component
 
     public function mount()
     {
-        if(Activity::where('slug', '=', 'Lectura')->first() === null)
+        if(Activity::where('slug', '=', 'reading')->first() === null)
         {
             $activity = new Activity();
             $activity->name = "Lectura";
-            $activity->slug = "Lectura";
-            $activity->rules = "Lee el párrafo cuidadosamente y escoge la opción correcta!";
+            $activity->slug = "reading";
+            $activity->rules = "1. Lee y contesta.";
             $activity->active = 1;
             $activity->save();
         }
-        $this->activityType = Activity::where('slug', '=', 'Lectura')->first();
+        $this->activityType = Activity::where('slug', '=', 'reading')->first();
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
                                     ->where('activity_id', '=', 2)->get();
     }
     public function render()
     {
-        if(Activity::where('slug', '=', 'Lectura')->first() === null)
+        if(Activity::where('slug', '=', 'reading')->first() === null)
         {
             $activity = new Activity();
             $activity->name = "Lectura";
-            $activity->slug = "Lectura";
-            $activity->rules = "Lee el párrafo cuidadosamente y escoge la opción correcta!";
+            $activity->slug = "reading";
+            $activity->rules = "1. Lee y contesta.";
             $activity->active = 1;
             $activity->save();
         }
-        $this->activityType = Activity::where('slug', '=', 'Lectura')->first();
+        $this->activityType = Activity::where('slug', '=', 'reading')->first();
         return view('livewire.reading-activity-management', ['lists' => ListExercise::where('user_id', '=', auth()->user()->id)
             ->where('deleted', '=', 0)->where('activity_id', '=', $this->activityType->id)->paginate(3)]);
     }
@@ -154,7 +154,7 @@ class ReadingActivityManagement extends Component
         $this->validate(['name' => ['required', 'max:128', new IsDefault()]]);
         $list = new ListExercise();
         $list->name = $this->name;
-        $list->activity_id = Activity::where('slug', '=', 'Lectura')->first()->id;
+        $list->activity_id = Activity::where('slug', '=', 'reading')->first()->id;
         $list->user_id = auth()->user()->id;
         if(Difficulty::where('name', '=', $this->difficulty)->first() === null)
         {
@@ -168,7 +168,7 @@ class ReadingActivityManagement extends Component
         $list->save();
         $list->owner()->associate(auth()->user()->id);
         $list->difficulty()->associate(Difficulty::where('name', '=', $this->difficulty)->first()->id);
-        $list->activity()->associate(Activity::where('slug', '=', 'Lectura')->first()->id);
+        $list->activity()->associate(Activity::where('slug', '=', 'reading')->first()->id);
         $this->resetOnClose();
         $this->dispatchBrowserEvent('group-added');
     }

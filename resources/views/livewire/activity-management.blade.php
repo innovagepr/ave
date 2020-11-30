@@ -14,7 +14,7 @@
                             @foreach($activities as $a)
                                 <x-table.row>
                                     <x-table.cell> {{__($a['activity'])}} </x-table.cell>
-                                    @if($a['activity'] === 'Palabras')
+                                    @if($a['activity'] === 'Orden de Palabras')
                                     <x-table.cell>
                                         <a href="/manejoActividades/palabras">
                                             <span class="fa fa-edit"></span>

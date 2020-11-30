@@ -12,7 +12,7 @@ class ActivityManagement extends Component
     public $members;
     public $active;
     public $headersActivities = array("Actividad", "Editar");
-    public $activities = array(array("activity" => "Palabras"),
+    public $activities = array(array("activity" => "Orden de Palabras"),
         array("activity" => "Lectura"));
 
     public function render()
@@ -20,10 +20,4 @@ class ActivityManagement extends Component
         return view('livewire.activity-management');
     }
 
-    public function submitGroup()
-    {
-        array_push($this->groups, array("name"=> $this->name, "creation-date"=> "4/noviembre/2020", "members" => 0, "active" => 1));
-        $this->name="";
-        $this->dispatchBrowserEvent('group-added');
-    }
 }

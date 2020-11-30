@@ -75,7 +75,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/estadisticas', function()
     return view('profile/statistics');
 })->name('estadisticas');
 
-Route::get('/mascota',[PetController::class, 'index'])->name('mascota');;
+Route::get('/mascota',[PetController::class, 'index'])->name('mascota');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/progreso', function(){
+    return view('child-progress');
+})->name('progreso');
 
 Route::get('/actividades', function () {
     return view('act');

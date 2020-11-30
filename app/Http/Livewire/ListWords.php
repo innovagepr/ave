@@ -28,10 +28,11 @@ class ListWords extends Component
         $this->dispatchBrowserEvent('newWordModal');
     }
     public function addWord(){
-        $this->validate(['word' => 'required|max:32|regex:/^\S*[a-zA-Z]+$/'],
+        $this->validate(['word' => 'required|min:2|max:15|regex:/^\S*[a-zA-Z]+$/'],
             [
                 'word.required' => 'Favor proveer una palabra.',
-                'word.max' => 'La palabra no puede exceder 32 caracteres.',
+                'word.min' => 'La palabra debe tener al menos 2 letras.',
+                'word.max' => 'La palabra no puede exceder 15 letras.',
                 'word.regex' => 'La palabra sólo debe contener letras.',
             ],
             ['word' => 'Palabra']);
@@ -51,10 +52,11 @@ class ListWords extends Component
         $this->dispatchBrowserEvent('editWordModal');
     }
     public function editWord(){
-        $this->validate(['word' => 'required|max:32|regex:/^\S*[a-zA-Z]+$/'],
+        $this->validate(['word' => 'required|min:2|max:15|regex:/^\S*[a-zA-Z]+$/'],
             [
                 'word.required' => 'Favor proveer una palabra.',
-                'word.max' => 'La palabra no puede exceder 32 caracteres.',
+                'word.min' => 'La palabra debe tener al menos 2 letras.',
+                'word.max' => 'La palabra no puede exceder 15 letras.',
                 'word.regex' => 'La palabra sólo debe contener letras.',
             ],
             ['wordt' => 'Palabra']);

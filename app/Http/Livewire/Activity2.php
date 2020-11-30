@@ -142,10 +142,25 @@ class Activity2 extends Component
             $completedActivity->difficulty_id = $this->activity->difficulty_id;
             $completedActivity->final_score = $this->score;
             $completedActivity->save();
-            $coins = auth()->user()->coins+2;
-            $points = auth()->user()->points+2;
+            $coins = auth()->user()->coins+$this->earnedCoins;
+            $points = auth()->user()->points+$this->earnedPoints;
+            $remainingLevel = 20-$points;
+            $petRemaining = $remainingLevel/2;
+            $level = auth()->user()->level;
             auth()->user()->coins = $coins;
-            auth()->user()->points = $points;
+            if($remainingLevel <= 0){
+                $level++;
+                auth()->user()->level = $level;
+                auth()->user()->points = abs($remainingLevel);
+            }
+            if($petRemaining <= 0){
+                $level++;
+                auth()->user()->level = $level;
+                auth()->user()->points = abs($remainingLevel);
+            }
+            else{
+                auth()->user()->points = $points;
+            }
             auth()->user()->save();
 //            $pet = Pet::find(auth()->user()->pet()->id);
 //            $pet->points += $this->score;

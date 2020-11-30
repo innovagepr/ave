@@ -4,6 +4,7 @@
 
 <div class="column left">
     <div lass="container mb-4" style="background-color:#FFFFFF; margin-top: 5%; margin-bottom: 5%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+        @if($groups->first() && $students)
         <fieldset>
             <legend> {{ __("Estadísticas por:") }}</legend>
             <div>
@@ -18,8 +19,11 @@
             <div>
             </div>
         </fieldset>
+        @else
+        <span>{{ __('No hay récords disponibles al momento.') }}</span>
+            @endif
     </div>
-
+@if($groups->first() && $students)
     <div lass="container mt-10" style="background-color:#FFFFFF; margin-bottom: 2%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
 
         <div class="mt-0">
@@ -39,7 +43,7 @@
                         </select>
                     @endif
         </div>
-        @if($option === 'Grupo')
+        @if($option === 'Grupo' && $activeMembers && $totalParticipants)
         <div class="mt-0">
             <div>{{ __('Total de Miembros Activos: ') }} {{ count($activeMembers) }}</div>
             <div>{{ __('Total de Participantes: ') }} {{ count($totalParticipants) }}</div>
@@ -47,6 +51,7 @@
             @endif
     </div>
 </div>
+    @endif
 <div class="column right">
 @if($option === 'Estudiante')
         <div class="container mt-10" style="background-color:#FFFFFF; margin-top: 5%; margin-bottom: 5%; width: 80%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
@@ -96,7 +101,7 @@
             </div>
             @endif
 
-        @elseif($activityFilter === 'Palabras' && $option === 'Estudiante')
+        @elseif($activityFilter === 'Orden de Palabras' && $option === 'Estudiante')
 
             <div>
             @if($wordMax)

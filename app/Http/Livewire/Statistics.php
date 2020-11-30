@@ -12,7 +12,6 @@ use App\Models\User;
 class Statistics extends Component
 {
     public $option = "Grupo";
-    public $month = "Enero";
     public $readingMax;
     public $readingMin;
     public $readingAvg;
@@ -75,13 +74,10 @@ class Statistics extends Component
     }
     public function mount()
     {
-        $this->months = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
-            'Noviembre', 'Diciembre');
         $this->activities = Activity::get();
-        $this->readingId = Activity::where('slug', '=', 'lectura')->first()->id;
-        $this->wordId = Activity::where('slug', '=', 'palabras')->first()->id;
-        $this->groups = Group::where('owner_id', '=', auth()->user()->id)->where('deleted', '=', 0)->get()
-            ->where('active', '=', 1);
+        $this->readingId = Activity::where('slug', '=', 'reading')->first()->id;
+        $this->wordId = Activity::where('slug', '=', 'letterOrdering')->first()->id;
+        $this->groups = Group::where('owner_id', '=', auth()->user()->id)->where('deleted', '=', 0)->where('active', '=', 1)->get();
         $tempResult1 = Group::with('members')->where('owner_id', '=', auth()->user()->id)
             ->get()->pluck('members')->all();
         if($tempResult1){
@@ -90,11 +86,19 @@ class Statistics extends Component
             }
             $this->students = $tempResult1[0];
          }
-        $this->groupFilter = $this->groups->first()->id;
-        $this->studentFilter = $this->students[0]->id;
-        $this->activityFilter = $this->activities->first()->slug;
-        $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
-        $this->activeMembers = Group::find($this->groupFilter)->members()->get();
+        if($this->groups->first()){
+            $this->groupFilter = $this->groups->first()->id;
+        }
+        if($this->students){
+            $this->studentFilter = $this->students[0]->id;
+        }
+        $this->activityFilter = $this->activities->first()->name;
+        if($this->groupFilter){
+            $this->totalParticipants = Group::find($this->groupFilter)->members()->get();
+            $this->activeMembers = Group::find($this->groupFilter)->members()->where('active', '=', 1)->get();
+        }
+
+
 
     }
 

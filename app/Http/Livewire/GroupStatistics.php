@@ -40,7 +40,7 @@ class GroupStatistics extends Component
         $this->dispatchBrowserEvent('studentAccessModal');
     }
     public function genChart(){
-        $stocksTable = \Lava::DataTable();  // Lava::DataTable() if using Laravel
+        $stocksTable = \Lava::DataTable();
         $stocksTable->addDateColumn('Mes')
             ->addNumberColumn('Accesos');
 

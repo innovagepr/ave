@@ -59,16 +59,16 @@ class WordActivityManagement extends Component
     public $headersStudents = array("Palabra", "Eliminar");
     public function mount()
     {
-        if(Activity::where('slug', '=', 'Palabras')->first() === null)
+        if(Activity::where('slug', '=', 'letterOrdering')->first() === null)
         {
             $activity = new Activity();
-            $activity->name = "Palabras";
-            $activity->slug = "Palabras";
-            $activity->rules = "Ordena las palabras!";
+            $activity->name = "Orden de Palabras";
+            $activity->slug = "letterOrdering";
+            $activity->rules = "1. Escucha y ordena.";
             $activity->active = 1;
             $activity->save();
         }
-        $this->activityType = Activity::where('slug', '=', 'Palabras')->first();
+        $this->activityType = Activity::where('slug', '=', 'letterOrdering')->first();
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
                                     ->where('activity_id', '=', $this->activityType->id)->get();
     }
@@ -77,16 +77,16 @@ class WordActivityManagement extends Component
     }
     public function render()
     {
-        if(Activity::where('slug', '=', 'Palabras')->first() === null)
+        if(Activity::where('slug', '=', 'letterOrdering')->first() === null)
         {
             $activity = new Activity();
-            $activity->name = "Palabras";
-            $activity->slug = "Palabras";
-            $activity->rules = "¡Ordena las palabras!";
+            $activity->name = "Orden de Palabras";
+            $activity->slug = "letterOrdering";
+            $activity->rules = "1. Escucha y ordena.";
             $activity->active = 1;
             $activity->save();
         }
-        $this->activityType = Activity::where('slug', '=', 'Palabras')->first();
+        $this->activityType = Activity::where('slug', '=', 'letterOrdering')->first();
         return view('livewire.word-activity-management', ['lists' => ListExercise::where('user_id', '=', auth()->user()->id)
                                                                 ->where('deleted', '=', 0)
                                                                 ->where('activity_id', '=', $this->activityType->id)->paginate(3)]);
@@ -160,7 +160,7 @@ class WordActivityManagement extends Component
         $list = new ListExercise();
         $list->name = $this->name;
 
-        $list->activity_id = Activity::where('slug', '=', 'Palabras')->first()->id;
+        $list->activity_id = Activity::where('slug', '=', 'letterOrdering')->first()->id;
         $list->user_id = auth()->user()->id;
         if(Difficulty::where('name', '=', $this->difficulty)->first() === null)
         {
@@ -174,7 +174,7 @@ class WordActivityManagement extends Component
         $list->save();
         $list->owner()->associate(auth()->user()->id);
         $list->difficulty()->associate(Difficulty::where('name', '=', $this->difficulty)->first()->id);
-        $list->activity()->associate(Activity::where('slug', '=', 'Palabras')->first()->id);
+        $list->activity()->associate(Activity::where('slug', '=', 'letterOrdering')->first()->id);
         $this->resetOnClose();
         $this->dispatchBrowserEvent('group-added');
     }
