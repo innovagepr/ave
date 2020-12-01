@@ -35,7 +35,7 @@ class CreateNewUser implements CreatesNewUsers
                 'last_name' => ['required', 'string', 'max:128'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'dob' => ['required', new AgeProfessional()],
-                'password' => $this->passwordRules(),
+                'contraseña' => $this->passwordRules(),
             ])->validate();
             if(Role::find(1) == null)
             {
@@ -53,7 +53,7 @@ class CreateNewUser implements CreatesNewUsers
                 'last_name' => ['required', 'string', 'max:128'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'dob' => ['required', new AgeChild()],
-                'password' => $this->passwordRules(),
+                'contraseña' => $this->passwordRules(),
             ])->validate();
             if(Role::find(2) == null)
             {
@@ -70,7 +70,7 @@ class CreateNewUser implements CreatesNewUsers
             'last_name' => $input['last_name'],
             'role_id' => $input['role_id'],
             'email' => $input['email'],
-            'password' => Hash::make($input['password']),
+            'password' => Hash::make($input['contraseña']),
             'dob'=> $input['dob'],
             'deleted' => 0,
         ]);

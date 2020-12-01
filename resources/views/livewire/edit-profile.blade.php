@@ -72,18 +72,18 @@
                 <div class="modal-body" style="text-align: center;">
                     <form>
                         <div class="mt-2">
-                            <x-jet-label for="password" value="{{ __('Nueva contraseña:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                            <x-jet-input id="password" type="text" style="display: inline-block; width:80%;" name="password" wire:model="password"/>
+                            <x-jet-label for="contraseña" value="{{ __('Nueva contraseña:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                            <x-jet-input id="contraseña" type="password" style="display: inline-block; width:80%;" name="contraseña" placeholder="**********" wire:model="contraseña"/>
                             <div>
-                                @error('newPassword') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('contraseña') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                         </div>
 
                         <div class="mt-0">
-                            <x-jet-label for="password_confirmation" value="{{ __('Confirmar Contraseña:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                            <x-jet-input id="password_confirmation" type="text" style="display: inline-block; width:80%;" name="password" wire:model="password_confirmation"/>
+                            <x-jet-label for="contraseña_confirmation" value="{{ __('Confirmar Contraseña:') }}" style="display: block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
+                            <x-jet-input id="contraseña_confirmation" type="password" style="display: inline-block; width:80%;" name="contraseña" placeholder="**********" wire:model="contraseña_confirmation"/>
                             <div>
-                                @error('newPasswordConfirm') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('contraseña_confirmation') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                         </div>
                         <div class="mt-4">
@@ -126,6 +126,9 @@
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="first_name" type="text"  name="first" wire:model="first"/>
+                                <div>
+                                    @error('first') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -134,6 +137,9 @@
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="last_name" type="text"  wire:model="last" name="last"/>
+                                <div>
+                                    @error('last') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -142,6 +148,9 @@
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="email" type="email"  name="email" wire:model="email"/>
+                                <div>
+                                    @error('email') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -160,6 +169,9 @@
                         <tr>
                             <td>
                                 <x-jet-label class="pr-2 block text-left" for="dob" value="{{ __('Fecha de Nacimiento:') }}" />
+                                <div>
+                                    @error('dob') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="dob" type="date"  name="first_name" wire:model="dob"/>

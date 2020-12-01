@@ -29,10 +29,8 @@ class StudentList extends Component
     public $firstName;
     public $lastName;
     public $dob;
-    protected $listeners = [
-        'group:update' => '$refresh',
-    ];
-    public $headersStudents = array("Nombre", "Edad", "Nivel", "Activo", "último acceso", "Eliminar");
+
+    public $headersStudents = array("Nombre", "Edad", "Nivel", "Activo", "último acceso", "Remover");
     public function render()
     {
         return view('livewire.student-list', ['students' => $this->selectedGroup->members()->paginate(3)] );
