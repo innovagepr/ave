@@ -189,7 +189,7 @@ class LetterDisplay extends Component
                 'activity_id'=> Activity::where('slug', 'letterOrdering')->first()->id,
                 'user_id' => $this->user->id,
                 'difficulty_id'=> $this->list->difficulty->id,
-                'final_score'=> (count($this->correctAnswers) *2),
+                'final_score'=> count($this->correctAnswers),
                 'list_id'=>$this->list->id
             ]);
 

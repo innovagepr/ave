@@ -98,8 +98,6 @@ class Statistics extends Component
             $this->activeMembers = Group::find($this->groupFilter)->members()->where('active', '=', 1)->get();
         }
 
-
-
     }
 
 }
