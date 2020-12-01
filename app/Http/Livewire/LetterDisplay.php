@@ -171,6 +171,11 @@ class LetterDisplay extends Component
         $this->joinedAnswer = implode($this->answer);
     }
 
+    /**
+     * Submit Exercise
+     * This function submit the activity, assign the points and coins to user (if user is not a guest) and displays a
+     * final pop-up modal with the required feedback.
+     */
     public function submitExercise(){
         $this->verifyAll();
 
@@ -214,12 +219,22 @@ class LetterDisplay extends Component
         }
     }
 
+    /**
+     * Clear All
+     * Removes all the letters in the answer boxes.
+     */
     public function clearAll(){
         for ($j = 0; $j < strlen($this->words[$this->step]->word); $j++){
             $this->removeLetter();
         }
     }
 
+    /**
+     * Go To
+     * This function allows you to move between the exercises of the activity.
+     * When you switch to an exercise, it resets the word corresponding to it.
+     * @param $step1
+     */
     public function goTo($step1){
 
         $this->tempAnswers[$this->step] = $this->answer;
@@ -240,6 +255,12 @@ class LetterDisplay extends Component
             $this->positions = $this->tempPositionsArray[$this->step];
         }
     }
+
+    /**
+     * QuitWarning (Submit Activity Warning)
+     * This function dispatch a pop-up modal at the moment of clicking the 'Finalizar Actividad' button.
+     * The modal displays a warning if you want to submit the exercises or not.
+     */
     public function quitWarning(){
         $sum = count($this->badAnswers) + count($this->correctAnswers);
 
@@ -251,6 +272,10 @@ class LetterDisplay extends Component
         }
     }
 
+    /**
+     * Verify All
+     * This function verify all exercises in the activity that have not been individually verified.
+     */
     public function verifyAll(){
         foreach ($this->answeredFlag as $answer){
             if($answer == 0){
@@ -260,6 +285,12 @@ class LetterDisplay extends Component
         }
     }
 
+    /**
+     * Immediate Result 2
+     * Same as Immediate Result function, but without executing the verification modals for each exercise.
+     * This function allows to verify the answer provided by the user.
+     * Depending on the answer it will executes an event to displays a modal.
+     */
     public function immediateResult2()
     {
         $this->sumas++;

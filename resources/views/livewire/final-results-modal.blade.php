@@ -13,7 +13,7 @@
                 </div>
                 <form autocomplete="off">
                     <div class="modal-body" style="text-align: center">
-                        <h2 style ="font-family: Berlin Sans FB; font-size: 25px; color: #2576AC; text-align: center; margin: 5px;">Solo te equivocaste en <span style="color: red">{{10 -( $sum - count($badAnswers))}}</span> ejericios:</h2>
+                        <h2 style ="font-family: Berlin Sans FB; font-size: 25px; color: #2576AC; text-align: center; margin: 5px;">Solo te equivocaste en <span style="color: red">{{10 -( $sum - count($badAnswers))}}</span> ejercicios:</h2>
                         <table style="text-align: center; font-family: 'Berlin Sans FB'; font-size: 25px; width:100%; border: 2px solid red">
                             <tr>
                                 <th style="font-weight: lighter; text-align: center; color: #2576AC">Ejercicio</th>
