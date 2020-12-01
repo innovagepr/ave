@@ -17,7 +17,7 @@ class ProSummary extends Component
     public $selectedGroup = null;
 
     public function mount(){
-        $this -> groups = auth()->user()->ownedGroups;
+        $this -> groups = auth()->user()->ownedGroups()->where('deleted', '=', 0)->get();
     }
 
     public function clickGroup($groupId)
