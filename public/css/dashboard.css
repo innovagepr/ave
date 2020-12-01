@@ -520,6 +520,8 @@ progress[value]::-webkit-progress-value {
     border: #2576AC 2px solid;
     color: #073c63;
     --text-opacity: 1;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .simple-table{
