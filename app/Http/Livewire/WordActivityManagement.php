@@ -40,10 +40,8 @@ class WordActivityManagement extends Component
     public $listToRemove;
     public $wordToRemove;
     public $groups;
-    public $test = [];
-    public $test2 = [];
-    public $testGroup = "";
-    public $testStudent = "";
+    public $groupList = [];
+    public $studentList = [];
     public $students = [];
     public $selectedGroup;
     public $description;
@@ -103,6 +101,8 @@ class WordActivityManagement extends Component
         $this->description="";
         $this->nameToEdit="";
         $this->diffToEdit="Fácil";
+        $this->groupList = [];
+        $this->studentList = [];
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)->get();
         if($this->tableActive)
         {
@@ -225,16 +225,15 @@ class WordActivityManagement extends Component
 
     public function assignList(){
 
-        foreach($this->test as $g) {
-            $this->testGroup = Group::find($g);
+        foreach($this->groupList as $g) {
             $assigneeGroup = Group::find($g);
             $this->selectedGroup->groups()->attach($assigneeGroup);
         }
-        foreach($this->test2 as $s){
-            $this->testStudent = User::find($s);
+        foreach($this->studentList as $s){
             $assigneeStudent = User::find($s);
             $this->selectedGroup->users()->attach($assigneeStudent);
         }
+        $this->resetOnClose();
         $this->dispatchBrowserEvent('list-assigned');
     }
 

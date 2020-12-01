@@ -37,13 +37,13 @@
         </div>
         <div class="container mb-4" style="background-color:#FFFFFF; margin-bottom: 5%; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
             <div>
-                <span>{{__('Total de ejercicios realizados: ')}}{{__($totalExercises)}}</span>
+                <span>{{__('Total de actividades realizados: ')}}{{__($totalExercises)}}</span>
             </div>
             <div>
-                <span>{{__('Total de ejercicios de palabras realizados: ')}}{{__($totalWordExercises)}}</span>
+                <span>{{__('Total de actividades de palabras realizados: ')}}{{__($totalWordExercises)}}</span>
             </div>
             <div>
-                <span>{{__('Total de ejercicios de lectura realizados: ')}}{{__($totalReadingExercises)}}</span>
+                <span>{{__('Total de actividades de lectura realizados: ')}}{{__($totalReadingExercises)}}</span>
             </div>
         </div>
             <div class="container">

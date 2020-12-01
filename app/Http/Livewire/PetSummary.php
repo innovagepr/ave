@@ -43,8 +43,6 @@ class PetSummary extends Component
      */
     public function buildAvatar(RewardType $item){
         $this->avatar = new PetAvatar;
-//        $this->avatar->set_background('#000000');
-//        $this->avatar->set_background("images/savings.png");
 
         if($this->pet->petType->slug == "perro"){
             $this->avatar->add_layer("images/pet_layers/dogBase.png");
@@ -58,24 +56,9 @@ class PetSummary extends Component
             $this->avatar->add_layer($reward->icon_url);
         }
 
-//        if($articleType == "hat"){
-//            $this->avatar->add_layer("images/pet_layers/topHat.png");
-//        } elseif($articleType == "tie"){
-//            $this->avatar->add_layer("images/pet_layers/bowTieRed.png");
-//        } elseif($articleType == "bowl"){
-//            $this->avatar->add_layer("images/pet_layers/redBowl.png");
-//        } elseif($articleType == "toy"){
-//            $this->avatar->add_layer("images/pet_layers/ball.png");
-//        }
-
-//        $this->avatar->add_layer($item->icon_url);
-
-//        $this->pet->pet_rewards = $this->pet->pet_rewards->fresh();
-
         $this->avatar->set_filename('avatar_'.Auth::user()->id.'.png');
         $this->avatar->build();
         $this->pet->pet_rewards()->attach($item);
-//        $this->pet->pet_rewards = $this->pet->pet_rewards->fresh();
         $this->pet->save();
         return redirect('/mascota');
     }
@@ -88,9 +71,6 @@ class PetSummary extends Component
      */
     public function detachItem(RewardType $item){
         $this->pet->pet_rewards()->detach($item);
-
-//        $this->pet->pet_rewards = $this->pet->pet_rewards->fresh();
-//        dd($this->pet->pet_rewards);
         $this->avatar = new PetAvatar;
 
         if($this->pet->petType->slug == "perro"){

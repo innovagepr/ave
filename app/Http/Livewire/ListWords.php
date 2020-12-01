@@ -65,13 +65,17 @@ class ListWords extends Component
         ApiController::tts($this->word);
         $this->dispatchBrowserEvent('word-edited');
     }
+    /**
+     * Calls a modal to remove a word from a list.
+     * @param $selectedWord the word delete button that was selected.
+     */
     public function removeWordModal($selectedWord){
         $this->wordToRemove = Word::find($selectedWord);
         $this->dispatchBrowserEvent('removeWordModal');
     }
+
     /**
-     * Removes a student depending on which area of the view it has been called.
-     * @param $selectedStudent the student delete button that was selected.
+     * Removes a word after the user has agreed to remove it with the word remove modal.
      */
     public function removeWord(){
         $this->selectedGroup->words()->detach($this->wordToRemove);
