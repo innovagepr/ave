@@ -5,7 +5,7 @@
 <div class="container-fluid mt-4" style="background-color:#FFFFFF; margin-top: 10%; margin-left: 20%; width: 60%; font-size: 2rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
     <div class="mb-4 text-sm items-center justify-center text-gray-600">
         {{ __('Para utilizar su cuenta, confirme la misma a través del enlace enviado a su correo electrónico.
-                De no recibirlo, presione el botón de reenviar.') }}
+                De no recibirlo, presione el botón de reenviar enlace de confirmación.') }}
     </div>
 
     @if (session('status') == 'verification-link-sent')
@@ -20,7 +20,7 @@
 
             <div>
                 <button type="submit" class="button button1">
-                    {{ __('Enviar enlace de confirmación') }}
+                    {{ __('Reenviar enlace de confirmación') }}
                 </button>
             </div>
         </form>

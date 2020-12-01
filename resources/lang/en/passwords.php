@@ -16,7 +16,7 @@ return [
     'reset' => 'Su contraseña ha sido restablecida con éxito.',
     'sent' => 'Hemos enviado el enlace para restablecer la contraseña al correo electrónico provisto.',
     'throttled' => 'Favor esperar antes de intentarlo nuevamente.',
-    'token' => 'El autentificador de restablecimiento de contraseña no es válido.',
+    'token' => 'El autentificador de restablecimiento de contraseña no es válido. ¿Está seguro que escribió su dirección de correo electrónico correctamente?',
     'user' => "No hemos encontrado un usuario atado al correo electrónico provisto.",
 
 ];

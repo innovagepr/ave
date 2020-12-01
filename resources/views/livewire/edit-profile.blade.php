@@ -126,6 +126,9 @@
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="first_name" type="text"  name="first" wire:model="first"/>
+                                <div>
+                                    @error('first') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -134,6 +137,9 @@
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="last_name" type="text"  wire:model="last" name="last"/>
+                                <div>
+                                    @error('last') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -142,6 +148,9 @@
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="email" type="email"  name="email" wire:model="email"/>
+                                <div>
+                                    @error('email') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -150,6 +159,9 @@
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" disabled id="password" type="password"  name="dob" placeholder="**********"/>
+                                <div>
+                                    @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                             <td>
                                 <a>
@@ -160,6 +172,9 @@
                         <tr>
                             <td>
                                 <x-jet-label class="pr-2 block text-left" for="dob" value="{{ __('Fecha de Nacimiento:') }}" />
+                                <div>
+                                    @error('dob') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </td>
                             <td>
                                 <x-jet-input class="inline-block w-x-full" id="dob" type="date"  name="first_name" wire:model="dob"/>

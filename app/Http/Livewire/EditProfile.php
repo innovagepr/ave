@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use App\Rules\AgeProfessional;
+use App\Rules\AgeChild;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use App\Actions\Fortify\PasswordValidationRules;
 
+
 class EditProfile extends Component
 {
     use PasswordValidationRules;
     public $user;
-    public $first = 'nombre puñeta';
+    public $first;
     public $last;
     public $email;
     public $dob;
@@ -42,6 +45,44 @@ class EditProfile extends Component
 
     public function updateUser()
     {
+        if($this->user->role_id == 1){
+            $this->validate(['first' => 'required|string|max:128',
+                'last' => 'required|string|max:128',
+                'email' => 'required|string|max:255|unique:users',
+                'dob' => 'required',
+                'dob' => new AgeProfessional()],
+                [
+                    'first.required' => 'Favor proveer el nombre.',
+                    'first.string' => 'El nombre debe contener letras.',
+                    'first.max' => 'El nombre no puede exceder los 128 caracteres',
+                    'last.required' => 'Favor proveer el apellido paterno',
+                    'last.string' => 'El apellido paterno debe contener letras.',
+                    'last.max' => 'El apellido paterno no puede exceder los 128 caracteres',
+                    'email.required' => 'Favor proveer el correo electrónico.',
+                    'email.string' => 'El correo electrónico debe contener letras.',
+                    'email.max' => 'El correo electrónico no puede exceder los 255 caracteres',
+                    'dob.required' => 'Favor proveer la fecha de nacimiento.'
+                ]);
+    }
+        else{
+            $this->validate(['first' => 'required|string|max:128',
+                'last' => 'required|string|max:128',
+                'email' => 'required|string|max:255|unique:users',
+                'dob' => 'required',
+                'dob' =>   new AgeChild()],
+                [
+                    'first.required' => 'Favor proveer el nombre.',
+                    'first.string' => 'El nombre debe contener letras.',
+                    'first.max' => 'El nombre no puede exceder los 128 caracteres',
+                    'last.required' => 'Favor proveer el apellido paterno',
+                    'last.string' => 'El apellido paterno debe contener letras.',
+                    'last.max' => 'El apellido paterno no puede exceder los 128 caracteres',
+                    'email.required' => 'Favor proveer el correo electrónico.',
+                    'email.string' => 'El correo electrónico debe contener letras.',
+                    'email.max' => 'El correo electrónico no puede exceder los 255 caracteres',
+                    'dob.required' => 'Favor proveer la fecha de nacimiento.'
+                ]);
+        }
         $this->user->first_name = $this->first;
         $this->user->last_name = $this->last;
         $this->user->email = $this->email;
