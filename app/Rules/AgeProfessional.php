@@ -27,7 +27,7 @@ class AgeProfessional implements Rule
     public function passes($attribute, $value)
     {
         $date = new Carbon($value);
-        return ((int) $date->diffInYears()) > 18;
+        return ((int) $date->diffInYears()) >= 18;
     }
 
     /**
