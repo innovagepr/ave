@@ -145,9 +145,9 @@
                             </div>
                             <div class="mt-2">
                                 @foreach($groups as $g)
-                                    @if(!$selectedGroup->groups()->where('id', '=', $g->id))
+                                    @if($selectedGroup->groups()->where('id', '=', $g->id)->first() === null)
                                     <x-jet-label for="{{$g->id}}" value="{{ __($g->name) }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                    <input type="checkbox" wire:model="test.{{ $g }}" value="{{$g->id}}">
+                                    <input type="checkbox" name="groupList.{{ $g }}" wire:model="groupList" value="{{$g->id}}">
                                     @endif
                                 @endforeach
                             </div>
@@ -156,8 +156,10 @@
                             </div>
                             <div class="mt-2">
                                 @foreach($students as $s)
+                                    @if($s->assignedLists()->where('id', '=', $selectedGroup->id)->first() === null)
                                     <x-jet-label for="{{$s->fullname}}" value="{{ __($s->fullname) }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
-                                    <input type="checkbox" wire:model="test2.{{ $s->id }}" value="{{$s->id}}">
+                                    <input type="checkbox" name="studentList.{{ $s->id }}" wire:model="studentList" value="{{$s->id}}">
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="mt-4">
