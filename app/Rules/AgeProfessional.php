@@ -27,7 +27,7 @@ class AgeProfessional implements Rule
     public function passes($attribute, $value)
     {
         $date = new Carbon($value);
-        return ((int) $date->diffInYears()) > 18;
+        return ((int) $date->diffInYears()) >= 18;
     }
 
     /**
@@ -37,6 +37,6 @@ class AgeProfessional implements Rule
      */
     public function message()
     {
-        return 'Profesional debe ser mayor de 18 años para poder registrarse.';
+        return 'Profesional debe ser mayor de 18 años.';
     }
 }

@@ -4,29 +4,6 @@
     {{-- View of the Activity 1 (Letters/Words) --}}
 
     <div style="margin-right: 90%">
-        {{--        @foreach($tempSplitWords as $tempSplitWord)--}}
-        {{--            @foreach($tempSplitWord as $palabras)--}}
-        {{--                {{$palabras}}--}}
-        {{--            @endforeach--}}
-        {{--            <br>--}}
-        {{--        @endforeach--}}
-        {{--        @foreach($tempPosition as $tempPositions)--}}
-        {{--            {{$tempPositions}}--}}
-
-        {{--            <br>--}}
-        {{--        @endforeach--}}
-        {{--        @foreach($tempAnswers as $tempAnswer)--}}
-        {{--            @foreach($tempAnswer as $palabras)--}}
-        {{--                {{$palabras}}--}}
-        {{--            @endforeach--}}
-        {{--            <br>--}}
-        {{--        @endforeach--}}
-        {{--        @foreach($badAnswers as $nose)--}}
-        {{--            @foreach($nose as $eye)--}}
-        {{--                {{$eye}}--}}
-        {{--            @endforeach--}}
-        {{--        @endforeach--}}
-
     </div>
     {{--Displays the steps bar that shows the current excercise in the screeen--}}
     <div class="main-block-ses">

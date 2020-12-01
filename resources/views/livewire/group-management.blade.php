@@ -1,4 +1,4 @@
-<div wire:poll.700ms>
+<div>
     <!-- Modal for adding a new group -->
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog"  aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -94,11 +94,11 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div style="margin: 0 auto; color: #2576AC; font-size: 3rem;">
-                        <span class="text-center">{{ __('Remover Grupo') }}</span>
+                        <span class="text-center">{{ __('Eliminar Grupo') }}</span>
                     </div>
 
                     <div class="modal-body" style="text-align: center;">
-                        <p>{{ __('¿Está seguro que quiere remover el grupo') }} {{ $groupToRemove->name }}
+                        <p>{{ __('¿Está seguro que quiere eliminar el grupo') }} {{ $groupToRemove->name }}
                             {{ __('? Éste cambio no se puede revertir.') }}</p>
                         <div class="mt-4">
                             <button type="submit" wire:click.prevent="removeGroup()" class="button button1" style="width: 20%">

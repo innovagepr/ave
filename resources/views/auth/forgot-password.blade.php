@@ -20,7 +20,7 @@
 <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
 <!-- Link to homepage -->
 <i type="button" onclick="location.href='/'" style="float: left; cursor: pointer; color: #8F8F8F; padding-left: 10px; padding-top: 10px;">
-    <span class="fa fa-home fa-5x"></span>
+    <span class="fa fa-home fa-2x"></span>
 </i>
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Activity;
 use App\Models\CompletedActivity;
 use App\Models\Difficulty;
+use App\Models\ListExercise;
 use Livewire\Component;
 use Carbon\Carbon;
 
@@ -39,6 +40,9 @@ class ChildProgress extends Component
     }
     public function getActivityName($activity_id){
         return Activity::find($activity_id)->name;
+    }
+    public function getListName($list_id){
+        return ListExercise::find($list_id)->name;
     }
     public function genChart(){
         $stocksTable = \Lava::DataTable();

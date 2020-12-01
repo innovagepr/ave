@@ -145,10 +145,10 @@
                             </div>
                             <div class="mt-2">
                                 @foreach($groups as $g)
-                                    @if(!$selectedGroup->groups()->where('id', '=', $g->id))
+{{--                                    @if(!$selectedGroup->groups()->where('id', '=', $g->id))--}}
                                     <x-jet-label for="{{$g->id}}" value="{{ __($g->name) }}" style="display: inline-block; text-align: left; font-size: 1rem; font-weight: normal; padding-left: 10%; color: #050404;" />
                                     <input type="checkbox" wire:model="test.{{ $g }}" value="{{$g->id}}">
-                                    @endif
+{{--                                    @endif--}}
                                 @endforeach
                             </div>
                             <div class="mt-2">

@@ -43,7 +43,7 @@
         </div>
         <div class="mt-4">
             <button type="submit" class="button button1" wire:click.prevent="checkUser()">
-                {{ __('Revisar') }}
+                {{ __('Siguiente') }}
             </button>
         </div>
     </div>

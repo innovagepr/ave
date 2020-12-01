@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use App\Rules\AgeProfessional;
+use App\Rules\AgeChild;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use App\Actions\Fortify\PasswordValidationRules;
 
+
 class EditProfile extends Component
 {
     use PasswordValidationRules;
     public $user;
-    public $first = 'nombre puñeta';
+    public $first;
     public $last;
     public $email;
     public $dob;
@@ -26,8 +29,8 @@ class EditProfile extends Component
         "5"=>'images/profileIcons/icon-blue.png',
         "6"=>'images/profileIcons/icon-purple.png',
         "7"=>'images/profileIcons/icon-pink.png');
-    public $password;
-    public $password_confirmation;
+    public $contraseña;
+    public $contraseña_confirmation;
 
 
     public function mount(){
@@ -42,9 +45,99 @@ class EditProfile extends Component
 
     public function updateUser()
     {
+        if($this->user->role_id == 1){
+            if($this->email === $this->user->email){
+                $this->validate(['first' => 'required|string|max:128',
+                    'last' => 'required|string|max:128',
+                    'dob' => 'required',
+                    'dob' => new AgeProfessional()],
+                    [
+                        'first.required' => 'Favor proveer el nombre.',
+                        'first.string' => 'El nombre debe contener letras.',
+                        'first.max' => 'El nombre no puede exceder los 128 caracteres',
+                        'last.required' => 'Favor proveer el apellido paterno',
+                        'last.string' => 'El apellido paterno debe contener letras.',
+                        'last.max' => 'El apellido paterno no puede exceder los 128 caracteres',
+                        'dob.required' => 'Favor proveer la fecha de nacimiento.'
+                    ],
+                    ['first' => 'nombre a editar',
+                        'last' => 'apellido paterno a editar',
+                        'dob' => 'fecha de nacimiento',]);
+            }
+            else{
+                $this->validate(['first' => 'required|string|max:128',
+                    'last' => 'required|string|max:128',
+                    'email' => 'required|string|max:255|unique:users',
+                    'dob' => 'required',
+                    'dob' => new AgeProfessional()],
+                    [
+                        'first.required' => 'Favor proveer el nombre.',
+                        'first.string' => 'El nombre debe contener letras.',
+                        'first.max' => 'El nombre no puede exceder los 128 caracteres',
+                        'last.required' => 'Favor proveer el apellido paterno',
+                        'last.string' => 'El apellido paterno debe contener letras.',
+                        'last.max' => 'El apellido paterno no puede exceder los 128 caracteres',
+                        'email.required' => 'Favor proveer el correo electrónico.',
+                        'email.string' => 'El correo electrónico debe contener letras.',
+                        'email.max' => 'El correo electrónico no puede exceder los 255 caracteres',
+                        'dob.required' => 'Favor proveer la fecha de nacimiento.'
+                    ],
+                    ['first' => 'nombre a editar',
+                        'last' => 'apellido paterno a editar',
+                        'email' => 'email',
+                        'dob' => 'fecha de nacimiento',]);
+            }
+
+    }
+        else{
+            if($this->email === $this->user->email){
+                $this->validate(['first' => 'required|string|max:128',
+                    'last' => 'required|string|max:128',
+                    'dob' => 'required',
+                    'dob' =>   new AgeChild()],
+                    [
+                        'first.required' => 'Favor proveer el nombre.',
+                        'first.string' => 'El nombre debe contener letras.',
+                        'first.max' => 'El nombre no puede exceder los 128 caracteres',
+                        'last.required' => 'Favor proveer el apellido paterno',
+                        'last.string' => 'El apellido paterno debe contener letras.',
+                        'last.max' => 'El apellido paterno no puede exceder los 128 caracteres',
+                        'dob.required' => 'Favor proveer la fecha de nacimiento.'
+                    ],
+                    ['first' => 'nombre a editar',
+                        'last' => 'apellido paterno a editar',
+                        'dob' => 'fecha de nacimiento',]);
+            }
+            else{
+                $this->validate(['first' => 'required|string|max:128',
+                    'last' => 'required|string|max:128',
+                    'email' => 'required|string|max:255|unique:users',
+                    'dob' => 'required',
+                    'dob' =>   new AgeChild()],
+                    [
+                        'first.required' => 'Favor proveer el nombre.',
+                        'first.string' => 'El nombre debe contener letras.',
+                        'first.max' => 'El nombre no puede exceder los 128 caracteres',
+                        'last.required' => 'Favor proveer el apellido paterno',
+                        'last.string' => 'El apellido paterno debe contener letras.',
+                        'last.max' => 'El apellido paterno no puede exceder los 128 caracteres',
+                        'email.required' => 'Favor proveer el correo electrónico.',
+                        'email.string' => 'El correo electrónico debe contener letras.',
+                        'email.max' => 'El correo electrónico no puede exceder los 255 caracteres',
+                        'dob.required' => 'Favor proveer la fecha de nacimiento.'
+                    ],
+                    ['first' => 'nombre a editar',
+                        'last' => 'apellido paterno a editar',
+                        'email' => 'email',
+                        'dob' => 'fecha de nacimiento',]);
+            }
+
+        }
         $this->user->first_name = $this->first;
         $this->user->last_name = $this->last;
-        $this->user->email = $this->email;
+        if($this->email !== $this->user->email){
+            $this->user->email = $this->email;
+        }
         $this->user->dob = $this->dob;
         $this->user->save();
         $this->first = $this->user->first_name;
@@ -58,14 +151,20 @@ class EditProfile extends Component
         $this->dispatchBrowserEvent('edit-password');
 
     }
+    public function resetOnClose(){
+        $this->contraseña = '';
+        $this->contraseña_confirmation = '';
+    }
 
     public function savePassword(){
-        $this->validate([ 'password' =>$this->passwordRules(), 'password_confirmation' => 'required']
+        $this->validate([ 'contraseña' =>$this->passwordRules(), 'contraseña_confirmation' => 'required'],
+            ['contraseña_confirmation.required' => 'El campo confirmación de contraseña es requerido.'],
+            ['contraseña' => 'contraseña',
+                'contraseña_confirmation' => 'confirmación de contraseña',]
             );
-        $this->user->password = Hash::make($this->password);
+        $this->user->password = Hash::make($this->contraseña);
         $this->user->save();
-        $this->dispatchBrowserEvent('finish-edit-password');
-
+        return redirect()->to('/login');
     }
 
     public function iconEdit(){

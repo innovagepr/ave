@@ -2,7 +2,7 @@
 
 namespace App\Actions\Fortify;
 
-use Laravel\Fortify\Rules\Password;
+use App\Rules\Password;
 
 trait PasswordValidationRules
 {
@@ -16,7 +16,5 @@ trait PasswordValidationRules
         return ['required', 'string', (new Password)->requireNumeric()->requireSpecialCharacter()->requireUppercase(), 'confirmed'];
     }
 
-    public function message(){
-        return 'Holis';
-    }
+
 }

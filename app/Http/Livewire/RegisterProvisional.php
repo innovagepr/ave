@@ -22,9 +22,9 @@ class RegisterProvisional extends Component
     public function checkUser(){
         $this->validate(['provisionalUsername' => 'required|exists:users,email', 'provisionalPassword' =>'required'],
             [
-                'provisionalUsername.required' => 'Favor proveer un nombre de usuario',
-                'provisionalUsername.exists' => 'Usuario no existe en el sistema',
-                'provisionalPassword.required' => 'Contraseña inválida',
+                'provisionalUsername.required' => 'Favor proveer un nombre de usuario.',
+                'provisionalUsername.exists' => 'Usuario no existe en el sistema.',
+                'provisionalPassword.required' => 'Contraseña inválida.',
             ],
             ['email' => 'Nombre de Usuario', 'password' => 'Contraseña']);
         $foundUser = User::where('email', '=', $this->provisionalUsername)->first();
@@ -43,9 +43,9 @@ class RegisterProvisional extends Component
     {
         $this->validate(['email' => 'required|email|unique:users|max:255|string', 'password' =>$this->passwordRules(), 'password_confirmation' => 'required'],
             [
-                'email.required' => 'Favor proveer un correo electrónico',
-                'email.email' => 'Formato incorrecto para correo electrónico',
-                'email.unique' => 'Usuario ya existe en el sistema',
+                'email.required' => 'Favor proveer un correo electrónico.',
+                'email.email' => 'Formato incorrecto para correo electrónico.',
+                'email.unique' => 'Usuario ya existe en el sistema.',
                 'email.max' => 'Correo electrónico no debe exceder 255 caracteres.',
                 'email.max' => 'Correo electrónico debe contener texto.',
             ],
