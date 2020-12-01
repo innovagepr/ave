@@ -1,5 +1,5 @@
 {{--View for the immediate modal for a provided correct answer--}}
-<div class="modal-dialog" style="margin-top: 20%; ">
+<div class="modal-dialog" style="margin-top: 10%; ">
     <div class="modal-content" style="border: 3px solid #2576AC; border-radius: 40px">
         <div>
             <h1 style ="font-family: Berlin Sans FB; font-size: 40px; color: #2576AC; text-align: center; margin: 10px;" >¡Bien Hecho!</h1>

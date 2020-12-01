@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Activity;
 use Livewire\Component;
 
 class AssignedLists extends Component
@@ -17,7 +18,7 @@ class AssignedLists extends Component
 
     public function activityList($list, $act){
 
-        if($act === 1){
+        if($act === Activity::where('slug', '=', 'letterOrdering')->first()->id){
             return redirect()->to('/lista/'.$list);
         }
         else {
