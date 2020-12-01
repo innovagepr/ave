@@ -8,7 +8,7 @@
         </div>
         <form autocomplete="off">
 
-            <p style ="font-family: 'Berlin Sans FB'; font-size: 20px; color: #2576AC" >Tienes <span style="color: red; font-size: 25px">{{$sum}}/10 </span> ejercicios contestados.</p>
+            <p style ="font-family: 'Berlin Sans FB'; font-size: 20px; color: #2576AC" >Tienes <span style="color: red; font-size: 25px">{{$sum}} de 10</span> ejercicios contestados.</p>
             <div class="modal-footer" style="margin:auto;">
                 <a style ="text-decoration: none" type="button" class="button4" style="font-size: 20px; margin: 0 auto" wire:click="$emitUp('submitExercise')" data-dismiss="modal">Someter</a>
                 <button type="button" class="button3 button1 " style="font-size: 20px; margin: 0 auto" data-dismiss="modal" >Cancelar</button>

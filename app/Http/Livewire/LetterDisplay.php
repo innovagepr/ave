@@ -154,7 +154,6 @@ class LetterDisplay extends Component
         }
         $sum = count($this->badAnswers) + count($this->correctAnswers);
         if ($sum === 10) {
-            sleep(3);
             $this->submitExercise();
         }
         if($this->step === 9){
@@ -173,11 +172,13 @@ class LetterDisplay extends Component
     }
 
     public function submitExercise(){
+        $this->verifyAll();
+
         $sum = count($this->badAnswers) + count($this->correctAnswers);
         $this->dispatchBrowserEvent('finalResult', $this->badAnswers, $sum, $this->correctAnswers);
         $this->emit('refreshFinal', $this->badAnswers, $sum, $this->correctAnswers);
 
-        if($this->user->id){
+        if($this->user){
             $completedActivity = new CompletedActivity();
             $completedActivity->create([
                 'activity_id'=> Activity::where('slug', 'letterOrdering')->first()->id,
@@ -200,7 +201,6 @@ class LetterDisplay extends Component
             $this->user->points = $points;
             $pet->points = $petPoints;
 
-
             if($remainingLevel <= 0){
                 $level++;
                 $this->user->level = $level;
@@ -211,7 +211,6 @@ class LetterDisplay extends Component
             }
             $pet->save();
             $this->user->save();
-
         }
     }
 
@@ -249,6 +248,58 @@ class LetterDisplay extends Component
             $this->emit('refreshWarning', $sum);
         }else {
             $this->submitExercise();
+        }
+    }
+
+    public function verifyAll(){
+        foreach ($this->answeredFlag as $answer){
+            if($answer == 0){
+                $this->goTo($answer);
+                $this->immediateResult2();
+            }
+        }
+    }
+
+    public function immediateResult2()
+    {
+        $this->sumas++;
+
+        $joinedWord = implode($this->answer);
+
+        if ($joinedWord == $this->word) {
+            array_push($this->correctAnswers, $joinedWord);
+            $this->answeredFlag[$this->step] = 1;
+        } else {
+            $this->answeredFlag[$this->step] = 1;
+            array_push($this->badAnswers,[$this->step + 1,$joinedWord,$this->word]);
+        }
+        if ($this->step < 9) {
+            $this->step++;
+            $this->word = $this->words[$this->step]->word;
+            $this->emit('refreshAudio', $this->word);
+
+            //Reset variables
+            $this->shuffledWord = null;
+            $this->splitWord = null;
+            $this->joinedAnswer = null;
+            $this->position2 = $this->tempPosition[$this->step];
+            $this->word = $this->words[$this->step]->word;
+            $this->splitWord = $this->tempSplitWords[$this->step];
+            $this->answer = $this->tempAnswers[$this->step];
+            $this->positions = $this->tempPositionsArray[$this->step];
+        }
+        $sum = count($this->badAnswers) + count($this->correctAnswers);
+        if ($sum === 10) {
+            $this->submitExercise();
+        }
+        if($this->step === 9){
+            if(array_search( 0, array_reverse($this->answeredFlag)) != 0)
+            {
+                $this->goTo(array_search(0, $this->answeredFlag));
+            }
+        }
+        else if (array_search(0, $this->answeredFlag)) {
+            $this->goTo(array_search(0, $this->answeredFlag));
         }
     }
 }
