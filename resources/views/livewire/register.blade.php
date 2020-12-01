@@ -1,4 +1,4 @@
-<div>
+<div wire:ignore wire:key="1">
     {{-- In work, do what you enjoy. --}}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,57 +35,65 @@
             <div class="mt-2">
                 <a style="color: #2576AC; font-size: 2rem;">{{ __('Complete su información') }}</a>
             </div>
-            <div class="mt-2">
+            <div class="mt-2" wire:ignore.self>
                 <x-jet-label for="first_name" value="{{ __('Nombre:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <x-jet-input id="first_name" type="text" style="display: inline-block; width:80%;" name="first_name" placeholder="Escriba su nombre" :value="old('first_name')" required autofocus autocomplete="name" />
             </div>
 
-            <div class="mt-0">
+            <div class="mt-0" wire:ignore.self>
                 <x-jet-label for="last_name" value="{{ __('Apellido:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <x-jet-input id="last_name" type="text" style="display: inline-block; width:80%;" name="last_name"  placeholder="Escriba su apellido" :value="old('last_name')" required autofocus autocomplete="name" />
             </div>
 
-            <div class="mt-0">
+            <div class="mt-0" wire:ignore.self>
                 <x-jet-label for="email" value="{{ __('Email:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <x-jet-input id="email"  type="email" style="display: inline-block; width:80%;" name="email" placeholder="Escriba su correo electrónico" :value="old('email')" required />
             </div>
 
-            <div class="mt-0">
+            <div class="mt-0" wire:key="2">
                 <x-jet-label for="password" value="{{ __('Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <x-jet-input id="password"  type="password" style="display: inline-block; width:80%;" name="password" placeholder="**********" wire:model="test" required autocomplete="new-password" />
             </div>
             <div class="mt-0">
                 <div class="mt-0">
                     @if(strlen($test) < 8)
-                        <span style="color: red"> {{ 'Debe contener 8 caracteres' }}</span>
+                        <span style="color: red"> {{ 'Debe contener al menos 8 caracteres' }}</span>
                     @else
-                        <span style="color: green"> {{ 'Contiene 8 caracteres' }}</span>
+                        <span style="color: green"> {{ 'Contiene al menos 8 caracteres' }}</span>
+                    @endif
+                </div>
+
+                <div class="mt-0">
+                    @if(preg_match('/[A-Z]/', $test) != 1)
+                        <span style="color: red"> {{ 'Debe contener al menos una letra mayúscula' }}</span>
+                    @else
+                        <span style="color: green"> {{ 'Contiene al menos una letra mayúscula' }}</span>
                     @endif
                 </div>
 
                 <div class="mt-0">
                 @if(preg_match('/\\d/', $test) != 1)
-                        <span style="color: red"> {{ 'Debe contener un número' }}</span>
+                        <span style="color: red"> {{ 'Debe contener al menos un número' }}</span>
                     @else
-                        <span style="color: green"> {{ 'Contiene un número' }}</span>
+                        <span style="color: green"> {{ 'Contiene al menos un número' }}</span>
                     @endif
                 </div>
                 <div class="mt-0">
-                    @if(preg_match('/[^a-zA-Z\d]/', $test) != 1)
-                        <span style="color: red"> {{ 'Debe contener un caracter especial' }}</span>
+                    @if(preg_match('/[\W_]/', $test) != 1)
+                        <span style="color: red"> {{ 'Debe contener al menos un caracter especial' }}</span>
                     @else
-                        <span style="color: green"> {{ 'Contiene un caracter especial' }}</span>
+                        <span style="color: green"> {{ 'Contiene al menos un caracter especial' }}</span>
                     @endif
                 </div>
             </div>
             <div class="mt-0">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirme Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+                <x-jet-label for="password_confirmation" value="{{ __('Confirmar Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <x-jet-input id="password_confirmation"  type="password"  style="display: inline-block; width:80%;" placeholder="**********" name="password_confirmation" required/>
             </div>
 
             <div class="mt-0">
                 <x-jet-label for="dob" value="{{ __('Fecha de Nacimiento:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="dob"  type="date" name="dob" style="display: inline-block; width:80%;" required/>
+                <x-jet-input id="dob"  type="date" name="dob" :value="old('dob')" style="display: inline-block; width:80%;" required/>
             </div>
 
             <div class="mt-0">
@@ -95,13 +103,6 @@
                     <option value="2">{{ __('Estudiante') }}</option>
                 </select>
             </div>
-            {{--<div class="mt-4">
-                <label for="accepted_terms" style="display: block; text-align: left; padding-left: 10%;">
-                    <input id="accepted_terms" type="checkbox" class="form-checkbox" name="accepted_terms" required>
-                    <span>{{ __('Acepto los términos y condiciones.') }}</span>
-                </label>
-            </div>--}}
-
             <div class="mt-4">
                 <button class="button button1">
                     {{ __('Completar') }}

@@ -7,6 +7,7 @@
             <table class="m-auto mt-2 w-4/5">
                 <thead>
                 <th>Actividad</th>
+                <th>Lista</th>
                 <th>Fecha</th>
                 <th>Dificultad</th>
                 <th>Resultado</th>
@@ -15,7 +16,10 @@
                 @foreach($recentActivities as $a)
                 <tr>
                     <td class="card-text">
-                        {{__(\App\Http\Livewire\ChildProgress::getActivityName($a->id))}}
+                        {{__(\App\Http\Livewire\ChildProgress::getActivityName($a->activity_id))}}
+                    </td>
+                    <td class="card-text">
+                        {{__(\App\Http\Livewire\ChildProgress::getListName($a->list_id))}}
                     </td>
                     <td class="card-text">
                         {{__($a->created_at->format('Y-m-d'))}}

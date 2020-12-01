@@ -3,6 +3,8 @@
 <body style="background-color:#E5FCFB; font-family: 'Berlin Sans FB';  overflow-x: hidden">
 
 <div class="container-fluid mt-4" style="background-color:#FFFFFF; margin-top: 10%; margin-left: 30%; width: 40%; font-size: 1.25rem; display: block; border-style: solid; border-width: 3px; border-radius: 35px; text-align: center; border-color:#2576AC;">
+    <!-- Allows for validation of user account information -->
+    <x-jet-validation-errors class="mb-4 text-danger error" style="color: red" />
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
 

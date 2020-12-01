@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\CompletedActivity;
 use App\Models\QuestionOption;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 /**
@@ -42,6 +43,7 @@ class Activity2 extends Component
     public $answers;
     public $tempStep = 0;
     public $correctAnswer;
+    public $user;
     public $incorrectAnswer;
     public $earnedCoins = 0;
     public $earnedPoints = 0;
@@ -132,7 +134,7 @@ class Activity2 extends Component
                 }
             }
         }
-        if(auth()->user()->id){
+        if(auth()->user()){
             $completedActivity = new CompletedActivity();
             $completedActivity->activity_id = $this->activity->activity_id;
             $completedActivity->user_id = auth()->user()->id;
@@ -142,27 +144,28 @@ class Activity2 extends Component
             $completedActivity->save();
             $coins = auth()->user()->coins+$this->earnedCoins;
             $points = auth()->user()->points+$this->earnedPoints;
-            $remainingLevel = 20-$points;
-            $petRemaining = $remainingLevel/2;
-            $level = auth()->user()->level;
-            auth()->user()->coins = $coins;
+            $this->user = auth()->user();
+            $pet = Auth::user()->pet;
+            $petPoints = $points/2;
+            $level = $this->user->level;
+            $petLevel = $pet->level;
+            $remainingLevel = ((20*$level)-$points);
+            $petRemaining = ((20*$petLevel)-$petPoints);
+            $this->user->coins = $coins;
+            $this->user->points = $points;
+            $pet->points = $petPoints;
+
+
             if($remainingLevel <= 0){
                 $level++;
-                auth()->user()->level = $level;
-                auth()->user()->points = abs($remainingLevel);
+                $this->user->level = $level;
             }
             if($petRemaining <= 0){
-                $level++;
-                auth()->user()->level = $level;
-                auth()->user()->points = abs($remainingLevel);
+                $petLevel++;
+                $pet->level = $petLevel;
             }
-            else{
-                auth()->user()->points = $points;
-            }
-            auth()->user()->save();
-//            $pet = Pet::find(auth()->user()->pet()->id);
-//            $pet->points += $this->score;
-//            $pet->save();
+            $pet->save();
+            $this->user->save();
         }
         $this->dispatchBrowserEvent('results');
     }
