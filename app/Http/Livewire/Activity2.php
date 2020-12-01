@@ -183,6 +183,5 @@ class Activity2 extends Component
     $this->exercises = $this->activity->questions()->get();
     $this->exercises = $this->exercises->shuffle();
     $this->currentExercise = $this->exercises[0];
-
     }
 }

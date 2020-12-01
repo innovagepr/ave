@@ -51,51 +51,33 @@
             </div>
 
             <div class="mt-0" wire:key="2">
-                <x-jet-label for="password" value="{{ __('Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="password"  type="password" style="display: inline-block; width:80%;" name="password" placeholder="**********" wire:model="test" required autocomplete="new-password" />
+                <x-jet-label for="contraseña" value="{{ __('Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+                <x-jet-input id="contraseña"  type="password" style="display: inline-block; width:80%;" name="contraseña" placeholder="**********" required autocomplete="new-password" />
+            </div>
+            <div class="mt-0" style="font-size: 1.1rem">
+                <span style="color: #2576AC;">{{ 'La contraseña debe contener al menos:' }}</span>
+                <ul style="color: #2576AC; text-align: center; margin: 0 auto; width: 30%;">
+                    <li><span> {{ '8 caracteres' }}</span></li>
+                    <li><span> {{ 'una letra mayúscula' }}</span></li>
+                    <li><span> {{ 'un dígito' }}</span></li>
+                    <li><span> {{ 'un caracter especial' }}</span></li>
+                </ul>
             </div>
             <div class="mt-0">
-                <div class="mt-0">
-                    @if(strlen($test) < 8)
-                        <span style="color: red"> {{ 'Debe contener al menos 8 caracteres' }}</span>
-                    @else
-                        <span style="color: green"> {{ 'Contiene al menos 8 caracteres' }}</span>
-                    @endif
-                </div>
-
-                <div class="mt-0">
-                    @if(preg_match('/[A-Z]/', $test) != 1)
-                        <span style="color: red"> {{ 'Debe contener al menos una letra mayúscula' }}</span>
-                    @else
-                        <span style="color: green"> {{ 'Contiene al menos una letra mayúscula' }}</span>
-                    @endif
-                </div>
-
-                <div class="mt-0">
-                @if(preg_match('/\\d/', $test) != 1)
-                        <span style="color: red"> {{ 'Debe contener al menos un número' }}</span>
-                    @else
-                        <span style="color: green"> {{ 'Contiene al menos un número' }}</span>
-                    @endif
-                </div>
-                <div class="mt-0">
-                    @if(preg_match('/[\W_]/', $test) != 1)
-                        <span style="color: red"> {{ 'Debe contener al menos un caracter especial' }}</span>
-                    @else
-                        <span style="color: green"> {{ 'Contiene al menos un caracter especial' }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="mt-0">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirmar Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
-                <x-jet-input id="password_confirmation"  type="password"  style="display: inline-block; width:80%;" placeholder="**********" name="password_confirmation" required/>
+                <x-jet-label for="contraseña_confirmation" value="{{ __('Confirmar Contraseña:') }}" style="display: block; text-align: left; padding-left: 10%;" />
+                <x-jet-input id="contraseña_confirmation"  type="password"  style="display: inline-block; width:80%;" placeholder="**********" name="contraseña_confirmation" required/>
             </div>
 
             <div class="mt-0">
                 <x-jet-label for="dob" value="{{ __('Fecha de Nacimiento:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <x-jet-input id="dob"  type="date" name="dob" :value="old('dob')" style="display: inline-block; width:80%;" required/>
             </div>
-
+            <div class="mt-0">
+                <span style="color: #2576AC; font-size: 1.1rem;"> {{ 'Cuentas de profesionales deben tener 18 años de edad o más.' }}</span>
+            </div>
+            <div class="mt-0">
+                <span style="color: #2576AC; font-size: 1.1rem;"> {{ 'Cuentas de niños deben tener entre 8 y 10 años de edad.' }}</span>
+            </div>
             <div class="mt-0">
                 <x-jet-label for="role_id" value="{{ __('Tipo de cuenta:') }}" style="display: block; text-align: left; padding-left: 10%;" />
                 <select id="role_id" type="select" style="display: inline-block; width:80%;" name="role_id" required>
