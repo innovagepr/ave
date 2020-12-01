@@ -42,10 +42,8 @@ class ReadingActivityManagement extends Component
 
     public $groups;
     public $listActive;
-    public $test = [];
-    public $test2 = [];
-    public $testGroup = "";
-    public $testStudent = "";
+    public $groupList = [];
+    public $studentList = [];
     public $students = [];
     public $selectedGroup;
     public $description;
@@ -104,6 +102,8 @@ class ReadingActivityManagement extends Component
         $this->description="";
         $this->nameToEdit="";
         $this->diffToEdit="Fácil";
+        $this->groupList = [];
+        $this->studentList = [];
         $this->lists = ListExercise::where('user_id', '=', auth()->user()->id)
             ->where('deleted', '=', 0)->where('activity_id', '=', 2)->get();
         if($this->tableActive)
@@ -196,15 +196,16 @@ class ReadingActivityManagement extends Component
         $this->dispatchBrowserEvent('group-edited');
         $this->resetOnClose();
     }
+    /**
+     * Deletes a list of exercises depending on which area of the view it has been called.
+     * @param $selectedGroup the group delete button that was selected.
+     */
     public function removeListModal($selectedGroup){
         $this->listToRemove = ListExercise::find($selectedGroup);
         $this->dispatchBrowserEvent('removeListModal');
     }
 
-    /**
-     * Removes a group depending on which area of the view it has been called.
-     * @param $selectedGroup the group delete button that was selected.
-     */
+
     public function removeList(){
         if($this->tableActive && ($this->listToRemove->id === $this->selectedGroup->id)){
             $this->tableActive = 0;
@@ -224,13 +225,11 @@ class ReadingActivityManagement extends Component
     }
     public function assignList(){
 
-        foreach($this->test as $g) {
-            $this->testGroup = Group::find($g);
+        foreach($this->groupList as $g) {
             $assigneeGroup = Group::find($g);
             $this->selectedGroup->groups()->attach($assigneeGroup);
         }
-        foreach($this->test2 as $s){
-            $this->testStudent = User::find($s);
+        foreach($this->studentList as $s){
             $assigneeStudent = User::find($s);
             $this->selectedGroup->users()->attach($assigneeStudent);
         }
